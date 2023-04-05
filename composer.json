@@ -1,4 +1,6 @@
 {
+    "name": "thoanny/lebusmagique-api",
+    "description": "API du Bus Magique.",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",

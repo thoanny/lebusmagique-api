@@ -46,7 +46,7 @@ jobs:
         run: npm run build
 
       - name: Clean unused files and directories
-        run: rm -rf .idea .github assets node_modules tests .env .env.test .gitignore composer.lock package.json package-lock.json phpunit.xml.dist readme.md symfony.lock webpack.config.js var/cache/prod
+        run: rm -rf .git .github .idea assets node_modules tests .env .env.test .gitignore composer.lock package.json package-lock.json phpunit.xml.dist readme.md symfony.lock webpack.config.js var/cache/prod
 
       - name: Copy file via ssh password
         uses: appleboy/scp-action@master

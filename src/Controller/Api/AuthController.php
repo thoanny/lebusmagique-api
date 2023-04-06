@@ -55,6 +55,10 @@ class AuthController extends AbstractController
         $plainPassword = $request->get('password');
         $email = $request->get('email');
 
+        if (empty($password) || empty($email)) {
+            return $this->api->respondValidationError("Invalid Password or Email");
+        }
+
         $user = $userRepository->findOneBy(['email' => $email]);
         if(!$user) {
             return $this->api->respondNotFound("User not found");

@@ -48,8 +48,8 @@ class AuthController extends AbstractController
         return $this->api->respondWithSuccess(sprintf('User %s successfully created', $user->getEmail()));
     }
 
-    #[Route('/api/login-check', name: 'app_api_login_check', methods: ['POST'])]
-    public function appApiLoginCheck(Request $request, UserPasswordHasherInterface $hasher, UserRepository $userRepository, JWTTokenManagerInterface $JWTManager): JsonResponse
+    #[Route('/api/login', name: 'app_api_login', methods: ['POST'])]
+    public function appApiLogin(Request $request, UserPasswordHasherInterface $hasher, UserRepository $userRepository, JWTTokenManagerInterface $JWTManager): JsonResponse
     {
         $request = $this->api->transformJsonBody($request);
         $plainPassword = $request->get('password');

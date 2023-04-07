@@ -5,7 +5,6 @@ namespace App\Controller\Api;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -48,26 +47,4 @@ class AuthController extends AbstractController
         return $this->api->respondWithSuccess(sprintf('User %s successfully created', $user->getEmail()));
     }
 
-    #[Route('/api/login', name: 'app_api_login', methods: ['POST'])]
-    public function appApiLogin(Request $request, UserPasswordHasherInterface $hasher, UserRepository $userRepository, JWTTokenManagerInterface $JWTManager): JsonResponse
-    {
-        $request = $this->api->transformJsonBody($request);
-        $plainPassword = $request->get('password');
-        $email = $request->get('email');
-
-        if (empty($plainPassword) || empty($email)) {
-            return $this->api->respondValidationError("Invalid Password or Email");
-        }
-
-        $user = $userRepository->findOneBy(['email' => $email]);
-        if(!$user) {
-            return $this->api->respondNotFound("User not found");
-        }
-
-        if(!$hasher->isPasswordValid($user, $plainPassword)) {
-            return $this->api->respondValidationError("Invalid Email or Password");
-        }
-
-        return new JsonResponse(['token' => $JWTManager->create($user)]);
-    }
 }

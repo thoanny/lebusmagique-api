@@ -18,10 +18,14 @@ security:
         login:
             pattern: ^/api/login
             stateless: true
+            entry_point: jwt
             json_login:
-                check_path: app_api_login
+                check_path: api_login_check
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
+            jwt: ~
+            refresh_jwt:
+                check_path: gesdinet_jwt_refresh_token
 
         api:
             pattern: ^/api

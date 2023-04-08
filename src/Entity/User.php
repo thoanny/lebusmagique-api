@@ -28,14 +28,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column(length: 55)]
-    private ?string $username = null;
-
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $lastLoginAt = null;
+
+    #[ORM\Column(length: 55, unique: true)]
+    private ?string $nickname = null;
 
     public function getId(): ?int
     {
@@ -121,7 +121,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function toArray() {
         return [
             'email' => $this->email,
-            'username' => $this->username,
+            'nickname' => $this->nickname,
             'created_at' => $this->createdAt->format('c'),
             'last_login_at' => $this->lastLoginAt->format('c'),
         ];
@@ -129,14 +129,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getUsername(): string
     {
-        return (string) $this->username;
-    }
-
-    public function setUsername(string $username): self
-    {
-        $this->username = $username;
-
-        return $this;
+        return (string) $this->email;
     }
 
     public function getCreatedAt(): ?\DateTimeImmutable
@@ -159,6 +152,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLastLoginAt(?\DateTimeImmutable $lastLoginAt): self
     {
         $this->lastLoginAt = $lastLoginAt;
+
+        return $this;
+    }
+
+    public function getNickname(): ?string
+    {
+        return $this->nickname;
+    }
+
+    public function setNickname(string $nickname): self
+    {
+        $this->nickname = $nickname;
 
         return $this;
     }

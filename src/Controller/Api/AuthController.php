@@ -4,9 +4,9 @@ namespace App\Controller\Api;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use App\Service\Api;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\NoResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,35 +15,24 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AuthController extends AbstractController
 {
-
-    private EntityManagerInterface $em;
-    private ApiController $api;
-
-    public function __construct(EntityManagerInterface $em, ApiController $api)
-    {
-        $this->em = $em;
-        $this->api = $api;
-    }
-
     /**
      * @throws NonUniqueResultException
-     * @throws NoResultException
      */
     #[Route('/api/register', name: 'app_api_register', methods: ['POST'])]
-    public function appApiRegister(Request $request, UserPasswordHasherInterface $hasher, UserRepository $userRepository): JsonResponse
+    public function appApiRegister(Request $request, UserPasswordHasherInterface $hasher, UserRepository $userRepository, EntityManagerInterface $em, Api $api): JsonResponse
     {
-        $request = $this->api->transformJsonBody($request);
+        $request = $api->transformJsonBody($request);
         $password = $request->get('password');
         $email = $request->get('email');
         $nickname = $request->get('nickname');
 
         if(empty($password) || empty($email) || empty($nickname)) {
-            return $this->api->respondValidationError("Empty Password, Email or Nickname");
+            return $api->respondBadRequest("Password, Email and Nickname are required");
         }
 
         $exists = $userRepository->findByEmailOrNickname($email, $nickname);
         if($exists) {
-            return $this->api->respondValidationError("Email or Nickname already used");
+            return $api->respondConflict("Email or Nickname already used");
         }
 
         $user = new User();
@@ -52,10 +41,10 @@ class AuthController extends AbstractController
         $user->setNickname($nickname);
         $user->setCreatedAt(new \DateTimeImmutable());
 
-        $this->em->persist($user);
-        $this->em-> flush();
+        $em->persist($user);
+        $em-> flush();
 
-        return $this->api->respondWithSuccess(sprintf('User %s successfully created', $user->getNickname()));
+        return $api->respondCreated(sprintf('User %s successfully created', $user->getNickname()));
     }
 
 }

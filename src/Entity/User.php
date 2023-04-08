@@ -122,8 +122,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return [
             'email' => $this->email,
             'username' => $this->username,
-            'created_at' => $this->createdAt,
-            'last_login_at' => $this->lastLoginAt,
+            'created_at' => $this->createdAt->format('c'),
+            'last_login_at' => $this->lastLoginAt->format('c'),
         ];
     }
 

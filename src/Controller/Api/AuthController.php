@@ -42,6 +42,7 @@ class AuthController extends AbstractController
         $user = new User();
         $user->setPassword($hasher->hashPassword($user, $password));
         $user->setEmail($email);
+        $user->setCreatedAt(new \DateTimeImmutable());
         $this->em->persist($user);
         $this->em-> flush();
         return $this->api->respondWithSuccess(sprintf('User %s successfully created', $user->getEmail()));

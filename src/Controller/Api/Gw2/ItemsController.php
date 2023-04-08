@@ -2,9 +2,9 @@
 
 namespace App\Controller\Api\Gw2;
 
-use App\Controller\Api\ApiController;
 use App\Entity\Gw2Api\Item;
 use App\Repository\Gw2Api\ItemRepository;
+use App\Service\Api;
 use App\Service\Gw2Api;
 use DateTime;
 use DateTimeImmutable;
@@ -15,14 +15,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ItemsController extends AbstractController
 {
-    protected ApiController $api;
-
-    public function __construct(ApiController $api) {
-        $this->api = $api;
-    }
-
     #[Route('/api/gw2/items/{uid}', name: 'app_api_gw2_items', defaults: ['uid' => null])]
-    public function appApiGw2Items($uid, Gw2Api $Gw2Api, ItemRepository $itemRepository, EntityManagerInterface $em): Response
+    public function appApiGw2Items($uid, Gw2Api $Gw2Api, ItemRepository $itemRepository, EntityManagerInterface $em, Api $api): Response
     {
 
         if ($uid) {
@@ -33,8 +27,8 @@ class ItemsController extends AbstractController
 
                 if (!is_array($apiItem) && $apiItem->getCode()) {
                     return match ($apiItem->getCode()) {
-                        404 => $this->api->respondNotFound('Item not found'),
-                        default => $this->api->respondWithErrors($apiItem->getMessage()),
+                        404 => $api->respondNotFound('Item not found'),
+                        default => $api->respondWithErrors($apiItem->getMessage()),
                     };
                 }
 

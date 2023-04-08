@@ -1,14 +1,10 @@
-<?php
+<?php namespace App\Service;
 
-namespace App\Controller\Api;
-
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
-class ApiController extends AbstractController
+class Api
 {
-
     protected int $statusCode = 200;
 
     public function getStatusCode(): int
@@ -16,13 +12,13 @@ class ApiController extends AbstractController
         return $this->statusCode;
     }
 
-    protected function setStatusCode(int $statusCode): ApiController
+    protected function setStatusCode(int $statusCode): Api
     {
         $this->statusCode = $statusCode;
         return $this;
     }
 
-    public function response(array $data, $headers = []): JsonResponse
+    public function response(array|object $data, $headers = []): JsonResponse
     {
         return new JsonResponse($data, $this->getStatusCode(), $headers);
     }
@@ -47,14 +43,24 @@ class ApiController extends AbstractController
         return new JsonResponse($data, $this->getStatusCode(), $headers);
     }
 
-    public function respondUnauthorized($message = 'Not authorized!'): JsonResponse
-    {
-        return $this->setStatusCode(401)->respondWithErrors($message);
-    }
-
     public function respondValidationError($message = 'Validation errors'): JsonResponse
     {
         return $this->setStatusCode(422)->respondWithErrors($message);
+    }
+
+    public function respondCreated($message = 'Created'): JsonResponse
+    {
+        return $this->setStatusCode(201)->respondWithSuccess($message);
+    }
+
+    public function respondBadRequest($message = 'Bad request'): JsonResponse
+    {
+        return $this->setStatusCode(400)->respondWithErrors($message);
+    }
+
+    public function respondUnauthorized($message = 'Not authorized!'): JsonResponse
+    {
+        return $this->setStatusCode(401)->respondWithErrors($message);
     }
 
     public function respondNotFound($message = 'Not found!'): JsonResponse
@@ -62,9 +68,9 @@ class ApiController extends AbstractController
         return $this->setStatusCode(404)->respondWithErrors($message);
     }
 
-    public function respondCreated($data = []): JsonResponse
+    public function respondConflict($message = 'Conflict'): JsonResponse
     {
-        return $this->setStatusCode(201)->response($data);
+        return $this->setStatusCode(409)->respondWithErrors($message);
     }
 
     public function transformJsonBody(Request $request): Request

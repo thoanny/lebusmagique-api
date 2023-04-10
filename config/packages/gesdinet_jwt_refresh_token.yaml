@@ -8,7 +8,7 @@ gesdinet_jwt_refresh_token:
         http_only: true
         same_site: strict
         secure: true
-        path: gesdinet_jwt_refresh_token
+        path: /
         domain: null
 
 when@dev:

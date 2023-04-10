@@ -9,7 +9,8 @@ lexik_jwt_authentication:
             name: BEARER
 
     set_cookies:
-        BEARER: ~
+        BEARER:
+            samesite: strict
 
 when@dev:
     lexik_jwt_authentication:

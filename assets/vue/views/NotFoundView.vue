@@ -1,16 +1,9 @@
 <template>
-    <section class="hero is-danger">
-        <div class="hero-body">
-            <div class="container">
-                <h1 class="title">
-                    404 Page not found
-                </h1>
-                <p class="subtitle">
-                    its just another vue route - you can change the url above to any thing
-                </p>
-            </div>
-        </div>
-    </section>
+    <div class="flex w-full h-full items-center justify-center gap-4 flex-col">
+        <h1 class="text-4xl font-semibold">Erreur 404</h1>
+        <p>Page introuvable...</p>
+        <RouterLink :to="{ name: 'Home' }" class="btn btn-primary">Retourner à l'accueil</RouterLink>
+    </div>
 </template>
 
 <style scoped>
@@ -26,3 +19,6 @@
     color: white;
 }
 </style>
+<script setup>
+import {RouterLink} from "vue-router";
+</script>

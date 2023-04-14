@@ -1,41 +1,21 @@
 <script setup>
 import {RouterLink} from "vue-router";
-import {onMounted, ref} from "vue";
+import {useAuthStore} from "../stores/auth.store";
+const auth = useAuthStore();
 
-const user = ref(null);
-
-async function getUser() {
-    await fetch('/api/user').then(res => {
-        if (res.ok) {
-            return res.json();
-        }
-        throw new Error(`${res.statusText} (${res.status})`);
-    }).then(data => {
-        user.value = data;
-    }).catch(err => {
-        console.error(err)
-    });
-}
-
-onMounted(() => {
-    getUser();
-});
 </script>
 
 <template>
-    <header class="container mx-auto navbar bg-base-100 shadow rounded-lg mb-6">
+    <header class="container mx-auto navbar bg-base-100 shadow rounded-lg mb-6" v-if="auth.user">
         <div class="flex-1">
             <RouterLink :to="{ name: 'Home' }" class="btn btn-ghost normal-case text-xl">Le Bus Magique</RouterLink>
         </div>
         <div class="flex-none gap-2">
-            <RouterLink :to="{ name: 'Home' }" class="avatar online placeholder" v-if="user">
-                <div class="bg-neutral-focus text-neutral-content uppercase font-semibold rounded-full w-10">
-                    <span>T</span>
+            <a  href="#!" @click.prevent="auth.logout()" class="avatar online placeholder">
+                <div class="bg-neutral-focus text-neutral-content uppercase text-sm font-semibold rounded-full w-10">
+                    <span>THO</span>
                 </div>
-            </RouterLink>
-            <RouterLink :to="{ name: 'Login' }" class="btn btn-primary" v-else>
-                Connexion
-            </RouterLink>
+            </a>
         </div>
     </header>
 </template>

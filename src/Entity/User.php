@@ -124,6 +124,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             'nickname' => $this->nickname,
             'created_at' => $this->createdAt->format('c'),
             'last_login_at' => $this->lastLoginAt->format('c'),
+            'roles' => $this->roles,
         ];
     }
 

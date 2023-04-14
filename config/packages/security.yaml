@@ -31,6 +31,8 @@ security:
             pattern: ^/api
             stateless: true
             provider: app_user_provider
+            logout:
+                path: app_api_logout
             guard:
                 authenticators:
                     - lexik_jwt_authentication.jwt_token_authenticator

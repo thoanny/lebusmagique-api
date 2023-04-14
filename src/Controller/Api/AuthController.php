@@ -44,7 +44,10 @@ class AuthController extends AbstractController
         $em->persist($user);
         $em-> flush();
 
-        return $api->respondCreated(sprintf('User %s successfully created', $user->getNickname()));
+        return $api->respondCreated(sprintf('Users %s successfully created', $user->getNickname()));
     }
+
+    #[Route('api/logout', name:'app_api_logout')]
+    public function appApiLogout(){}
 
 }

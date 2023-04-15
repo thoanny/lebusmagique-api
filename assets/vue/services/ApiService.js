@@ -20,6 +20,9 @@ export default {
         return await ApiClient.get('logout');
     },
     async getUsers() {
-        return await ApiClient.get('/users');
-    }
+        return await ApiClient.get('/admin/users');
+    },
+    async getGW2Items() {
+        return await ApiClient.get('/admin/gw2/items');
+    },
 }

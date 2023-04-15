@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Api;
+namespace App\Controller\Api\Admin;
 
 use App\Repository\UserRepository;
 use App\Service\Api;
@@ -9,12 +9,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[IsGranted('ROLE_USER')]
+#[IsGranted('ROLE_ADMIN')]
 class UserController extends AbstractController
 {
-    #[Route('/api/user', name: 'app_api_user')]
-    public function appApiUser(Api $api): Response
+    #[Route('/api/admin/users', name: 'app_api_admin_users')]
+    public function appApiAdminUsers(Api $api, UserRepository $userRepository): Response
     {
-        return $api->response($this->getUser()->toArray());
+        $users = $userRepository->api_findAll();
+        return $api->response($users);
     }
 }

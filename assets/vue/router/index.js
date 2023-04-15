@@ -29,6 +29,17 @@ const router = createRouter({
             ]
         },
         {
+            path: '/admin/gw2/items',
+            name: 'GW2Items',
+            children: [
+                {
+                    path: '',
+                    name: 'GW2ItemsHome',
+                    component: () => import('../views/GW2/Items/HomeView.vue')
+                }
+            ]
+        },
+        {
             path: '/admin/:catchAll(.*)',
             name: 'NotFound',
             component: NotFound

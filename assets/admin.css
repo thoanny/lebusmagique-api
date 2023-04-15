@@ -7,3 +7,7 @@ html, body {
 body {
     @apply bg-gray-100  py-6 px-4;
 }
+
+table thead th {
+    @apply !bg-primary text-white;
+}

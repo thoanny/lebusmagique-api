@@ -41,12 +41,6 @@ function formatDate(date) {
       </tbody>
   </table>
   <div v-else>
-      <buton class="btn btn-ghost loading">Chargement en cours...</buton>
+      <button class="btn btn-ghost loading">Chargement en cours...</button>
   </div>
 </template>
-
-<style scoped>
-  table thead th {
-      @apply bg-primary text-white;
-  }
-</style>

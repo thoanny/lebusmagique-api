@@ -67,7 +67,7 @@
           Objets
         </span>
         <ul class="rounded-box p-2 bg-base-100 shadow">
-          <li><a>Tous les objets</a></li>
+          <li><RouterLink :to="{name: 'GW2ItemsHome'}">Tous les objets</RouterLink></li>
           <li><a>Forge mystique</a></li>
           <li><a>Black market</a></li>
         </ul>

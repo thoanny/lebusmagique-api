@@ -47,15 +47,51 @@ table {
 }
 
 .rarity {
+    &--Legendary {
+        .ring {
+            --tw-ring-color: #4C139D;
+        }
+    }
+
+    &--Ascended {
+        .ring {
+            --tw-ring-color: #fb3e8d;
+        }
+    }
+
     &--Exotic {
         .ring {
-            @apply ring-amber-600;
+            --tw-ring-color: #ffa405;
         }
     }
 
     &--Rare {
         .ring {
-            @apply ring-yellow-400;
+            --tw-ring-color: #fcd00b;
+        }
+    }
+
+    &--Masterwork {
+        .ring {
+            --tw-ring-color: #1a9306;
+        }
+    }
+
+    &--Fine {
+        .ring {
+            --tw-ring-color: #62A4DA;
+        }
+    }
+
+    &--Basic {
+        .ring {
+            --tw-ring-color: #000000;
+        }
+    }
+
+    &--Junk {
+        .ring {
+            --tw-ring-color: #AAAAAA;
         }
     }
 }

@@ -1,4 +1,6 @@
-<template>
+{% extends 'admin.html.twig' %}
+
+{% block body %}
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 w-full">
         <div class="stats shadow">
             <div class="stat place-items-center">
@@ -98,15 +100,4 @@
             </div>
         </div>
     </div>
-
-</template>
-
-<style scoped>
-.stats {
-    @apply w-full rounded-lg;
-}
-
-.stat {
-    @apply py-8;
-}
-</style>
+{% endblock %}

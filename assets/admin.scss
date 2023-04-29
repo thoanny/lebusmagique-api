@@ -1,0 +1,61 @@
+@import 'style.css';
+
+html, body {
+    @apply p-0 m-0 min-h-screen;
+}
+
+body {
+    @apply bg-gray-100  py-6 px-4;
+}
+
+table {
+    thead {
+        @apply bg-primary;
+
+        tr {
+            th {
+                @apply text-white;
+                background : var(--p) !important;
+            }
+        }
+    }
+}
+
+
+/** Menu **/
+
+.menu {
+    .menu-title {
+        @apply uppercase;
+    }
+
+    .router-link-active  {
+        @apply text-primary font-semibold;
+    }
+
+    .router-link-active:active {
+        @apply text-white;
+    }
+}
+
+.stats {
+    @apply w-full rounded-lg;
+
+    .stat {
+        @apply py-8;
+    }
+}
+
+.rarity {
+    &--Exotic {
+        .ring {
+            @apply ring-amber-600;
+        }
+    }
+
+    &--Rare {
+        .ring {
+            @apply ring-yellow-400;
+        }
+    }
+}

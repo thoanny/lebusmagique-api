@@ -73,7 +73,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         ;
     }
 
-    public function api_findAll() {
+    public function adminUsers() {
         return $this->createQueryBuilder('u')
             ->select('u.id', 'u.nickname', 'u.createdAt', 'u.lastLoginAt', 'u.roles')
             ->getQuery()

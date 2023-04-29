@@ -3,6 +3,8 @@
 namespace App\Entity\Gw2Api;
 
 use App\Repository\Gw2Api\ItemRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -41,6 +43,20 @@ class Item
 
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $inventoryManagerTip = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $obteningTip = null;
+
+    #[ORM\ManyToMany(targetEntity: ItemTag::class, inversedBy: 'items')]
+    private Collection $tag;
+
+    public function __construct()
+    {
+        $this->tag = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -151,6 +167,54 @@ class Item
     public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getInventoryManagerTip(): ?string
+    {
+        return $this->inventoryManagerTip;
+    }
+
+    public function setInventoryManagerTip(?string $inventoryManagerTip): self
+    {
+        $this->inventoryManagerTip = $inventoryManagerTip;
+
+        return $this;
+    }
+
+    public function getObteningTip(): ?string
+    {
+        return $this->obteningTip;
+    }
+
+    public function setObteningTip(?string $obteningTip): self
+    {
+        $this->obteningTip = $obteningTip;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ItemTag>
+     */
+    public function getTag(): Collection
+    {
+        return $this->tag;
+    }
+
+    public function addTag(ItemTag $tag): self
+    {
+        if (!$this->tag->contains($tag)) {
+            $this->tag->add($tag);
+        }
+
+        return $this;
+    }
+
+    public function removeTag(ItemTag $tag): self
+    {
+        $this->tag->removeElement($tag);
 
         return $this;
     }

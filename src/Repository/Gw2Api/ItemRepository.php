@@ -39,7 +39,7 @@ class ItemRepository extends ServiceEntityRepository
         }
     }
 
-    public function findAllAdmin() {
+    public function adminItems() {
         return $this->createQueryBuilder('i')
             ->select('i.id', 'i.uid', 'i.name', 'i.rarity', 'i.blackmarket', 'i.type', 'i.subtype')
             ->orderBy('i.uid', 'DESC')

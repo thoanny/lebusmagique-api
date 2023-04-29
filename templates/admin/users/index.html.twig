@@ -1,0 +1,33 @@
+{% extends 'admin.html.twig' %}
+
+{% block body %}
+    <h1 class="text-3xl font-semibold mb-4">Utilisateurs</h1>
+    <table class="table rounded-lg shadow w-full">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Pseudonyme</th>
+            <th class="text-center">Rôle</th>
+            <th class="text-center">Création</th>
+            <th class="text-center">Connexion</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td class="font-bold">{{ user.nickname }}</td>
+                    <td class="text-center">
+                        {% if user.roles %}
+                            {% for role in user.roles %}<span class="badge badge-sm badge-primary">{{ ('User.Role.'~role)|trans }}</span>{% endfor %}
+                        {% else %}
+                            <span class="badge badge-sm badge-secondary">{{ ('User.Role.ROLE_USER')|trans }}</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-center">{{ user.createdAt|format_datetime('medium', 'short') }}</td>
+                    <td class="text-center">{{ user.lastLoginAt|format_datetime('medium', 'short') }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

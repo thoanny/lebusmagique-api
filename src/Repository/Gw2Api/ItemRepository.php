@@ -41,7 +41,7 @@ class ItemRepository extends ServiceEntityRepository
 
     public function adminItems() {
         return $this->createQueryBuilder('i')
-            ->select('i.id', 'i.uid', 'i.name', 'i.rarity', 'i.blackmarket', 'i.type', 'i.subtype')
+//            ->select('i.id', 'i.uid', 'i.name', 'i.rarity', 'i.blackmarket', 'i.type', 'i.subtype', 'i.tag')
             ->orderBy('i.uid', 'DESC')
             ->getQuery()
             ->getResult();

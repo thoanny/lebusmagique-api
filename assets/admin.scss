@@ -95,3 +95,47 @@ table {
         }
     }
 }
+
+h1 {
+    @apply text-3xl font-semibold mb-4 text-primary;
+}
+
+.form-control {
+    .label {
+        .help-text {
+            @apply label-text-alt;
+        }
+
+        .label-text {
+            @apply font-semibold;
+        }
+    }
+}
+
+
+
+.form-control {
+    &.checkboxes {
+        @apply flex gap-4 text-sm;
+
+        >div>label {
+            @apply text-sm font-semibold px-1;
+        }
+
+        >div>div {
+            @apply flex items-center mt-2;
+
+            label {
+                @apply mr-4 pl-2;
+
+                &:last-of-type {
+                    @apply mr-0;
+                }
+            }
+        }
+
+        input {
+            @apply checkbox checkbox-sm checkbox-primary;
+        }
+    }
+}

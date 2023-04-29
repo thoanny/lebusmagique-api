@@ -1,0 +1,56 @@
+{% extends 'admin.html.twig' %}
+
+{% block body %}
+    <h1 class="flex flex-start gap-4 pl-1 items-center">
+        <div class="avatar rarity--{{ item.rarity }}">
+            <div class="rounded ring ring-offset-base-100 ring-offset-2 w-12 h-12">
+                <img src="/uploads/api/gw2/items/{{ item.uid }}.png" />
+            </div>
+        </div>
+        Modifier&nbsp;: {{ item.name }}
+    </h1>
+
+    {{ form_start(form) }}
+
+        <div class="form-control">
+            <label class="cursor-pointer label justify-start gap-2">
+                {{ form_widget(form.blackmarket, {attr: {class: 'toggle toggle-primary'}}) }}
+                {{ form_label(form.blackmarket) }}
+            </label>
+        </div>
+
+        <div class="form-control">
+            <div class="form-control">
+                <label class="label">
+                    {{ form_label(form.inventoryManagerTip) }}
+                </label>
+                {{ form_widget(form.inventoryManagerTip, {attr: {class: 'textarea textarea-bordered'}}) }}
+                <label class="label">
+                    {{ form_help(form.inventoryManagerTip) }}
+                </label>
+            </div>
+        </div>
+
+        <div class="form-control">
+            <div class="form-control">
+                <label class="label">
+                    {{ form_label(form.obteningTip) }}
+                </label>
+                {{ form_widget(form.obteningTip, {attr: {class: 'textarea textarea-bordered'}}) }}
+                <label class="label">
+                    {{ form_help(form.obteningTip) }}
+                </label>
+            </div>
+        </div>
+
+        <div class="form-control checkboxes checkboxes--inline mt-2">
+            {{ form_row(form.tag) }}
+        </div>
+
+        <div class="mt-4">
+            {{ form_row(form.submit) }}
+        </div>
+
+        {{ form(form) }}
+    {{ form_end(form) }}
+{% endblock %}

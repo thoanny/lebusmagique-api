@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Le Bus Magique{% endblock %}</title>
-    {{ encore_entry_link_tags('admin') }}
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('admin') }}
+    {% endblock %}
 </head>
 <body>
     {% if(is_granted('IS_AUTHENTICATED_FULLY')) %}
@@ -125,6 +127,9 @@
         </div>
     </footer>
 
-    {{ encore_entry_script_tags('admin') }}
+    {% block javascripts %}
+        {{ encore_entry_script_tags('admin') }}
+    {% endblock %}
+
 </body>
 </html>

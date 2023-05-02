@@ -50,13 +50,26 @@ class Item
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $obteningTip = null;
 
-    #[ORM\ManyToMany(targetEntity: ItemTag::class, inversedBy: 'items')]
-    private Collection $tag;
+    #[ORM\Column(nullable: true)]
+    private ?bool $isFish = null;
 
-    public function __construct()
-    {
-        $this->tag = new ArrayCollection();
-    }
+    #[ORM\Column(length: 55, nullable: true)]
+    private ?string $fishPower = null;
+
+    #[ORM\Column(length: 2, nullable: true)]
+    private ?string $fishTime = null;
+
+    #[ORM\Column(length: 25, nullable: true)]
+    private ?string $fishSpecialization = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $isFishStrangeDietAchievement = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $isFishBait = null;
+
+    #[ORM\Column(length: 25, nullable: true)]
+    private ?string $fishBaitPower = null;
 
     public function getId(): ?int
     {
@@ -195,26 +208,86 @@ class Item
         return $this;
     }
 
-    /**
-     * @return Collection<int, ItemTag>
-     */
-    public function getTag(): Collection
+    public function isFish(): ?bool
     {
-        return $this->tag;
+        return $this->isFish;
     }
 
-    public function addTag(ItemTag $tag): self
+    public function setIsFish(?bool $isFish): self
     {
-        if (!$this->tag->contains($tag)) {
-            $this->tag->add($tag);
-        }
+        $this->isFish = $isFish;
 
         return $this;
     }
 
-    public function removeTag(ItemTag $tag): self
+    public function getFishPower(): ?string
     {
-        $this->tag->removeElement($tag);
+        return $this->fishPower;
+    }
+
+    public function setFishPower(?string $fishPower): self
+    {
+        $this->fishPower = $fishPower;
+
+        return $this;
+    }
+
+    public function getFishTime(): ?string
+    {
+        return $this->fishTime;
+    }
+
+    public function setFishTime(?string $fishTime): self
+    {
+        $this->fishTime = $fishTime;
+
+        return $this;
+    }
+
+    public function getFishSpecialization(): ?string
+    {
+        return $this->fishSpecialization;
+    }
+
+    public function setFishSpecialization(?string $fishSpecialization): self
+    {
+        $this->fishSpecialization = $fishSpecialization;
+
+        return $this;
+    }
+
+    public function isFishStrangeDietAchievement(): ?bool
+    {
+        return $this->isFishStrangeDietAchievement;
+    }
+
+    public function setIsFishStrangeDietAchievement(?bool $isFishStrangeDietAchievement): self
+    {
+        $this->isFishStrangeDietAchievement = $isFishStrangeDietAchievement;
+
+        return $this;
+    }
+
+    public function isFishBait(): ?bool
+    {
+        return $this->isFishBait;
+    }
+
+    public function setIsFishBait(?bool $isFishBait): self
+    {
+        $this->isFishBait = $isFishBait;
+
+        return $this;
+    }
+
+    public function getFishBaitPower(): ?string
+    {
+        return $this->fishBaitPower;
+    }
+
+    public function setFishBaitPower(?string $fishBaitPower): self
+    {
+        $this->fishBaitPower = $fishBaitPower;
 
         return $this;
     }

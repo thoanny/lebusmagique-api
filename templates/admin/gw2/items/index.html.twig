@@ -27,7 +27,8 @@
                                 <div class="flex flex-wrap gap-1">
                                     {% if item.type %}<span class="badge badge-sm badge-primary">{{ ('Gw2.Item.'~item.type)|trans }}</span>{% endif %}
                                     {% if item.subtype %}<span class="badge badge-sm badge-secondary">{{ ('Gw2.Item.'~item.subtype)|trans }}</span>{% endif %}
-                                    {% for tag in item.tag %}<span class="badge badge-sm">{{ tag.name }}</span>{% endfor %}
+                                    {% if item.isFish %}<span class="badge badge-sm">Poisson</span>{% endif %}
+                                    {% if item.isFishBait %}<span class="badge badge-sm">Appât</span>{% endif %}
                                 </div>
                             </div>
                         </div>

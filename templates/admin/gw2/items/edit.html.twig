@@ -14,37 +14,88 @@
 
         <div class="form-control">
             <label class="cursor-pointer label justify-start gap-2">
-                {{ form_widget(form.blackmarket, {attr: {class: 'toggle toggle-primary'}}) }}
+                {{ form_widget(form.blackmarket) }}
                 {{ form_label(form.blackmarket) }}
             </label>
         </div>
 
         <div class="form-control">
+            <label class="label">
+                {{ form_label(form.inventoryManagerTip) }}
+            </label>
+            {{ form_widget(form.inventoryManagerTip, {attr: {class: 'textarea textarea-bordered'}}) }}
+            <label class="label">
+                {{ form_help(form.inventoryManagerTip) }}
+            </label>
+        </div>
+
+        <div class="form-control">
+            <label class="label">
+                {{ form_label(form.obteningTip) }}
+            </label>
+            {{ form_widget(form.obteningTip, {attr: {class: 'textarea textarea-bordered'}}) }}
+            <label class="label">
+                {{ form_help(form.obteningTip) }}
+            </label>
+        </div>
+
+        <div class="form-control">
+            <label class="cursor-pointer label justify-start gap-2">
+                {{ form_widget(form.isFish) }}
+                {{ form_label(form.isFish) }}
+            </label>
+        </div>
+
+        <div id="fishFields" class="hidden border border-secondary rounded-lg bg-white p-6 mb-6">
+            <h2>Poisson</h2>
+            <div class="grid grid-cols-4 gap-4">
+                <div class="form-control">
+                    <label class="label">{{ form_label(form.fishPower) }}</label>
+                    {{ form_widget(form.fishPower) }}
+                </div>
+                <div class="form-control">
+                    <label class="label">{{ form_label(form.fishTime) }}</label>
+                    {{ form_widget(form.fishTime) }}
+                </div>
+                <div class="form-control">
+                    TODO : Zone de pêche
+                </div>
+                <div class="form-control">
+                    TODO : Appât
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div class="form-control">
+                    TODO : Succès
+                </div>
+                <div class="form-control">
+                    <label class="label">{{ form_label(form.fishSpecialization) }}</label>
+                    {{ form_widget(form.fishSpecialization) }}
+                </div>
+            </div>
+
             <div class="form-control">
-                <label class="label">
-                    {{ form_label(form.inventoryManagerTip) }}
-                </label>
-                {{ form_widget(form.inventoryManagerTip, {attr: {class: 'textarea textarea-bordered'}}) }}
-                <label class="label">
-                    {{ form_help(form.inventoryManagerTip) }}
+                <label class="cursor-pointer label justify-start gap-2">
+                    {{ form_widget(form.isFishStrangeDietAchievement) }}
+                    {{ form_label(form.isFishStrangeDietAchievement) }}
                 </label>
             </div>
         </div>
 
         <div class="form-control">
-            <div class="form-control">
-                <label class="label">
-                    {{ form_label(form.obteningTip) }}
-                </label>
-                {{ form_widget(form.obteningTip, {attr: {class: 'textarea textarea-bordered'}}) }}
-                <label class="label">
-                    {{ form_help(form.obteningTip) }}
-                </label>
-            </div>
+            <label class="cursor-pointer label justify-start gap-2">
+                {{ form_widget(form.isFishBait) }}
+                {{ form_label(form.isFishBait) }}
+            </label>
         </div>
 
-        <div class="form-control checkboxes checkboxes--inline mt-2">
-            {{ form_row(form.tag) }}
+        <div id="fishBaitFields" class="hidden border border-secondary rounded-lg bg-white p-6 mb-6">
+            <h2>Appât</h2>
+            <div class="form-control">
+                <label class="label">{{ form_label(form.fishBaitPower) }}</label>
+                {{ form_widget(form.fishBaitPower) }}
+            </div>
         </div>
 
         <div class="mt-4">
@@ -53,4 +104,45 @@
 
         {{ form(form) }}
     {{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        const isFish = document.querySelector('input#item_isFish');
+        const fishFields = document.getElementById('fishFields');
+
+        const isFishBait = document.querySelector('input#item_isFishBait');
+        const fishBaitFields = document.getElementById('fishBaitFields');
+
+        function handleFishFields() {
+            if(isFish.checked) {
+                fishFields.classList.remove('hidden');
+                isFishBait.checked = false;
+                handleFishBaitFields();
+            } else {
+                fishFields.classList.add('hidden');
+            }
+        }
+
+        function handleFishBaitFields() {
+            if(isFishBait.checked) {
+                fishBaitFields.classList.remove('hidden');
+                isFish.checked = false;
+                handleFishFields();
+            } else {
+                fishBaitFields.classList.add('hidden');
+            }
+        }
+
+        handleFishFields();
+        handleFishBaitFields();
+
+        isFish.addEventListener('change', (e) => {
+            handleFishFields();
+        });
+
+        isFishBait.addEventListener('change', (e) => {
+            handleFishBaitFields();
+        });
+    </script>
 {% endblock %}

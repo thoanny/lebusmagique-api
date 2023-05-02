@@ -43,7 +43,18 @@ class ItemsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $item = $form->getData();
 
-//            dd($item);
+            if(!$item->isFish()) {
+                ($item)
+                    ->setFishPower(null)
+                    ->setFishTime(null)
+                    ->setFishSpecialization(null)
+                    ->setIsFishStrangeDietAchievement(null)
+                ;
+            }
+
+            if(!$item->isFishBait()) {
+                $item->setFishBaitPower(null);
+            }
 
             $this->em->persist($item);
             $this->em->flush();

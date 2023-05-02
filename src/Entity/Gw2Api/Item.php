@@ -79,6 +79,17 @@ class Item
     #[ORM\ManyToOne(inversedBy: 'items')]
     private ?Hole $fishHole = null;
 
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'baitItems')]
+    private ?self $fishBaitItem = null;
+
+    #[ORM\OneToMany(mappedBy: 'fishBaitItem', targetEntity: self::class)]
+    private Collection $baitItems;
+
+    public function __construct()
+    {
+        $this->baitItems = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -320,6 +331,48 @@ class Item
     public function setFishHole(?Hole $fishHole): self
     {
         $this->fishHole = $fishHole;
+
+        return $this;
+    }
+
+    public function getFishBaitItem(): ?self
+    {
+        return $this->fishBaitItem;
+    }
+
+    public function setFishBaitItem(?self $fishBaitItem): self
+    {
+        $this->fishBaitItem = $fishBaitItem;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, self>
+     */
+    public function getBaitItems(): Collection
+    {
+        return $this->baitItems;
+    }
+
+    public function addBaitItem(self $baitItem): self
+    {
+        if (!$this->baitItems->contains($baitItem)) {
+            $this->baitItems->add($baitItem);
+            $baitItem->setFishBaitItem($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBaitItem(self $baitItem): self
+    {
+        if ($this->baitItems->removeElement($baitItem)) {
+            // set the owning side to null (unless already changed)
+            if ($baitItem->getFishBaitItem() === $this) {
+                $baitItem->setFishBaitItem(null);
+            }
+        }
 
         return $this;
     }

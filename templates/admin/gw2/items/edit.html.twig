@@ -66,16 +66,19 @@
                     {{ form_widget(form.fishTime) }}
                 </div>
                 <div class="form-control">
-                    TODO : Zone de pêche
+                    <label class="label">{{ form_label(form.fishHole) }}</label>
+                    {{ form_widget(form.fishHole) }}
                 </div>
                 <div class="form-control">
-                    TODO : Appât
+                    <label class="label">{{ form_label(form.fishBaitItem) }}</label>
+                    {{ form_widget(form.fishBaitItem) }}
                 </div>
             </div>
 
             <div class="grid grid-cols-2 gap-4">
                 <div class="form-control">
-                    TODO : Succès
+                    <label class="label">{{ form_label(form.fishAchievement) }}</label>
+                    {{ form_widget(form.fishAchievement) }}
                 </div>
                 <div class="form-control">
                     <label class="label">{{ form_label(form.fishSpecialization) }}</label>

@@ -2,7 +2,11 @@
 
 namespace App\Form\Admin\Gw2;
 
+use App\Entity\Gw2\Fish\Achievement;
+use App\Entity\Gw2\Fish\Hole;
 use App\Entity\Gw2Api\Item;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -121,6 +125,37 @@ class ItemType extends AbstractType
                     'class' => 'toggle toggle-primary'
                 ]
             ])
+            ->add('fishHole', EntityType::class, [
+                'class' => Hole::class,
+                'choice_label' => 'name',
+                'attr' => ['class' => 'select select-bordered'],
+                'label_attr' => ['class' => 'label-text'],
+                'label' => 'Zone de pêche',
+                'required' => false
+            ])
+            ->add('fishBaitItem', EntityType::class, [
+                'class' => Item::class,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('i')
+                        ->where('i.isFishBait = :true')
+                        ->setParameter('true', true)
+                        ->orderBy('i.name', 'ASC');
+                },
+                'choice_value' => 'id',
+                'choice_label' => 'name',
+                'attr' => ['class' => 'select select-bordered'],
+                'label_attr' => ['class' => 'label-text'],
+                'label' => 'Appât',
+                'required' => false
+            ])
+            ->add('fishAchievement', EntityType::class, [
+                'class' => Achievement::class,
+                'choice_label' => 'name',
+                'attr' => ['class' => 'select select-bordered'],
+                'label_attr' => ['class' => 'label-text'],
+                'label' => 'Succès de pêche',
+                'required' => false
+            ])
             ->add('isFishBait', CheckboxType::class, [
                 'required' => false,
                 'label' => 'Appât',
@@ -129,7 +164,7 @@ class ItemType extends AbstractType
                 ],
                 'attr' => [
                     'class' => 'toggle toggle-primary'
-                ]
+                ],
             ])
             ->add('fishBaitPower', TextType::class, [
                 'required' => false,

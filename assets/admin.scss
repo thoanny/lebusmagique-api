@@ -97,7 +97,7 @@ table {
 }
 
 h1 {
-    @apply text-3xl font-semibold mb-4 text-primary;
+    @apply text-3xl font-semibold mb-4 text-primary flex justify-between items-center gap-2;
 }
 
 h2 {

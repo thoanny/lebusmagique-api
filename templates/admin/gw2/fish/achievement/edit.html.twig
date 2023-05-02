@@ -1,0 +1,36 @@
+{% extends 'admin.html.twig' %}
+
+{% block body %}
+    <div class="text-sm breadcrumbs">
+        <ul>
+            <li>Guild Wars 2</li>
+            <li>Pêche</li>
+            <li><a href="{{ path('app_admin_gw2_fish_achievements') }}">Succès</a></li>
+            <li>{{ (achievement.id)?'Modifier':'Ajouter' }}</li>
+        </ul>
+    </div>
+
+    <h1>{{ (achievement.id)?'Modifier le succès de pêche':'Ajouter un succès de pêche' }}</h1>
+
+    {{ form_start(form) }}
+        <div class="form-control">
+            <label class="label">
+                {{ form_label(form.name) }}
+            </label>
+            {{ form_widget(form.name) }}
+        </div>
+        <div class="form-control">
+            <label class="label">
+                {{ form_label(form.achievementId) }}
+            </label>
+            {{ form_widget(form.achievementId) }}
+        </div>
+        <div class="form-control">
+            <label class="label">
+                {{ form_label(form.achievementRepeatId) }}
+            </label>
+            {{ form_widget(form.achievementRepeatId) }}
+        </div>
+        {{ form(form) }}
+    {{ form_end(form) }}
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'admin.html.twig' %}
+
+{% block body %}
+    <div class="text-sm breadcrumbs">
+        <ul>
+            <li>Guild Wars 2</li>
+            <li>Pêche</li>
+            <li><a href="{{ path('app_admin_gw2_fish_holes') }}">Zones de pêche</a></li>
+            <li>{{ (hole.id)?'Modifier':'Ajouter' }}</li>
+        </ul>
+    </div>
+
+    <h1>{{ (hole.id)?'Modifier la zone de pêche':'Ajouter une zone de pêche' }}</h1>
+
+    {{ form_start(form) }}
+        <div class="form-control">
+            <label class="label">
+                {{ form_label(form.name) }}
+            </label>
+            {{ form_widget(form.name) }}
+        </div>
+        {{ form(form) }}
+    {{ form_end(form) }}
+{% endblock %}
+

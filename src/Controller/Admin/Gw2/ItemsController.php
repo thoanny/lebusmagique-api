@@ -20,9 +20,14 @@ class ItemsController extends AbstractController
     }
 
     #[Route('/admin/gw2/items', name: 'app_admin_gw2_items')]
-    public function appAdminGw2Items(ItemRepository $itemRepository): Response
+    public function appAdminGw2Items(ItemRepository $itemRepository, Request $request): Response
     {
-        $items = $itemRepository->adminItems();
+        $filters = [];
+        $_is = $request->query->get('is', null);
+        if(in_array($_is, ['fish', 'fish-bait', 'blackmarket'])) {
+            $filters['is'] = $_is;
+        }
+        $items = $itemRepository->adminItems($filters);
         return $this->render('admin/gw2/items/index.html.twig', [
             'items' => $items,
         ]);

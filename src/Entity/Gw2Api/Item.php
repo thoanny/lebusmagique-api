@@ -2,6 +2,8 @@
 
 namespace App\Entity\Gw2Api;
 
+use App\Entity\Gw2\Fish\Achievement;
+use App\Entity\Gw2\Fish\Hole;
 use App\Repository\Gw2Api\ItemRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -70,6 +72,12 @@ class Item
 
     #[ORM\Column(length: 25, nullable: true)]
     private ?string $fishBaitPower = null;
+
+    #[ORM\ManyToOne(inversedBy: 'items')]
+    private ?Achievement $fishAchievement = null;
+
+    #[ORM\ManyToOne(inversedBy: 'items')]
+    private ?Hole $fishHole = null;
 
     public function getId(): ?int
     {
@@ -288,6 +296,30 @@ class Item
     public function setFishBaitPower(?string $fishBaitPower): self
     {
         $this->fishBaitPower = $fishBaitPower;
+
+        return $this;
+    }
+
+    public function getFishAchievement(): ?Achievement
+    {
+        return $this->fishAchievement;
+    }
+
+    public function setFishAchievement(?Achievement $fishAchievement): self
+    {
+        $this->fishAchievement = $fishAchievement;
+
+        return $this;
+    }
+
+    public function getFishHole(): ?Hole
+    {
+        return $this->fishHole;
+    }
+
+    public function setFishHole(?Hole $fishHole): self
+    {
+        $this->fishHole = $fishHole;
 
         return $this;
     }

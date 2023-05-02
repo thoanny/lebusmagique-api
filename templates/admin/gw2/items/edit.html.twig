@@ -1,7 +1,15 @@
 {% extends 'admin.html.twig' %}
 
 {% block body %}
-    <h1 class="flex flex-start gap-4 pl-1 items-center">
+    <div class="text-sm breadcrumbs">
+        <ul>
+            <li>Guild Wars 2</li>
+            <li><a href="{{ path('app_admin_gw2_items') }}">Objets</a></li>
+            <li>{{ (item.id)?'Modifier':'Ajouter' }}</li>
+        </ul>
+    </div>
+
+    <h1 class="flex flex-start justify-start gap-4 pl-1 items-center mt-2">
         <div class="avatar rarity--{{ item.rarity }}">
             <div class="rounded ring ring-offset-base-100 ring-offset-2 w-12 h-12">
                 <img src="/uploads/api/gw2/items/{{ item.uid }}.png" />

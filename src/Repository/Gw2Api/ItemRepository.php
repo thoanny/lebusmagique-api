@@ -39,11 +39,24 @@ class ItemRepository extends ServiceEntityRepository
         }
     }
 
-    public function adminItems() {
-        return $this->createQueryBuilder('i')
-//            ->select('i.id', 'i.uid', 'i.name', 'i.rarity', 'i.blackmarket', 'i.type', 'i.subtype', 'i.tag')
-            ->orderBy('i.uid', 'DESC')
-            ->getQuery()
+    public function adminItems($filters) {
+        $q = $this->createQueryBuilder('i')
+            ->orderBy('i.uid', 'DESC');
+
+        if(isset($filters['is'])) {
+            if($filters['is'] === 'fish') {
+                $q->where('i.isFish = :true')
+                    ->setParameter('true', true);
+            } else if($filters['is'] === 'fish-bait') {
+                $q->where('i.isFishBait = :true')
+                    ->setParameter('true', true);
+            } else if($filters['is'] === 'blackmarket') {
+                $q->where('i.blackmarket = :true')
+                    ->setParameter('true', true);
+            }
+        }
+
+        return $q->getQuery()
             ->getResult();
     }
 }

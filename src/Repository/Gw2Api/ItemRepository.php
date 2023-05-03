@@ -63,13 +63,6 @@ class ItemRepository extends ServiceEntityRepository
     public function findFishes()
     {
         return $this->createQueryBuilder('i')
-            ->select('i.uid AS fishUid', 'i.name AS fishName', 'i.rarity AS fishRarity', 'i.fishPower', 'i.fishTime', 'i.fishSpecialization', 'i.isFishStrangeDietAchievement')
-            ->addSelect('a.id AS achievementId', 'a.name AS achievementName', 'a.achievementId AS achievementUid', 'a.achievementRepeatId AS achievementRepeatUid')
-            ->addSelect('h.id AS holeId', 'h.name AS holeName')
-            ->addSelect('b.uid AS baitUid', 'b.name AS baitName')
-            ->leftJoin('i.fishAchievement', 'a')
-            ->leftJoin('i.fishHole', 'h')
-            ->leftJoin('i.fishBaitItem', 'b')
             ->where('i.isFish = :true')
             ->setParameter('true', true)
             ->getQuery()

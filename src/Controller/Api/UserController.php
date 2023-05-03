@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[IsGranted('ROLE_USER')]
 class UserController extends AbstractController
 {
-    #[Route('/api/user', name: 'app_api_user')]
+    #[Route('/api/user', name: 'app_api_user', methods: ['GET'])]
     public function appApiUser(Api $api): Response
     {
         return $api->response($this->getUser()->toArray());

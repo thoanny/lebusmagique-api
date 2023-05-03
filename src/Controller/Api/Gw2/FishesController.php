@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class FishesController extends AbstractController
 {
-    #[Route('/api/gw2/fishes', name: 'app_api_gw2_fishes')]
+    #[Route('/api/gw2/fishes', name: 'app_api_gw2_fishes', methods: ['GET'])]
     public function index(ItemRepository $itemRepository): Response
     {
         $fishes = $itemRepository->findFishes();

@@ -15,8 +15,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ItemsController extends AbstractController
 {
-    #[Route('/api/gw2/items/{uid}', name: 'app_api_gw2_items', defaults: ['uid' => null])]
-    public function appApiGw2Items($uid, Gw2Api $Gw2Api, ItemRepository $itemRepository, EntityManagerInterface $em, Api $api): Response
+    #[Route('/api/gw2/items/{uid}', name: 'app_api_gw2_items', defaults: ['uid' => null], methods: ['GET'])]
+    public function appApiGw2Items(int $uid, Gw2Api $Gw2Api, ItemRepository $itemRepository, EntityManagerInterface $em, Api $api): Response
     {
 
         if ($uid) {

@@ -47,7 +47,7 @@ class AuthController extends AbstractController
         return $api->respondCreated(sprintf('Users %s successfully created', $user->getNickname()));
     }
 
-    #[Route('api/logout', name:'app_api_logout')]
+    #[Route('api/logout', name:'app_api_logout', methods: ['GET'])]
     public function appApiLogout(){}
 
 }

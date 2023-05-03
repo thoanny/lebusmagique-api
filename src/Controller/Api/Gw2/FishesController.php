@@ -24,7 +24,7 @@ class FishesController extends AbstractController
                 'time' => $fish->getFishTime(),
                 'specialization' => $fish->getFishSpecialization(),
                 'strangeDiet' => $fish->isFishStrangeDietAchievement(),
-                'achievement' => null,
+                'achievements' => null,
                 'bait' => null,
                 'hole' => null
             ];

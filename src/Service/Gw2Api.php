@@ -43,6 +43,9 @@ class Gw2Api
         try {
             $client = HttpClient::create();
             $response = $client->request('GET', $this->parameterBag->get('gw2.api.url') . $endpoint, ['query' => $query]);
+            if($response->getStatusCode() !== 200) {
+                return false;
+            }
             return $response->toArray();
         } catch (\Exception $e) {
             return $e;
@@ -52,5 +55,9 @@ class Gw2Api
     public function getItem($uid)
     {
         return $this->get('/items/:uid', ['uid' => $uid]);
+    }
+
+    public function getPrice($uid) {
+        return $this->get('/commerce/prices/:id', ['id' => $uid]);
     }
 }

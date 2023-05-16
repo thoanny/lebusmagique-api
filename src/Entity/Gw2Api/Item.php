@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ItemRepository::class)]
 #[ORM\Table(name: 'gw2_api_item')]
@@ -20,27 +21,34 @@ class Item
     private ?int $id = null;
 
     #[ORM\Column(unique: true)]
+    #[Groups('item')]
     private ?int $uid = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('item')]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $text = null;
 
     #[ORM\Column(length: 55)]
+    #[Groups('item')]
     private ?string $type = null;
 
     #[ORM\Column(length: 55, nullable: true)]
+    #[Groups('item')]
     private ?string $subtype = null;
 
     #[ORM\Column(length: 25)]
+    #[Groups('item')]
     private ?string $rarity = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups('item')]
     private ?bool $blackmarket = null;
 
     #[ORM\Column]
+    #[Groups('item')]
     private array $data = [];
 
     #[ORM\Column]
@@ -84,6 +92,10 @@ class Item
 
     #[ORM\OneToMany(mappedBy: 'fishBaitItem', targetEntity: self::class)]
     private Collection $baitItems;
+
+    #[ORM\OneToOne(mappedBy: 'item', cascade: ['persist', 'remove'])]
+    #[Groups('item')]
+    private ?ItemPrice $itemPrice = null;
 
     public function __construct()
     {
@@ -373,6 +385,23 @@ class Item
                 $baitItem->setFishBaitItem(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getItemPrice(): ?ItemPrice
+    {
+        return $this->itemPrice;
+    }
+
+    public function setItemPrice(ItemPrice $itemPrice): self
+    {
+        // set the owning side of the relation if necessary
+        if ($itemPrice->getItem() !== $this) {
+            $itemPrice->setItem($this);
+        }
+
+        $this->itemPrice = $itemPrice;
 
         return $this;
     }

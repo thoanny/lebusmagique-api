@@ -60,4 +60,12 @@ class Gw2Api
     public function getPrice($uid) {
         return $this->get('/commerce/prices/:id', ['id' => $uid]);
     }
+
+    public function getRecipesByOutput( $uid ) {
+        return $this->get('/recipes/search', [], ['output' => $uid]);
+    }
+
+    public function getRecipe($uid) {
+        return $this->get('/recipes/:uid', ['uid' => $uid]);
+    }
 }

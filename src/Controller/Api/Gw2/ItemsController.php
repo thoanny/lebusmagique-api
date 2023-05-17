@@ -4,8 +4,11 @@ namespace App\Controller\Api\Gw2;
 
 use App\Entity\Gw2Api\Item;
 use App\Entity\Gw2Api\ItemPrice;
+use App\Entity\Gw2Api\Recipe;
+use App\Entity\Gw2Api\RecipeIngredient;
 use App\Repository\Gw2Api\ItemPriceRepository;
 use App\Repository\Gw2Api\ItemRepository;
+use App\Repository\Gw2Api\RecipeRepository;
 use App\Service\Api;
 use App\Service\Gw2Api;
 use DateTime;
@@ -13,9 +16,7 @@ use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface;
 
 class ItemsController extends AbstractController
@@ -23,14 +24,16 @@ class ItemsController extends AbstractController
 
     private ItemRepository $itemRepository;
     private ItemPriceRepository $itemPriceRepository;
+    private RecipeRepository $recipeRepository;
     private Gw2Api $Gw2Api;
     private Api $api;
     private EntityManagerInterface $em;
 
-    public function __construct(ItemRepository $itemRepository, ItemPriceRepository $itemPriceRepository, Gw2Api $Gw2Api, Api $api, EntityManagerInterface $em)
+    public function __construct(ItemRepository $itemRepository, ItemPriceRepository $itemPriceRepository, RecipeRepository $recipeRepository, Gw2Api $Gw2Api, Api $api, EntityManagerInterface $em)
     {
         $this->itemRepository = $itemRepository;
         $this->itemPriceRepository = $itemPriceRepository;
+        $this->recipeRepository = $recipeRepository;
         $this->Gw2Api = $Gw2Api;
         $this->api = $api;
         $this->em = $em;
@@ -121,6 +124,34 @@ class ItemsController extends AbstractController
                     }
                 }
 
+                $recipes = $this->Gw2Api->getRecipesByOutput($item->getUid());
+                if($recipes) {
+                    foreach($recipes as $r) {
+                        $recipe = $this->recipeRepository->findOneBy(['uid' => $r]);
+                        if(!$recipe) {
+                            $recipe = new Recipe();
+                        }
+
+                        $_recipe = $this->Gw2Api->getRecipe($r);
+                        if($_recipe) {
+                            $recipe->setUid($r);
+                            $recipe->setItem($this->getGw2Item($_recipe['output_item_id']));
+                            $recipe->setQuantity($_recipe['output_item_count']);
+                            $recipe->setData($_recipe);
+
+                            foreach($_recipe['ingredients'] as $ing) {
+                                $ingredient = (new RecipeIngredient())
+                                    ->setItem($this->getGw2Item($ing['item_id']))
+                                    ->setQuantity($ing['count'])
+                                ;
+                                $recipe->addIngredient($ingredient);
+                            }
+
+                            $item->addRecipe($recipe);
+                        }
+                    }
+                }
+
                 $this->em->persist($item);
                 $this->em->flush();
             }
@@ -135,7 +166,7 @@ class ItemsController extends AbstractController
         $item = $this->getGw2Item($uid);
         $data = $serializer->serialize(
             $item,
-            'json', ['groups' => ['item','price']]
+            'json', ['groups' => ['item','price', 'recipe', 'ingredient']]
         );
         return new JsonResponse($data, 200, [], true);
     }

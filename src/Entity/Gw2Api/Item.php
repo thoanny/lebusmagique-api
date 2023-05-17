@@ -97,9 +97,14 @@ class Item
     #[Groups('item')]
     private ?ItemPrice $itemPrice = null;
 
+    #[ORM\OneToMany(mappedBy: 'item', targetEntity: Recipe::class, cascade: ['persist'], orphanRemoval: true)]
+    #[Groups('item')]
+    private Collection $recipes;
+
     public function __construct()
     {
         $this->baitItems = new ArrayCollection();
+        $this->recipes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -402,6 +407,36 @@ class Item
         }
 
         $this->itemPrice = $itemPrice;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Recipe>
+     */
+    public function getRecipes(): Collection
+    {
+        return $this->recipes;
+    }
+
+    public function addRecipe(Recipe $recipe): self
+    {
+        if (!$this->recipes->contains($recipe)) {
+            $this->recipes->add($recipe);
+            $recipe->setItem($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecipe(Recipe $recipe): self
+    {
+        if ($this->recipes->removeElement($recipe)) {
+            // set the owning side to null (unless already changed)
+            if ($recipe->getItem() === $this) {
+                $recipe->setItem(null);
+            }
+        }
 
         return $this;
     }

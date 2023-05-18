@@ -46,9 +46,17 @@ class ItemRepository extends ServiceEntityRepository
 
         if($filters['is']) {
             if($filters['is'] === 'fish') {
+                $q->addSelect('i.fishPower', 'i.fishTime', 'i.fishSpecialization', 'i.isFishStrangeDietAchievement');
+                $q->addSelect('b.name AS baitName');
+                $q->addSelect('h.name AS holeName');
+                $q->addSelect('a.name AS achievementName');
+                $q->leftJoin('i.fishBaitItem', 'b');
+                $q->leftJoin('i.fishHole', 'h');
+                $q->leftJoin('i.fishAchievement', 'a');
                 $q->where('i.isFish = :true')
                     ->setParameter('true', true);
             } else if($filters['is'] === 'fish-bait') {
+                $q->addSelect('i.fishBaitPower');
                 $q->where('i.isFishBait = :true')
                     ->setParameter('true', true);
             } else if($filters['is'] === 'blackmarket') {

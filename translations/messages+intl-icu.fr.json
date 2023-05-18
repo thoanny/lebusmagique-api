@@ -69,5 +69,8 @@
     "Gw2.Item.Subtype.Unlock": "Déverouillage",
     "Gw2.Item.Subtype.UpgradeRemoval": "__UpgradeRemoval",
     "Gw2.Item.Subtype.Utility": "Utilitaire",
-    "Gw2.Item.Subtype.Warhorn": "Cor de guerre"
+    "Gw2.Item.Subtype.Warhorn": "Cor de guerre",
+    "Gw2.Item.FishTime.d": "Jour",
+    "Gw2.Item.FishTime.n": "Nuit",
+    "Gw2.Item.FishTime.dd": "Aube/Crépuscule"
 }

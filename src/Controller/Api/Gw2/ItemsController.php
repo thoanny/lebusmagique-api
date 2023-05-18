@@ -39,7 +39,7 @@ class ItemsController extends AbstractController
         $this->em = $em;
     }
 
-    protected function getGw2Item($uid) {
+    protected function getGw2Item($uid, $withRecipes = true) {
         if ($uid) {
             $item = $this->itemRepository->findOneBy(['uid' => $uid]);
 
@@ -83,6 +83,9 @@ class ItemsController extends AbstractController
                     }
                 }
 
+                $this->em->persist($item);
+                $this->em->flush();
+
                 $getPrice = $this->Gw2Api->getPrice($uid);
                 if($getPrice) {
                     $checksum = md5(json_encode($getPrice));
@@ -124,30 +127,32 @@ class ItemsController extends AbstractController
                     }
                 }
 
-                $recipes = $this->Gw2Api->getRecipesByOutput($item->getUid());
-                if($recipes) {
-                    foreach($recipes as $r) {
-                        $recipe = $this->recipeRepository->findOneBy(['uid' => $r]);
-                        if(!$recipe) {
-                            $recipe = new Recipe();
-                        }
-
-                        $_recipe = $this->Gw2Api->getRecipe($r);
-                        if($_recipe) {
-                            $recipe->setUid($r);
-                            $recipe->setItem($this->getGw2Item($_recipe['output_item_id']));
-                            $recipe->setQuantity($_recipe['output_item_count']);
-                            $recipe->setData($_recipe);
-
-                            foreach($_recipe['ingredients'] as $ing) {
-                                $ingredient = (new RecipeIngredient())
-                                    ->setItem($this->getGw2Item($ing['item_id']))
-                                    ->setQuantity($ing['count'])
-                                ;
-                                $recipe->addIngredient($ingredient);
+                if($withRecipes) {
+                    $recipes = $this->Gw2Api->getRecipesByOutput($item->getUid());
+                    if($recipes) {
+                        foreach($recipes as $r) {
+                            $recipe = $this->recipeRepository->findOneBy(['uid' => $r]);
+                            if(!$recipe) {
+                                $recipe = new Recipe();
                             }
 
-                            $item->addRecipe($recipe);
+                            $_recipe = $this->Gw2Api->getRecipe($r);
+                            if($_recipe) {
+                                $recipe->setUid($r);
+                                $recipe->setItem($this->getGw2Item($_recipe['output_item_id'], false));
+                                $recipe->setQuantity($_recipe['output_item_count']);
+                                $recipe->setData($_recipe);
+
+                                foreach($_recipe['ingredients'] as $ing) {
+                                    $ingredient = (new RecipeIngredient())
+                                        ->setItem($this->getGw2Item($ing['item_id']))
+                                        ->setQuantity($ing['count'])
+                                    ;
+                                    $recipe->addIngredient($ingredient);
+                                }
+
+                                $item->addRecipe($recipe);
+                            }
                         }
                     }
                 }

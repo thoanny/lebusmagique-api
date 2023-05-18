@@ -52,6 +52,14 @@ class Gw2Api
         }
     }
 
+    public function getItems($ids = null)
+    {
+        if($ids) {
+            return $this->get('/items', null, ['ids' => $ids]);
+        }
+        return $this->get('/items');
+    }
+
     public function getItem($uid)
     {
         return $this->get('/items/:uid', ['uid' => $uid]);

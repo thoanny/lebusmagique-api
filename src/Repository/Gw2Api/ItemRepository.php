@@ -41,9 +41,10 @@ class ItemRepository extends ServiceEntityRepository
 
     public function adminItems($filters) {
         $q = $this->createQueryBuilder('i')
+            ->select('i.id', 'i.uid', 'i.name', 'i.rarity', 'i.type', 'i.subtype', 'i.blackmarket', 'i.isFish', 'i.isFishBait')
             ->orderBy('i.uid', 'DESC');
 
-        if(isset($filters['is'])) {
+        if($filters['is']) {
             if($filters['is'] === 'fish') {
                 $q->where('i.isFish = :true')
                     ->setParameter('true', true);
@@ -56,8 +57,17 @@ class ItemRepository extends ServiceEntityRepository
             }
         }
 
-        return $q->getQuery()
-            ->getResult();
+        if($filters['type']) {
+            $q->andWhere('i.type = :type')
+                ->setParameter('type', $filters['type']);
+        }
+
+        if($filters['subtype']) {
+            $q->andWhere('i.subtype = :subtype')
+                ->setParameter('subtype', $filters['subtype']);
+        }
+
+        return $q->getQuery();
     }
 
     public function findFishes()
@@ -67,5 +77,28 @@ class ItemRepository extends ServiceEntityRepository
             ->setParameter('true', true)
             ->getQuery()
             ->getResult();
+    }
+
+    public function adminItemsTypes(): array
+    {
+        return $this->createQueryBuilder('i')
+            ->select('i.type')
+            ->groupBy('i.type')
+            ->orderBy('i.type')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function adminItemsSubtypes(): array
+    {
+        return $this->createQueryBuilder('i')
+            ->select('i.subtype')
+            ->groupBy('i.subtype')
+            ->orderBy('i.subtype')
+            ->where('i.subtype IS NOT NULL')
+            ->getQuery()
+            ->getScalarResult()
+        ;
     }
 }

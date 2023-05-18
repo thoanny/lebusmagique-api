@@ -5,6 +5,7 @@ namespace App\Controller\Admin\Gw2;
 use App\Form\Admin\Gw2\ItemType;
 use App\Repository\Gw2Api\ItemRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,16 +21,28 @@ class ItemsController extends AbstractController
     }
 
     #[Route('/admin/gw2/items', name: 'app_admin_gw2_items')]
-    public function appAdminGw2Items(ItemRepository $itemRepository, Request $request): Response
+    public function appAdminGw2Items(ItemRepository $itemRepository, Request $request, PaginatorInterface $paginator): Response
     {
-        $filters = [];
-        $_is = $request->query->get('is', null);
-        if(in_array($_is, ['fish', 'fish-bait', 'blackmarket'])) {
-            $filters['is'] = $_is;
-        }
-        $items = $itemRepository->adminItems($filters);
+        $filters = [
+            'is' => (in_array($request->query->get('is'), ['fish', 'fish-bait', 'blackmarket'])) ? $request->query->get('is') : null,
+            'type' => $request->query->get('type'),
+            'subtype' => $request->query->get('subtype'),
+        ];
+
+        $types = $itemRepository->adminItemsTypes();
+        $subtypes = $itemRepository->adminItemsSubtypes();
+
+        $items = $paginator->paginate(
+            $itemRepository->adminItems($filters),
+            $request->query->getInt('page', 1),
+            25
+        );
+
         return $this->render('admin/gw2/items/index.html.twig', [
             'items' => $items,
+            'types' => $types,
+            'subtypes' => $subtypes,
+            'filters' => $filters
         ]);
     }
 

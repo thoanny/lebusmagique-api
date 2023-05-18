@@ -116,7 +116,21 @@ h2 {
     }
 }
 
+.pagination {
+    @apply flex justify-center gap-2 mt-4;
 
+    .page > a,
+    .next > a,
+    .last > a,
+    .first > a,
+    .previous > a {
+        @apply btn btn-sm;
+    }
+
+    .current {
+        @apply btn btn-sm btn-primary;
+    }
+}
 
 .form-control {
     &.checkboxes {

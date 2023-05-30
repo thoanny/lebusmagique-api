@@ -112,6 +112,13 @@ h2 {
 
         .label-text {
             @apply font-semibold;
+
+            &.required {
+                &:after {
+                    @apply font-bold text-error;
+                    content: '*';
+                }
+            }
         }
     }
 }
@@ -156,4 +163,19 @@ h2 {
             @apply checkbox checkbox-sm checkbox-primary;
         }
     }
+}
+
+.vich-image {
+    > a:first-of-type {
+        @apply inline-block mt-4;
+
+        img {
+            @apply bg-primary rounded;
+        }
+    }
+}
+
+#genshin-map {
+    @apply mt-4;
+    min-height: 80vh;
 }

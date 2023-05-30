@@ -1,0 +1,109 @@
+{% extends 'admin.html.twig' %}
+
+{% block body %}
+    <div class="text-sm breadcrumbs">
+        <ul>
+            <li>Genshin Impact</li>
+            <li>Carte interactive</li>
+            <li><a href="{{ path('app_admin_genshin_maps_markers') }}">Marqueurs</a></li>
+        </ul>
+    </div>
+
+    <h1>Éditer un marqueur</h1>
+
+    {{ form_start(form) }}
+
+        <div class="form-control">
+            <label class="cursor-pointer label justify-start gap-2">
+                {{ form_widget(form.active) }}
+                {{ form_label(form.active) }}
+            </label>
+        </div>
+
+        <div class="grid grid-cols-3 gap-2">
+            <div class="form-control">
+                <label class="label">{{ form_label(form.icon) }}</label>
+                {{ form_widget(form.icon) }}
+            </div>
+            <div class="form-control">
+                <label class="label">{{ form_label(form.title) }}</label>
+                {{ form_widget(form.title) }}
+            </div>
+            <div class="form-control">
+                <label class="label">{{ form_label(form.slug) }}</label>
+                {{ form_widget(form.slug, {attr: {value: (marker.slug)?marker.slug:marker.markerGroup.slug~'-'}}) }}
+            </div>
+        </div>
+
+        <div class="form-control">
+            <label class="label">{{ form_label(form.format) }}</label>
+            {{ form_widget(form.format) }}
+        </div>
+
+        {% if marker.markerGroup.format %}
+            <div class="border border-secondary rounded-lg bg-white p-6 mt-2">
+                <h4 class="text-secondary text-lg font-bold mb-2">Format du groupe</h4>
+                {{ marker.markerGroup.format }}
+            </div>
+        {% endif %}
+
+        <div class="form-control">
+            <label class="label">{{ form_label(form.text) }}</label>
+            {{ form_widget(form.text) }}
+        </div>
+
+        {% if marker.markerGroup.text %}
+            <div class="border border-secondary rounded-lg bg-white p-6 mt-2">
+                <h4 class="text-secondary text-lg font-bold mb-2">Texte du groupe</h4>
+                {{ marker.markerGroup.text }}
+            </div>
+        {% endif %}
+
+        <div class="form-control">
+            <label class="label">{{ form_label(form.guide) }}</label>
+            {{ form_widget(form.guide) }}
+        </div>
+
+        {% if marker.markerGroup.guide %}
+            <div class="border border-secondary rounded-lg bg-white p-6 mt-2">
+                <h4 class="text-secondary text-lg font-bold mb-2">Guide du groupe</h4>
+                <a href="{{ marker.markerGroup.guide }}" target="_blank" class="underline">{{ marker.markerGroup.guide }}</a>
+            </div>
+        {% endif %}
+
+        <div class="form-control">
+            <label class="label">{{ form_label(form.video) }}</label>
+            {{ form_widget(form.video) }}
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+            <div class="form-control">
+                <label class="label">{{ form_label(form.x) }}</label>
+                {{ form_widget(form.x) }}
+            </div>
+            <div class="form-control">
+                <label class="label">{{ form_label(form.y) }}</label>
+                {{ form_widget(form.y) }}
+            </div>
+        </div>
+
+        {% set map = marker.markerGroup.section.map %}
+        <div id="genshin-map" class="cursor-crosshair"
+             data-tiles="{{ map.tiles }}"
+             data-zoom="{{ map.zoom }}"
+             data-min-zoom="{{ map.minZoom }}"
+             data-max-zoom="{{ map.maxZoom }}"
+             data-bounds="{{ map.bounds }}"
+             data-input-x="marker_x"
+             data-input-y="marker_y"
+             data-icon="{{ asset('build/images/marker-icon.png') }}"
+             data-marker-x="{{ marker.x }}"
+             data-marker-y="{{ marker.y }}"
+        ></div>
+
+        <div class="mt-4">
+            {{ form_row(form.submit) }}
+        </div>
+    {{ form_end(form) }}
+
+{% endblock %}

@@ -31,6 +31,7 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "leaflet": "^1.9.4",
         "marked": "^4.3.0"
     }
 }

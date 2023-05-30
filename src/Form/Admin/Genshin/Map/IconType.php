@@ -21,6 +21,7 @@ class IconType extends AbstractType
                 'label_attr' => ['class' => 'label-text'],
             ])
             ->add('imageFile', VichImageType::class, [
+                'required' => false,
                 'allow_delete' => false,
                 'download_uri' => false,
                 'image_uri' => true,

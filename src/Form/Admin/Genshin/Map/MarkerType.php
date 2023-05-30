@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class MarkerType extends AbstractType
 {
@@ -84,13 +85,21 @@ class MarkerType extends AbstractType
                     'class' => 'toggle toggle-primary'
                 ]
             ])
-//            ->add('markerGroup')
             ->add('icon', EntityType::class, [
                 'class' => Icon::class,
                 'choice_label' => 'name',
                 'label' => 'Icône',
                 'attr' => ['class' => 'select select-bordered'],
                 'label_attr' => ['class' => 'label-text'],
+            ])
+            ->add('imageFile', VichImageType::class, [
+                'required' => false,
+                'allow_delete' => false,
+                'download_uri' => false,
+                'image_uri' => true,
+                'label' => 'Image',
+                'label_attr' => ['class' => 'label-text'],
+                'attr' => ['class' => 'file-input file-input-bordered w-full'],
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Enregistrer',

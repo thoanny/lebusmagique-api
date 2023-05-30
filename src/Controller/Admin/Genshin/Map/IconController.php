@@ -7,7 +7,9 @@ use App\Form\Admin\Genshin\Map\IconType;
 use App\Repository\Genshin\Map\IconRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -58,5 +60,26 @@ class IconController extends AbstractController
             'icon' => $icon,
             'form' => $form->createView()
         ]);
+    }
+
+    #[Route('/admin/genshin/maps/icons/delete/{id}', name: 'app_admin_genshin_maps_icon_delete')]
+    #[IsGranted('ROLE_ADMIN')]
+    public function appAdminGenshinMapsIconDelete($id, IconRepository $iconRepository, EntityManagerInterface $em): RedirectResponse {
+        if(!$id) {
+            $this->addFlash('error', 'Icône introuvable...');
+            return $this->redirectToRoute('app_admin_genshin_maps_icons');
+        }
+
+        $icon = $iconRepository->findOneBy(['id' => $id]);
+        if(!$icon) {
+            $this->addFlash('error', 'Icône introuvable...');
+            return $this->redirectToRoute('app_admin_genshin_maps_icons');
+        }
+
+        $em->remove($icon);
+        $em->flush();
+
+        $this->addFlash('success', 'Icône supprimée');
+        return $this->redirectToRoute('app_admin_genshin_maps_icons');
     }
 }

@@ -7,7 +7,9 @@ use App\Form\Admin\Genshin\Map\SectionType;
 use App\Repository\Genshin\Map\SectionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -59,5 +61,26 @@ class SectionController extends AbstractController
             'section' => $section,
             'form' => $form->createView()
         ]);
+    }
+
+    #[Route('/admin/genshin/maps/sections/delete/{id}', name: 'app_admin_genshin_maps_section_delete')]
+    #[IsGranted('ROLE_ADMIN')]
+    public function appAdminGenshinMapsSectionDelete($id, SectionRepository $sectionRepository, EntityManagerInterface $em): RedirectResponse {
+        if(!$id) {
+            $this->addFlash('error', 'Section introuvable...');
+            return $this->redirectToRoute('app_admin_genshin_maps_sections');
+        }
+
+        $section = $sectionRepository->findOneBy(['id' => $id]);
+        if(!$section) {
+            $this->addFlash('error', 'Section introuvable...');
+            return $this->redirectToRoute('app_admin_genshin_maps_sections');
+        }
+
+        $em->remove($section);
+        $em->flush();
+
+        $this->addFlash('success', 'Section supprimée');
+        return $this->redirectToRoute('app_admin_genshin_maps_sections');
     }
 }

@@ -6,11 +6,13 @@ use App\Entity\Gw2\Fish\Map;
 use App\Form\Admin\Gw2\Fish\MapType;
 use App\Repository\Gw2\Fish\MapRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[IsGranted('ROLE_GW2')]
 class MapController extends AbstractController
 {
     #[Route('/admin/gw2/fish/maps', name: 'app_admin_gw2_fish_maps')]

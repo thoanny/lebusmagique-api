@@ -8,7 +8,9 @@ use App\Repository\Genshin\Map\GroupRepository;
 use App\Repository\Genshin\Map\MarkerRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -77,5 +79,26 @@ class MarkerController extends AbstractController
             'marker' => $marker,
             'form' => $form->createView()
         ]);
+    }
+
+    #[Route('/admin/genshin/maps/markers/delete/{id}', name: 'app_admin_genshin_maps_marker_delete')]
+    #[IsGranted('ROLE_ADMIN')]
+    public function appAdminGenshinMapsMarkerDelete($id, MarkerRepository $markerRepository, EntityManagerInterface $em): RedirectResponse {
+        if(!$id) {
+            $this->addFlash('error', 'Marqueur introuvable...');
+            return $this->redirectToRoute('app_admin_genshin_maps_markers');
+        }
+
+        $marker = $markerRepository->findOneBy(['id' => $id]);
+        if(!$marker) {
+            $this->addFlash('error', 'Marqueur introuvable...');
+            return $this->redirectToRoute('app_admin_genshin_maps_markers');
+        }
+
+        $em->remove($marker);
+        $em->flush();
+
+        $this->addFlash('success', 'Marqueur supprimé');
+        return $this->redirectToRoute('app_admin_genshin_maps_markers');
     }
 }

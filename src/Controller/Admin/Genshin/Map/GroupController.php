@@ -8,11 +8,14 @@ use App\Repository\Genshin\Map\GroupRepository;
 use App\Repository\Genshin\Map\SectionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[IsGranted('ROLE_GENSHIN')]
 class GroupController extends AbstractController
 {
     #[Route('/admin/genshin/maps/groups', name: 'app_admin_genshin_maps_groups')]
@@ -79,5 +82,26 @@ class GroupController extends AbstractController
             'group' => $group,
             'form' => $form->createView()
         ]);
+    }
+
+    #[Route('/admin/genshin/maps/groups/delete/{id}', name: 'app_admin_genshin_maps_group_delete')]
+    #[IsGranted('ROLE_ADMIN')]
+    public function appAdminGenshinMapsGroupDelete($id, GroupRepository $groupRepository, EntityManagerInterface $em): RedirectResponse {
+        if(!$id) {
+            $this->addFlash('error', 'Groupe introuvable...');
+            return $this->redirectToRoute('app_admin_genshin_maps_groups');
+        }
+
+        $group = $groupRepository->findOneBy(['id' => $id]);
+        if(!$group) {
+            $this->addFlash('error', 'Groupe introuvable...');
+            return $this->redirectToRoute('app_admin_genshin_maps_groups');
+        }
+
+        $em->remove($group);
+        $em->flush();
+
+        $this->addFlash('success', 'Groupe supprimé');
+        return $this->redirectToRoute('app_admin_genshin_maps_groups');
     }
 }

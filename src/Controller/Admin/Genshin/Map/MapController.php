@@ -6,7 +6,9 @@ use App\Entity\Genshin\Map\Map;
 use App\Form\Admin\Genshin\Map\MapType;
 use App\Repository\Genshin\Map\MapRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -53,5 +55,26 @@ class MapController extends AbstractController
             'map' => $map,
             'form' => $form->createView()
         ]);
+    }
+
+    #[Route('/admin/genshin/maps/maps/delete/{id}', name: 'app_admin_genshin_map_delete')]
+    #[IsGranted('ROLE_ADMIN')]
+    public function appAdminGenshinMapDelete($id, MapRepository $mapRepository, EntityManagerInterface $em): RedirectResponse {
+        if(!$id) {
+            $this->addFlash('error', 'Carte introuvable...');
+            return $this->redirectToRoute('app_admin_genshin_maps');
+        }
+
+        $map = $mapRepository->findOneBy(['id' => $id]);
+        if(!$map) {
+            $this->addFlash('error', 'Carte introuvable...');
+            return $this->redirectToRoute('app_admin_genshin_maps');
+        }
+
+        $em->remove($map);
+        $em->flush();
+
+        $this->addFlash('success', 'Carte supprimée');
+        return $this->redirectToRoute('app_admin_genshin_maps');
     }
 }

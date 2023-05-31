@@ -63,4 +63,13 @@ class IconRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    public function findByIds(array $iconsIds)
+    {
+        return $this->createQueryBuilder('i')
+            ->select('i.id', 'i.imageName AS icon', 'i.iconSize', 'i.iconAnchor', 'i.popupAnchor')
+            ->where('i.id IN (:iconsIds)')
+            ->setParameter('iconsIds', $iconsIds)
+            ->getQuery()
+            ->getResult();
+    }
 }

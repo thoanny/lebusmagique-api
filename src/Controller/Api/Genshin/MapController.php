@@ -1,0 +1,86 @@
+<?php
+
+namespace App\Controller\Api\Genshin;
+
+use App\Repository\Genshin\Map\GroupRepository;
+use App\Repository\Genshin\Map\IconRepository;
+use App\Repository\Genshin\Map\MapRepository;
+use App\Repository\Genshin\Map\MarkerRepository;
+use App\Repository\Genshin\Map\SectionRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use OpenApi\Attributes as OA;
+
+class MapController extends AbstractController
+{
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
+    /**
+     * Informations sur la carte interactive
+     *
+     * Expose les informations de la carte, de ses sections, groupes, marqueurs et icônes et les autres cartes disponibles.
+     */
+    #[Route('/api/genshin/map/{slug}', name: 'app_api_genshin_map', defaults: ['slug' => null], methods: ['GET'])]
+    #[OA\Tag(name: 'Genshin')]
+    public function index(MapRepository $mapRepository, SectionRepository $sectionRepository, GroupRepository $groupRepository, MarkerRepository $markerRepository, IconRepository $iconRepository, $slug): Response
+    {
+        $map = $mapRepository->findOneBySlug($slug);
+        $maps = $mapRepository->findOtherMaps($map['id']);
+
+        $sectionsIds = [];
+        $sections = $sectionRepository->findByMap($map['id']);
+        foreach($sections as $section) {
+            $sectionsIds[] = $section['id'];
+        }
+
+        $iconsIds = [];
+        $groupsIds = [];
+        $groups = $groupRepository->findBySections($sectionsIds);
+        foreach($groups as $group) {
+            $groupsIds[] = $group['id'];
+
+            if($group['iconId'] && !in_array($group['iconId'], $iconsIds)) {
+                $iconsIds[] = $group['iconId'];
+            }
+        }
+
+        $markers = $markerRepository->findByGroups($groupsIds);
+
+
+        foreach($markers as $marker) {
+            // TODO : ajouter LiipImagine et envoyer imageThumbnail et imageFull
+            if($marker['iconId'] && !in_array($marker['iconId'], $iconsIds)) {
+                $iconsIds[] = $marker['iconId'];
+            }
+        }
+
+        $icons = $iconRepository->findByIds($iconsIds);
+        foreach($icons as $k => $v) {
+            $icons[$k]['iconSize'] = explode(',', $v['iconSize']);
+            $icons[$k]['iconAnchor'] = explode(',', $v['iconAnchor']);
+            $icons[$k]['popupAnchor'] = explode(',', $v['popupAnchor']);
+        }
+
+        list($a, $b) = explode('|', $map['bounds']);
+        list($c, $d) = explode(',', $a);
+        list($e, $f) = explode(',', $b);
+
+        $map['bounds'] = [$c, $d, $e, $f];
+        $map['center'] = explode(',', $map['center']);
+
+        return new JsonResponse([
+            'map' => $map,
+            'sections' => $sections,
+            'groups' => $groups,
+            'markers' => $markers,
+            'icons' => $icons,
+            'maps' => $maps
+        ]);
+    }
+}

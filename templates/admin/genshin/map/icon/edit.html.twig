@@ -17,6 +17,21 @@
             {{ form_widget(form.name) }}
         </div>
 
+        <div class="grid grid-cols-3 gap-2">
+            <div class="form-control">
+                <label class="label">{{ form_label(form.iconSize) }}</label>
+                {{ form_widget(form.iconSize) }}
+            </div>
+            <div class="form-control">
+                <label class="label">{{ form_label(form.iconAnchor) }}</label>
+                {{ form_widget(form.iconAnchor) }}
+            </div>
+            <div class="form-control">
+                <label class="label">{{ form_label(form.popupAnchor) }}</label>
+                {{ form_widget(form.popupAnchor) }}
+            </div>
+        </div>
+
         <div class="form-control">
             <label class="label">{{ form_label(form.imageFile) }}</label>
             {{ form_widget(form.imageFile) }}

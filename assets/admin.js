@@ -8,9 +8,9 @@ if(document.getElementById('genshin-map')) {
     const {tiles ,zoom, minZoom, maxZoom, bounds, inputX, inputY, icon, markerX, markerY} = target.dataset;
     const mapIcon = L.icon({
         iconUrl: icon,
-        iconSize:     [25, 41],
-        iconAnchor:   [12, 41],
-        popupAnchor:  [12, 0]
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [12, 0]
     });
 
     let mapBounds = [];
@@ -62,6 +62,8 @@ if(document.getElementById('genshin-map')) {
         maxBoundsViscosity: 0.8,
         noWrap: true
     }).addTo(genshinMap);
+
+    console.log(mapBounds)
 
     if(mapBounds.length === 4) {
         genshinMap.setMaxBounds(new L.LatLngBounds(unproject([mapBounds[0], mapBounds[1]]), unproject([mapBounds[2], mapBounds[3]])));

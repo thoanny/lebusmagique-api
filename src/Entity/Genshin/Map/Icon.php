@@ -33,6 +33,15 @@ class Icon
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    #[ORM\Column(length: 25)]
+    private ?string $iconSize = null;
+
+    #[ORM\Column(length: 25)]
+    private ?string $iconAnchor = null;
+
+    #[ORM\Column(length: 25)]
+    private ?string $popupAnchor = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -93,5 +102,41 @@ class Icon
     public function getImageSize(): ?int
     {
         return $this->imageSize;
+    }
+
+    public function getIconSize(): ?string
+    {
+        return $this->iconSize;
+    }
+
+    public function setIconSize(string $iconSize): self
+    {
+        $this->iconSize = $iconSize;
+
+        return $this;
+    }
+
+    public function getIconAnchor(): ?string
+    {
+        return $this->iconAnchor;
+    }
+
+    public function setIconAnchor(string $iconAnchor): self
+    {
+        $this->iconAnchor = $iconAnchor;
+
+        return $this;
+    }
+
+    public function getPopupAnchor(): ?string
+    {
+        return $this->popupAnchor;
+    }
+
+    public function setPopupAnchor(string $popupAnchor): self
+    {
+        $this->popupAnchor = $popupAnchor;
+
+        return $this;
     }
 }

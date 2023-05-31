@@ -63,4 +63,18 @@ class SectionRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    public function findByMap(mixed $id)
+    {
+        return $this->createQueryBuilder('s')
+            ->select('s.id', 's.name')
+            ->where('s.map = :map')
+            ->andWhere('s.active = :active')
+            ->setParameters([
+                'map' => $id,
+                'active' => true,
+            ])
+            ->orderBy('s.position', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }

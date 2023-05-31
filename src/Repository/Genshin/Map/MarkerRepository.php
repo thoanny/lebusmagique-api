@@ -63,4 +63,17 @@ class MarkerRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    public function findByGroups(array $groupsIds)
+    {
+        return $this->createQueryBuilder('m')
+            ->select('m.id', 'g.slug AS groupSlug', 'i.id AS iconId', 'm.slug', 'm.title', 'm.text', 'm.format', 'm.imageName AS image', 'm.video', 'm.guide', 'm.x', 'm.y')
+            ->leftJoin('m.markerGroup', 'g')
+            ->leftJoin('m.icon', 'i')
+            ->where('m.markerGroup IN (:groupsIds)')
+            ->setParameters([
+                'groupsIds' => $groupsIds,
+            ])
+            ->getQuery()
+            ->getResult();
+    }
 }

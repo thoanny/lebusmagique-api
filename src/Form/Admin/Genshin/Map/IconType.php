@@ -29,6 +29,21 @@ class IconType extends AbstractType
                 'label_attr' => ['class' => 'label-text'],
                 'attr' => ['class' => 'file-input file-input-bordered w-full'],
             ])
+            ->add('iconSize', TextType::class, [
+                'label' => 'Taille de l\'icône',
+                'attr' => ['class' => 'input input-bordered'],
+                'label_attr' => ['class' => 'label-text'],
+            ])
+            ->add('iconAnchor', TextType::class, [
+                'label' => 'Position de l\'ancre',
+                'attr' => ['class' => 'input input-bordered'],
+                'label_attr' => ['class' => 'label-text'],
+            ])
+            ->add('popupAnchor', TextType::class, [
+                'label' => 'Position de la pop-up',
+                'attr' => ['class' => 'input input-bordered'],
+                'label_attr' => ['class' => 'label-text'],
+            ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Enregistrer',
                 'attr' => [

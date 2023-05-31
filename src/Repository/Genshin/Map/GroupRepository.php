@@ -63,4 +63,21 @@ class GroupRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    public function findBySections(array $sectionsIds)
+    {
+        return $this->createQueryBuilder('g')
+            ->select('g.id', 's.id AS sectionId', 'g.title', 'g.slug', 'i.imageName AS iconUrl', 'i.id AS iconId', 'g.text', 'g.format', 'g.guide', 'g.checkbox', 'g.x', 'g.y', 'g.z')
+            ->leftJoin('g.icon', 'i')
+            ->leftJoin('g.section', 's')
+            ->where('g.section IN (:sectionsIds)')
+            ->andWhere('g.active = :active')
+            ->orderBy('s.position', 'ASC')
+            ->addOrderBy('g.position', 'ASC')
+            ->setParameters([
+                'sectionsIds' => $sectionsIds,
+                'active' => true
+            ])
+            ->getQuery()
+            ->getResult();
+    }
 }

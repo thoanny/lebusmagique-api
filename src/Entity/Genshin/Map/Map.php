@@ -19,9 +19,6 @@ class Map
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 55, unique: true)]
-    private ?string $slug = null;
-
     #[ORM\Column]
     private ?bool $active = null;
 
@@ -71,18 +68,6 @@ class Map
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
-
-    public function setSlug(string $slug): self
-    {
-        $this->slug = $slug;
 
         return $this;
     }

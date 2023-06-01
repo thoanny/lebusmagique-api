@@ -29,7 +29,6 @@
             <th>Section</th>
             <th>Groupe</th>
             <th>Marqueur</th>
-            <th>Slug</th>
             <th class="text-center">Active</th>
             <th width="1">&nbsp;</th>
         </tr>
@@ -45,16 +44,14 @@
                     <div class="flex items-center space-x-4">
                         <div class="avatar">
                             <div class="rounded bg-primary w-12 h-12">
-                                <img src="{{ vich_uploader_asset(marker.icon) }}" class="p-2" />
+
+                                <img src="{{ (marker.icon) ? vich_uploader_asset(marker.icon) : vich_uploader_asset(marker.markerGroup.icon) }}" class="p-2" />
                             </div>
                         </div>
                         <div>
                             <div class="font-bold my-1">{{ marker.title }}</div>
                         </div>
                     </div>
-                </td>
-                <td>
-                    {{ marker.slug }}
                 </td>
                 <td class="text-center">
                     {% if marker.active %}

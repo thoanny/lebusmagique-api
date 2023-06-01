@@ -18,9 +18,6 @@ class Marker
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255, unique: true)]
-    private ?string $slug = null;
-
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
@@ -67,18 +64,6 @@ class Marker
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
-
-    public function setSlug(string $slug): self
-    {
-        $this->slug = $slug;
-
-        return $this;
     }
 
     public function getTitle(): ?string

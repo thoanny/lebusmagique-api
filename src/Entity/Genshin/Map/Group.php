@@ -20,9 +20,6 @@ class Group
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\Column(length: 255, unique: true)]
-    private ?string $slug = null;
-
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $text = null;
 
@@ -79,18 +76,6 @@ class Group
     public function setTitle(string $title): self
     {
         $this->title = $title;
-
-        return $this;
-    }
-
-    public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
-
-    public function setSlug(string $slug): self
-    {
-        $this->slug = $slug;
 
         return $this;
     }

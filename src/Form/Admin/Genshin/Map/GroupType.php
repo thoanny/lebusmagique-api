@@ -26,11 +26,6 @@ class GroupType extends AbstractType
                 'attr' => ['class' => 'input input-bordered'],
                 'label_attr' => ['class' => 'label-text'],
             ])
-            ->add('slug', TextType::class, [
-                'label' => 'Slug',
-                'attr' => ['class' => 'input input-bordered'],
-                'label_attr' => ['class' => 'label-text'],
-            ])
             ->add('text', TextareaType::class, [
                 'required' => false,
                 'label' => 'Texte',

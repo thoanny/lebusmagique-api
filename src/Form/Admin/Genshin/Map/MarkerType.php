@@ -22,11 +22,6 @@ class MarkerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('slug', TextType::class, [
-                'label' => 'Slug',
-                'attr' => ['class' => 'input input-bordered'],
-                'label_attr' => ['class' => 'label-text'],
-            ])
             ->add('title', TextType::class, [
                 'label' => 'Intitulé',
                 'attr' => ['class' => 'input input-bordered'],
@@ -86,6 +81,7 @@ class MarkerType extends AbstractType
                 ]
             ])
             ->add('icon', EntityType::class, [
+                'required' => false,
                 'class' => Icon::class,
                 'choice_label' => 'name',
                 'label' => 'Icône',

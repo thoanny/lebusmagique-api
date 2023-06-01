@@ -20,8 +20,8 @@
         </div>
         <div class="grid grid-cols-3 gap-2">
             <div class="form-control">
-                <label class="label">{{ form_label(form.slug) }}</label>
-                {{ form_widget(form.slug, {attr: {value: (group.slug)?group.slug:group.section.map.slug~'-'}}) }}
+                <label class="label">{{ form_label(form.icon) }}</label>
+                {{ form_widget(form.icon) }}
             </div>
             <div class="form-control">
                 <label class="label">{{ form_label(form.title) }}</label>
@@ -31,10 +31,6 @@
                 <label class="label">{{ form_label(form.position) }}</label>
                 {{ form_widget(form.position) }}
             </div>
-        </div>
-        <div class="form-control">
-            <label class="label">{{ form_label(form.icon) }}</label>
-            {{ form_widget(form.icon) }}
         </div>
         <div class="form-control">
             <label class="label">{{ form_label(form.format) }}</label>

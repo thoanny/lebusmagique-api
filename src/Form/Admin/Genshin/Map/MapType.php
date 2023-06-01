@@ -23,11 +23,6 @@ class MapType extends AbstractType
                 'attr' => ['class' => 'input input-bordered'],
                 'label_attr' => ['class' => 'label-text'],
             ])
-            ->add('slug', TextType::class, [
-                'label' => 'Slug',
-                'attr' => ['class' => 'input input-bordered'],
-                'label_attr' => ['class' => 'label-text'],
-            ])
             ->add('active', CheckboxType::class, [
                 'required' => false,
                 'label' => 'Active',

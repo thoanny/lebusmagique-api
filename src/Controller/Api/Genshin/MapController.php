@@ -31,7 +31,7 @@ class MapController extends AbstractController
     public function index(MapRepository $mapRepository, SectionRepository $sectionRepository, GroupRepository $groupRepository, MarkerRepository $markerRepository, IconRepository $iconRepository, $slug): Response
     {
         $map = $mapRepository->findOneBySlug($slug);
-        $maps = $mapRepository->findOtherMaps($map['id']);
+        $maps = $mapRepository->findActiveMaps();
 
         $sectionsIds = [];
         $sections = $sectionRepository->findByMap($map['id']);

@@ -98,15 +98,13 @@ class MapRepository extends ServiceEntityRepository
 
     }
 
-    public function findOtherMaps($excluded) {
+    public function findActiveMaps() {
         return $this->createQueryBuilder('m')
             ->select('m.name', 'm.slug', 'i.imageName AS iconUrl')
             ->leftJoin('m.icon', 'i')
             ->orderBy('m.position', 'ASC')
-            ->where('m.id != :excluded')
             ->andWhere('m.active = :active')
             ->setParameters([
-                'excluded' => $excluded,
                 'active' => true
             ])
             ->getQuery()

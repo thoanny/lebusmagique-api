@@ -66,7 +66,7 @@ class GroupRepository extends ServiceEntityRepository
     public function findBySections(array $sectionsIds)
     {
         return $this->createQueryBuilder('g')
-            ->select('g.id', 's.id AS sectionId', 'g.title', 'g.slug', 'i.imageName AS iconUrl', 'i.id AS iconId', 'g.text', 'g.format', 'g.guide', 'g.checkbox', 'g.x', 'g.y', 'g.z')
+            ->select('g.id', 's.id AS sectionId', 'g.title', 'i.imageName AS iconUrl', 'i.id AS iconId', 'g.text', 'g.format', 'g.guide', 'g.checkbox', 'g.x', 'g.y', 'g.z')
             ->leftJoin('g.icon', 'i')
             ->leftJoin('g.section', 's')
             ->where('g.section IN (:sectionsIds)')

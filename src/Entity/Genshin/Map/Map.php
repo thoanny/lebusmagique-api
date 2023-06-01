@@ -6,6 +6,7 @@ use App\Repository\Genshin\Map\MapRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: MapRepository::class)]
 #[ORM\Table(name: 'genshin_map')]
@@ -49,6 +50,10 @@ class Map
 
     #[ORM\Column]
     private ?int $position = null;
+
+    #[ORM\Column(length: 128, unique: true)]
+    #[Gedmo\Slug(fields: ['name'])]
+    private $slug;
 
     public function __construct()
     {
@@ -208,5 +213,10 @@ class Map
         $this->position = $position;
 
         return $this;
+    }
+
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }

@@ -69,10 +69,29 @@
                 {{ form_widget(form.y) }}
             </div>
             <div class="form-control">
-                <label class="label">{{ form_label(form.z) }}</label>
+                <label class="label">
+                    {{ form_label(form.z) }}
+                    <label class="label-text text-secondary">Entre <strong>{{ group.section.map.minZoom }}</strong> et <strong>{{ group.section.map.maxZoom }}</strong></label>
+                </label>
                 {{ form_widget(form.z) }}
+
             </div>
         </div>
+
+        {% set map = group.section.map %}
+        <div id="genshin-map" class="cursor-crosshair"
+             data-tiles="{{ map.tiles }}"
+             data-zoom="{{ map.zoom }}"
+             data-min-zoom="{{ map.minZoom }}"
+             data-max-zoom="{{ map.maxZoom }}"
+             data-bounds="{{ map.bounds }}"
+             data-input-x="group_x"
+             data-input-y="group_y"
+             data-icon="{{ asset('build/images/marker-icon.png') }}"
+             data-marker-x="{{ group.x }}"
+             data-marker-y="{{ group.y }}"
+        ></div>
+
         <div class="mt-4">
             {{ form_row(form.submit) }}
         </div>

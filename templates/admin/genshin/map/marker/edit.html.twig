@@ -20,52 +20,50 @@
             </label>
         </div>
 
-        <div class="grid grid-cols-2 gap-2">
+        <div class="grid grid-cols-3 gap-2">
             <div class="form-control">
-                <label class="label">{{ form_label(form.icon) }}</label>
+                <label class="label">
+                    {{ form_label(form.icon) }}
+                    {% if marker.markerGroup.icon %}
+                        <label class="label-text text-secondary">Groupe&nbsp;: <strong>{{ marker.markerGroup.icon.name }}</strong></label>
+                    {% endif %}
+                </label>
                 {{ form_widget(form.icon) }}
             </div>
             <div class="form-control">
                 <label class="label">{{ form_label(form.title) }}</label>
                 {{ form_widget(form.title) }}
             </div>
-        </div>
-
-        <div class="form-control">
-            <label class="label">{{ form_label(form.format) }}</label>
-            {{ form_widget(form.format) }}
-        </div>
-
-        {% if marker.markerGroup.format %}
-            <div class="border border-secondary rounded-lg bg-white p-6 mt-2">
-                <h4 class="text-secondary text-lg font-bold mb-2">Format du groupe</h4>
-                {{ marker.markerGroup.format }}
+            <div class="form-control">
+                <label class="label">
+                    {{ form_label(form.format) }}
+                    {% if marker.markerGroup.format %}
+                        <label class="label-text text-secondary">Groupe&nbsp;: <strong>{{ marker.markerGroup.format }}</strong></label>
+                    {% endif %}
+                </label>
+                {{ form_widget(form.format) }}
             </div>
-        {% endif %}
+        </div>
 
         <div class="form-control">
             <label class="label">{{ form_label(form.text) }}</label>
             {{ form_widget(form.text) }}
+            {% if marker.markerGroup.text %}
+                <label class="label">
+                    <label class="label-text text-secondary"><strong>{{ marker.markerGroup.text }}</strong></label>
+                </label>
+            {% endif %}
         </div>
-
-        {% if marker.markerGroup.text %}
-            <div class="border border-secondary rounded-lg bg-white p-6 mt-2">
-                <h4 class="text-secondary text-lg font-bold mb-2">Texte du groupe</h4>
-                {{ marker.markerGroup.text }}
-            </div>
-        {% endif %}
 
         <div class="form-control">
-            <label class="label">{{ form_label(form.guide) }}</label>
+            <label class="label">
+                {{ form_label(form.guide) }}
+                {% if marker.markerGroup.guide %}
+                    <label class="label-text text-secondary">Groupe&nbsp;: <strong><a href="{{ marker.markerGroup.guide }}" target="_blank" class="underline">Guide</a></strong></label>
+                {% endif %}
+            </label>
             {{ form_widget(form.guide) }}
         </div>
-
-        {% if marker.markerGroup.guide %}
-            <div class="border border-secondary rounded-lg bg-white p-6 mt-2">
-                <h4 class="text-secondary text-lg font-bold mb-2">Guide du groupe</h4>
-                <a href="{{ marker.markerGroup.guide }}" target="_blank" class="underline">{{ marker.markerGroup.guide }}</a>
-            </div>
-        {% endif %}
 
         <div class="form-control">
             <label class="label">{{ form_label(form.video) }}</label>

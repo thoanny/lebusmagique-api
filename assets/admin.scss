@@ -179,3 +179,9 @@ h2 {
     @apply mt-4;
     min-height: 80vh;
 }
+
+.checkboxes {
+    input[type="checkbox"] {
+        @apply checkbox;
+    }
+}

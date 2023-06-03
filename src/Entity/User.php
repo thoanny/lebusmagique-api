@@ -120,11 +120,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function toArray() {
         return [
-            'email' => $this->email,
             'nickname' => $this->nickname,
-            'created_at' => $this->createdAt->format('c'),
-            'last_login_at' => $this->lastLoginAt->format('c'),
-            'roles' => $this->roles,
+            'avatar' => $this->getAvatar()
         ];
     }
 
@@ -167,5 +164,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->nickname = $nickname;
 
         return $this;
+    }
+
+    public function getAvatar(): string
+    {
+        // TODO : ajouter un choix d'avatar parmis une liste (GW2 + Genshin)
+        return $this->getGravatar();
+    }
+
+    public function getGravatar(): string
+    {
+        return 'https://www.gravatar.com/avatar/'.md5($this->email).'?d=retro';
     }
 }

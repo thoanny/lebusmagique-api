@@ -62,9 +62,12 @@ class MapController extends AbstractController
 
         $icons = $iconRepository->findByIds($iconsIds);
         foreach($icons as $k => $v) {
-            $icons[$k]['iconSize'] = explode(',', $v['iconSize']);
-            $icons[$k]['iconAnchor'] = explode(',', $v['iconAnchor']);
-            $icons[$k]['popupAnchor'] = explode(',', $v['popupAnchor']);
+            $size = explode(',', $v['iconSize']);
+            $anchor = explode(',', $v['iconAnchor']);
+            $popup = explode(',', $v['popupAnchor']);
+            $icons[$k]['iconSize'] = [(int) $size[0], (int) $size[1]];
+            $icons[$k]['iconAnchor'] = [(int) $anchor[0], (int) $anchor[1]];
+            $icons[$k]['popupAnchor'] = [(int) $popup[0], (int) $popup[1]];
         }
 
         list($a, $b) = explode('|', $map['bounds']);

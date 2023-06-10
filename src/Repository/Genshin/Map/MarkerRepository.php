@@ -70,8 +70,10 @@ class MarkerRepository extends ServiceEntityRepository
             ->leftJoin('m.markerGroup', 'g')
             ->leftJoin('m.icon', 'i')
             ->where('m.markerGroup IN (:groupsIds)')
+            ->andWhere('m.active = :active')
             ->setParameters([
                 'groupsIds' => $groupsIds,
+                'active' => true,
             ])
             ->getQuery()
             ->getResult();

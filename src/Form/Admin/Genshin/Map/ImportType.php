@@ -37,7 +37,10 @@ class ImportType extends AbstractType
                 'attr' => ['class' => 'select select-bordered'],
                 'label_attr' => ['class' => 'label-text'],
                 'choices' => [
-                    'Mines du Gouffre' => 'chasm'
+                    'Mines du Gouffre' => 'chasm',
+                    'Enkanomiya' => 'enkanomiya',
+                    'Teyvat' => '',
+                    'Trois royaumes' => 'troisroyaumes'
                 ]
             ])
             ->add('data', TextareaType::class, [

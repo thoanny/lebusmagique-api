@@ -67,6 +67,16 @@ class ImportController extends AbstractController
                     }
                 }
 
+                if($format === 'gif') {
+                    $image = @file_get_contents('https://gaming.lebusmagique.fr/genshin-impact-carte-interactive/assets/img/medias/'.$form->get('map')->getData().$data->id.$m->id.'.gif');
+                    if($image) {
+                        $filename = uniqid().'.gif';
+                        file_put_contents('uploads/api/genshin/maps/medias/'.$filename, $image);
+                        $marker->setImageName($filename);
+                        $marker->setImageSize(strlen($image));
+                    }
+                }
+
                 $em->persist($marker);
             }
 

@@ -26,9 +26,10 @@ class ImportController extends AbstractController
             $data = json_decode($data);
 
             $group = $groupRepository->findOneBy(['id' => $form->get('group')->getData()]);
-            $format = $data->format;
 
             foreach($data->markers as $m) {
+
+                $format = $data->format;
 
                 if(isset($m->format)) {
                     $format = $m->format;

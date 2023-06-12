@@ -112,7 +112,7 @@ class MapController extends AbstractController
     /**
      * Marqueurs enregistrés de l'utilisateur
      */
-    #[Route('/api/user/genshin/map/makers/reset', name: 'app_api_user_genshin_map_markers_reset', methods: ['POST'])]
+    #[Route('/api/user/genshin/map/markers/reset', name: 'app_api_user_genshin_map_markers_reset', methods: ['POST'])]
     #[OA\Tag(name: 'Genshin')]
     public function appApiUserGenshinMapMarkersReset(MapRepository $mapRepository, UserMarkerRepository $userMarkerRepository, Api $api, Request $request, EntityManagerInterface $em): JsonResponse
     {

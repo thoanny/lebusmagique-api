@@ -25,10 +25,9 @@
         <thead>
         <tr>
             <th width="1" class="text-center">#</th>
-            <th>Carte</th>
-            <th>Section</th>
             <th>Groupe</th>
-            <th>Position</th>
+            <th class="text-center">Format</th>
+            <th class="text-center">Position</th>
             <th class="text-center">Active</th>
             <th width="1">&nbsp;</th>
         </tr>
@@ -37,9 +36,7 @@
         {% for group in groups %}
             <tr>
                 <td class="text-center">{{ group.id }}</td>
-                <td>{{ group.section.map.name }}</td>
-                <td>{{ group.section.name }}</td>
-                <td class="font-bold">
+                <td>
                     <div class="flex items-center space-x-4">
                         <div class="avatar">
                             <div class="rounded bg-primary w-12 h-12">
@@ -47,11 +44,16 @@
                             </div>
                         </div>
                         <div>
-                            <div class="font-bold my-1">{{ group.title }}</div>
+                            <div class="font-bold">{{ group.title }}</div>
+                            <span class="badge badge-sm badge-primary">{{ group.section.map.name }}</span>
+                            <span class="badge badge-sm badge-secondary">{{ group.section.name }}</span>
                         </div>
                     </div>
                 </td>
-                <td>{{ group.position }}</td>
+                <td class="text-center">
+                    <span class="btn btn-xs btn-outline">{{ group.format }}</span>
+                </td>
+                <td class="text-center">{{ group.position }}</td>
                 <td class="text-center">
                     {% if group.active %}
                         <span class="badge badge-success">Active</span>
@@ -78,7 +80,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="7" class="text-center">Aucun groupe</td>
+                <td colspan="5" class="text-center">Aucun groupe</td>
             </tr>
         {% endfor %}
         </tbody>

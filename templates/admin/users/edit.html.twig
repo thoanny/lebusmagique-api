@@ -1,0 +1,45 @@
+{% extends 'admin.html.twig' %}
+
+{% block body %}
+    <div class="text-sm breadcrumbs">
+        <ul>
+            <li>Le Bus Magique</li>
+            <li><a href="{{ path('app_admin_users') }}">Utilisateurs</a></li>
+        </ul>
+    </div>
+
+    <h1>Éditer un utilisateur</h1>
+
+    {{ form_start(form) }}
+        <div class="form-control">
+            <label class="label">{{ form_label(form.nickname) }}</label>
+            {{ form_widget(form.nickname) }}
+        </div>
+        <div class="form-control">
+            <label class="label">{{ form_label(form.email) }}</label>
+            {{ form_widget(form.email) }}
+        </div>
+        <div class="form-control">
+            <label class="label">
+                <label class="label-text">Roles</label>
+            </label>
+            {% for role in form.roles %}
+                <label class="label cursor-pointer justify-start gap-2">
+                    {{ form_widget(role, {attr: {class: 'checkbox'}}) }}
+                    {{ form_label(role) }}
+                </label>
+            {% endfor %}
+        </div>
+        <div class="alert shadow-lg bg-white mt-2">
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-info flex-shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <span>Les <strong>administrateurs</strong> ont tous les droits. Les <strong>managers</strong> peuvent se connecter à l'administration, mais doivent cumuler un rôle <strong>"Guild Wars 2"</strong> et/ou <strong>"Genshin Impact"</strong> pour lire, ajouter et modifier des informations. Les personnes sans aucun rôle sont de simples utilisateurs.</span>
+            </div>
+        </div>
+        <div class="mt-4">
+            {{ form_row(form.submit) }}
+        </div>
+    {{ form_end(form) }}
+
+{% endblock %}
+

@@ -1,0 +1,46 @@
+{% extends 'admin.html.twig' %}
+
+{% block body %}
+    <div class="text-sm breadcrumbs">
+        <ul>
+            <li>Genshin Impact</li>
+            <li>Carte interactive</li>
+            <li><a href="{{ path('app_admin_genshin_maps_icons') }}">Icônes</a></li>
+        </ul>
+    </div>
+
+    <h1>Éditer une icône</h1>
+
+    {{ form_start(form) }}
+        <div class="form-control">
+            <label class="label">{{ form_label(form.name) }}</label>
+            {{ form_widget(form.name) }}
+        </div>
+
+        <div class="grid grid-cols-3 gap-2">
+            <div class="form-control">
+                <label class="label">{{ form_label(form.iconSize) }}</label>
+                {{ form_widget(form.iconSize) }}
+            </div>
+            <div class="form-control">
+                <label class="label">{{ form_label(form.iconAnchor) }}</label>
+                {{ form_widget(form.iconAnchor) }}
+            </div>
+            <div class="form-control">
+                <label class="label">{{ form_label(form.popupAnchor) }}</label>
+                {{ form_widget(form.popupAnchor) }}
+            </div>
+        </div>
+
+        <div class="form-control">
+            <label class="label">{{ form_label(form.imageFile) }}</label>
+            {{ form_widget(form.imageFile) }}
+        </div>
+
+        <div class="mt-4">
+            {{ form_row(form.submit) }}
+        </div>
+    {{ form_end(form) }}
+
+{% endblock %}
+

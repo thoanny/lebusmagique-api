@@ -1,0 +1,101 @@
+{% extends 'admin.html.twig' %}
+
+{% block body %}
+    <div class="text-sm breadcrumbs">
+        <ul>
+            <li>Genshin Impact</li>
+            <li>Carte interactive</li>
+            <li><a href="{{ path('app_admin_genshin_maps_groups') }}">Groupes</a></li>
+        </ul>
+    </div>
+
+    <h1>Éditer un groupe</h1>
+
+    {{ form_start(form) }}
+        <div class="form-control">
+            <label class="cursor-pointer label justify-start gap-2">
+                {{ form_widget(form.active) }}
+                {{ form_label(form.active) }}
+            </label>
+        </div>
+        <div class="grid grid-cols-3 gap-2">
+            <div class="form-control">
+                <label class="label">{{ form_label(form.icon) }}</label>
+                {{ form_widget(form.icon) }}
+            </div>
+            <div class="form-control">
+                <label class="label">{{ form_label(form.title) }}</label>
+                {{ form_widget(form.title) }}
+            </div>
+            <div class="form-control">
+                <label class="label">{{ form_label(form.position) }}</label>
+                {{ form_widget(form.position) }}
+            </div>
+        </div>
+        <div class="form-control">
+            <label class="label">{{ form_label(form.format) }}</label>
+            {{ form_widget(form.format) }}
+            <label class="label">
+                <span class="label-text-alt">Utilisé par défaut pour les marqueurs de ce groupe.</span>
+            </label>
+        </div>
+        <div class="form-control">
+            <label class="label">{{ form_label(form.text) }}</label>
+            {{ form_widget(form.text) }}
+            <label class="label">
+                <span class="label-text-alt">Utilisé par défaut pour les marqueurs de ce groupe.</span>
+            </label>
+        </div>
+        <div class="form-control">
+            <label class="label">{{ form_label(form.guide) }}</label>
+            {{ form_widget(form.guide) }}
+            <label class="label">
+                <span class="label-text-alt">Utilisé par défaut pour les marqueurs de ce groupe.</span>
+            </label>
+        </div>
+        <div class="form-control">
+            <label class="cursor-pointer label justify-start gap-2">
+                {{ form_widget(form.checkbox) }}
+                {{ form_label(form.checkbox) }}
+            </label>
+        </div>
+        <div class="grid grid-cols-3 gap-2">
+            <div class="form-control">
+                <label class="label">{{ form_label(form.x) }}</label>
+                {{ form_widget(form.x) }}
+            </div>
+            <div class="form-control">
+                <label class="label">{{ form_label(form.y) }}</label>
+                {{ form_widget(form.y) }}
+            </div>
+            <div class="form-control">
+                <label class="label">
+                    {{ form_label(form.z) }}
+                    <label class="label-text text-secondary">Entre <strong>{{ group.section.map.minZoom }}</strong> et <strong>{{ group.section.map.maxZoom }}</strong></label>
+                </label>
+                {{ form_widget(form.z) }}
+
+            </div>
+        </div>
+
+        {% set map = group.section.map %}
+        <div id="genshin-map" class="cursor-crosshair"
+             data-tiles="{{ map.tiles }}"
+             data-zoom="{{ map.zoom }}"
+             data-min-zoom="{{ map.minZoom }}"
+             data-max-zoom="{{ map.maxZoom }}"
+             data-bounds="{{ map.bounds }}"
+             data-input-x="group_x"
+             data-input-y="group_y"
+             data-icon="{{ asset('build/images/marker-icon.png') }}"
+             data-marker-x="{{ group.x }}"
+             data-marker-y="{{ group.y }}"
+        ></div>
+
+        <div class="mt-4">
+            {{ form_row(form.submit) }}
+        </div>
+    {{ form_end(form) }}
+
+{% endblock %}
+

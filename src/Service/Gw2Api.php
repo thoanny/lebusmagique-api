@@ -43,14 +43,37 @@ class Gw2Api
         try {
             $client = HttpClient::create();
             $response = $client->request('GET', $this->parameterBag->get('gw2.api.url') . $endpoint, ['query' => $query]);
+            if($response->getStatusCode() !== 200) {
+                return false;
+            }
             return $response->toArray();
         } catch (\Exception $e) {
             return $e;
         }
     }
 
+    public function getItems($ids = null)
+    {
+        if($ids) {
+            return $this->get('/items', null, ['ids' => $ids]);
+        }
+        return $this->get('/items');
+    }
+
     public function getItem($uid)
     {
         return $this->get('/items/:uid', ['uid' => $uid]);
+    }
+
+    public function getPrice($uid) {
+        return $this->get('/commerce/prices/:id', ['id' => $uid]);
+    }
+
+    public function getRecipesByOutput( $uid ) {
+        return $this->get('/recipes/search', [], ['output' => $uid]);
+    }
+
+    public function getRecipe($uid) {
+        return $this->get('/recipes/:uid', ['uid' => $uid]);
     }
 }

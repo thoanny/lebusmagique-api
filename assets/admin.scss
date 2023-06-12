@@ -1,0 +1,187 @@
+@import 'style.css';
+
+html, body {
+    @apply p-0 m-0 min-h-screen;
+}
+
+body {
+    @apply bg-gray-100  py-6 px-4;
+}
+
+table {
+    thead {
+        @apply bg-primary;
+
+        tr {
+            th {
+                @apply text-white;
+                background : var(--p) !important;
+            }
+        }
+    }
+}
+
+
+/** Menu **/
+
+.menu {
+    .menu-title {
+        @apply uppercase;
+    }
+
+    .router-link-active  {
+        @apply text-primary font-semibold;
+    }
+
+    .router-link-active:active {
+        @apply text-white;
+    }
+}
+
+.stats {
+    @apply w-full rounded-lg;
+
+    .stat {
+        @apply py-8;
+    }
+}
+
+.rarity {
+    &--Legendary {
+        .ring {
+            --tw-ring-color: #4C139D;
+        }
+    }
+
+    &--Ascended {
+        .ring {
+            --tw-ring-color: #fb3e8d;
+        }
+    }
+
+    &--Exotic {
+        .ring {
+            --tw-ring-color: #ffa405;
+        }
+    }
+
+    &--Rare {
+        .ring {
+            --tw-ring-color: #fcd00b;
+        }
+    }
+
+    &--Masterwork {
+        .ring {
+            --tw-ring-color: #1a9306;
+        }
+    }
+
+    &--Fine {
+        .ring {
+            --tw-ring-color: #62A4DA;
+        }
+    }
+
+    &--Basic {
+        .ring {
+            --tw-ring-color: #000000;
+        }
+    }
+
+    &--Junk {
+        .ring {
+            --tw-ring-color: #AAAAAA;
+        }
+    }
+}
+
+h1 {
+    @apply text-3xl font-semibold mb-4 text-primary flex justify-between items-center gap-2;
+}
+
+h2 {
+    @apply text-2xl font-semibold mb-4 text-secondary;
+}
+
+.form-control {
+    .label {
+        .help-text {
+            @apply label-text-alt;
+        }
+
+        .label-text {
+            @apply font-semibold;
+
+            &.required {
+                &:after {
+                    @apply font-bold text-error;
+                    content: '*';
+                }
+            }
+        }
+    }
+}
+
+.pagination {
+    @apply flex justify-center gap-2 mt-4;
+
+    .page > a,
+    .next > a,
+    .last > a,
+    .first > a,
+    .previous > a {
+        @apply btn btn-sm;
+    }
+
+    .current {
+        @apply btn btn-sm btn-primary;
+    }
+}
+
+.form-control {
+    &.checkboxes {
+        @apply flex gap-4 text-sm;
+
+        >div>label {
+            @apply text-sm font-semibold px-1;
+        }
+
+        >div>div {
+            @apply flex items-center mt-2;
+
+            label {
+                @apply mr-4 pl-2;
+
+                &:last-of-type {
+                    @apply mr-0;
+                }
+            }
+        }
+
+        input {
+            @apply checkbox checkbox-sm checkbox-primary;
+        }
+    }
+}
+
+.vich-image {
+    > a:first-of-type {
+        @apply inline-block mt-4;
+
+        img {
+            @apply bg-primary rounded;
+        }
+    }
+}
+
+#genshin-map {
+    @apply mt-4;
+    min-height: 80vh;
+}
+
+.checkboxes {
+    input[type="checkbox"] {
+        @apply checkbox;
+    }
+}

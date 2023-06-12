@@ -39,28 +39,74 @@ class ItemRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Item[] Returns an array of Item objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('i')
-//            ->andWhere('i.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('i.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function adminItems($filters) {
+        $q = $this->createQueryBuilder('i')
+            ->select('i.id', 'i.uid', 'i.name', 'i.rarity', 'i.type', 'i.subtype', 'i.blackmarket', 'i.isFish', 'i.isFishBait')
+            ->orderBy('i.uid', 'DESC');
 
-//    public function findOneBySomeField($value): ?Item
-//    {
-//        return $this->createQueryBuilder('i')
-//            ->andWhere('i.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        if($filters['is']) {
+            if($filters['is'] === 'fish') {
+                $q->addSelect('i.fishPower', 'i.fishTime', 'i.fishSpecialization', 'i.isFishStrangeDietAchievement');
+                $q->addSelect('b.name AS baitName');
+                $q->addSelect('h.name AS holeName');
+                $q->addSelect('a.name AS achievementName');
+                $q->leftJoin('i.fishBaitItem', 'b');
+                $q->leftJoin('i.fishHole', 'h');
+                $q->leftJoin('i.fishAchievement', 'a');
+                $q->where('i.isFish = :true')
+                    ->setParameter('true', true);
+            } else if($filters['is'] === 'fish-bait') {
+                $q->addSelect('i.fishBaitPower');
+                $q->where('i.isFishBait = :true')
+                    ->setParameter('true', true);
+            } else if($filters['is'] === 'blackmarket') {
+                $q->where('i.blackmarket = :true')
+                    ->setParameter('true', true);
+            }
+        }
+
+        if($filters['type']) {
+            $q->andWhere('i.type = :type')
+                ->setParameter('type', $filters['type']);
+        }
+
+        if($filters['subtype']) {
+            $q->andWhere('i.subtype = :subtype')
+                ->setParameter('subtype', $filters['subtype']);
+        }
+
+        return $q->getQuery();
+    }
+
+    public function findFishes()
+    {
+        return $this->createQueryBuilder('i')
+            ->where('i.isFish = :true')
+            ->setParameter('true', true)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function adminItemsTypes(): array
+    {
+        return $this->createQueryBuilder('i')
+            ->select('i.type')
+            ->groupBy('i.type')
+            ->orderBy('i.type')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function adminItemsSubtypes(): array
+    {
+        return $this->createQueryBuilder('i')
+            ->select('i.subtype')
+            ->groupBy('i.subtype')
+            ->orderBy('i.subtype')
+            ->where('i.subtype IS NOT NULL')
+            ->getQuery()
+            ->getScalarResult()
+        ;
+    }
 }

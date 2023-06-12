@@ -28,3 +28,7 @@ services:
     App\EventListener\SuccessLoginListener:
         tags:
             - { name: 'kernel.event_listener', event: 'security.interactive_login' }
+
+    App\EventListener\LogoutListener:
+        tags:
+            - { name: 'kernel.event_listener', event: Symfony\Component\Security\Http\Event\LogoutEvent }

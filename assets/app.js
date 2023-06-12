@@ -1,11 +1,9 @@
-import { createApp } from 'vue'
-import App from './vue/App.vue'
-import router from './vue/router'
-
 import './app.css';
 
-const app = createApp(App)
-app.use(router)
+import { defineCustomElement } from 'vue'
 
+import HelloWorld from './HelloWorld.ce.vue'
 
-app.mount('#app')
+const HelloWorldCE = defineCustomElement(HelloWorld)
+
+customElements.define('hello-world', HelloWorldCE)

@@ -1,0 +1,37 @@
+{% extends 'admin.html.twig' %}
+
+{% block body %}
+    <div class="text-sm breadcrumbs">
+        <ul>
+            <li>Guild Wars 2</li>
+            <li>Pêche</li>
+            <li><a href="{{ path('app_admin_gw2_fish_maps') }}">Cartes</a></li>
+            <li>{{ (map.id)?'Modifier':'Ajouter' }}</li>
+        </ul>
+    </div>
+
+    <h1>{{ (map.id)?'Modifier la carte':'Ajouter une carte' }}</h1>
+
+    {{ form_start(form) }}
+        <div class="form-control">
+            <label class="label">
+                {{ form_label(form.name) }}
+            </label>
+            {{ form_widget(form.name) }}
+        </div>
+        <div class="form-control">
+            <label class="label">
+                {{ form_label(form.mapId) }}
+            </label>
+            {{ form_widget(form.mapId) }}
+        </div>
+        <div class="form-control">
+            <label class="label">
+                {{ form_label(form.fishAchievement) }}
+            </label>
+            {{ form_widget(form.fishAchievement) }}
+        </div>
+        {{ form(form) }}
+    {{ form_end(form) }}
+{% endblock %}
+

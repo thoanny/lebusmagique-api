@@ -110,7 +110,7 @@ class MapController extends AbstractController
     }
 
     /**
-     * Marqueurs enregistrés de l'utilisateur
+     * Réinitialiser le suivi des marqueurs
      */
     #[Route('/api/user/genshin/map/markers/reset', name: 'app_api_user_genshin_map_markers_reset', methods: ['POST'])]
     #[OA\Tag(name: 'Genshin')]

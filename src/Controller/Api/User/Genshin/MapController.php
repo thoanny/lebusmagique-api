@@ -108,4 +108,36 @@ class MapController extends AbstractController
 
         return $api->respondBadRequest('003');
     }
+
+    /**
+     * Marqueurs enregistrés de l'utilisateur
+     */
+    #[Route('/api/user/genshin/map/makers/reset', name: 'app_api_user_genshin_map_markers_reset', methods: ['POST'])]
+    #[OA\Tag(name: 'Genshin')]
+    public function appApiUserGenshinMapMarkersReset(MapRepository $mapRepository, UserMarkerRepository $userMarkerRepository, Api $api, Request $request, EntityManagerInterface $em): JsonResponse
+    {
+
+        $request = $api->transformJsonBody($request);
+        $user = $this->getUser();
+        $map = $request->get('map');
+
+        if(!$user) {
+            return $api->respondUnauthorized();
+        }
+
+        $map = $mapRepository->findOneBy(['slug' => $map]);
+        if(!$map) {
+            return $api->respondNotFound('Map not found!');
+        }
+
+        $userMarkers = $userMarkerRepository->findBy(['map' => $map, 'user' => $user]);
+        foreach($userMarkers as $um) {
+            $em->remove($um);
+        }
+
+        $em->flush();
+
+        return $api->respondWithSuccess('Suivi des marqueurs réinitialisés.');
+
+    }
 }

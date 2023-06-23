@@ -5,6 +5,7 @@ namespace App\Controller\Admin\Genshin\Map;
 use App\Entity\Genshin\Map\Group;
 use App\Form\Admin\Genshin\Map\GroupType;
 use App\Repository\Genshin\Map\GroupRepository;
+use App\Repository\Genshin\Map\MapRepository;
 use App\Repository\Genshin\Map\SectionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -19,19 +20,40 @@ use Symfony\Component\Routing\Annotation\Route;
 class GroupController extends AbstractController
 {
     #[Route('/admin/genshin/maps/groups', name: 'app_admin_genshin_maps_groups')]
-    public function appAdminGenshinMapsGroups(GroupRepository $groupRepository, SectionRepository $sectionRepository, PaginatorInterface $paginator, Request $request): Response
+    public function appAdminGenshinMapsGroups(GroupRepository $groupRepository, SectionRepository $sectionRepository, MapRepository $mapRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $filters = [
+            'query' => $request->query->get('query'),
+            'map' => $request->query->getInt('map'),
+            'active' => $request->query->getInt('active'),
+        ];
+
         $groups = $paginator->paginate(
-            $groupRepository->findAll(),
+            $groupRepository->findByFilters($filters),
             $request->query->getInt('page', 1),
             25
         );
 
-        $sections = $sectionRepository->findAll();
+        $maps = $mapRepository->findBy([], ['name' => 'ASC']);
+
+        $_sections = $sectionRepository->findAllOrdered();
+        $sections = [];
+        foreach($_sections as $s) {
+            if(!isset($sections[$s['mapId']])) {
+                $sections[$s['mapId']] = [
+                    'name' => $s['mapName'],
+                    'sections' => []
+                ];
+            }
+
+            $sections[$s['mapId']]['sections'][$s['id']] = $s['name'];
+        }
 
         return $this->render('admin/genshin/map/group/index.html.twig', [
             'groups' => $groups,
-            'sections' => $sections
+            'sections' => $sections,
+            'maps' => $maps,
+            'filters' => $filters
         ]);
     }
 

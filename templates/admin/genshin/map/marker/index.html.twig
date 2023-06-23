@@ -9,17 +9,55 @@
         </ul>
     </div>
 
-    <div class="flex justify-between items-center gap-4 mb-4">
-        <h1 class="mb-0">Marqueurs</h1>
-        <form method="get" action="{{ path('app_admin_genshin_maps_marker_edit') }}" class="flex gap-2 items-center">
-            <select name="group" class="select select-bordered">
-                {% for group in groups %}
-                    <option value="{{ group.id }}">{{ group.title }} - {{ group.section.map.name }}</option>
-                {% endfor %}
-            </select>
-            <button type="submit" class="btn btn-primary">Ajouter un marqueur</button>
-        </form>
+    <div class="mb-4">
+        <h1 class="mb-4">Marqueurs</h1>
+
+        <div class="flex w-full items-center justify-between">
+            <form class="flex gap-2 items-center">
+                <input type="text" class="input input-bordered input-sm" placeholder="Chercher..." name="query" value="{{ filters.query }}">
+                <select name="group" id="" class="select select-bordered select-sm">
+                    <option value="">-- Groupe --</option>
+                    {% for group in groups %}
+                        <option value="{{ group.id }}" {% if filters.group == group.id %}selected{% endif %}>{{ group.title }} - {{ group.section.map.name }}</option>
+                    {% endfor %}
+                </select>
+                <select name="format" id="" class="select select-bordered select-sm">
+                    <option value="">-- Format --</option>
+                    {% for f in ['todo', 'image', 'video', 'popup', 'banner', 'region', 'simple'] %}
+                        <option value="{{ f }}" {% if filters.format == f %}selected{% endif %}>{{ f|capitalize }}</option>
+                    {% endfor %}
+                </select>
+                <select name="active" id="" class="select select-bordered select-sm">
+                    <option value="">-- Statut --</option>
+                    <option value="-1" {% if filters.active < 0 %}selected{% endif %}>Inactif</option>
+                    <option value="1"  {% if filters.active > 0 %}selected{% endif %}>Actif</option>
+                </select>
+                <button type="submit" class="btn btn-secondary btn-sm">Filtrer</button>
+                {% if filters.query or filters.group or filters.format or filters.active %}
+                    <a href="{{ path('app_admin_genshin_maps_markers') }}" class="btn btn-secondary btn-outline btn-square btn-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+                            <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
+                        </svg>
+                    </a>
+                {% endif %}
+            </form>
+            <div class="">
+                <form method="get" action="{{ path('app_admin_genshin_maps_marker_edit') }}" class="flex gap-2 items-center">
+                    <select name="group" class="select select-bordered select-sm" required>
+                        <option value="" selected disabled>-- Groupe --</option>
+                        {% for group in groups %}
+                            <option value="{{ group.id }}">{{ group.title }} - {{ group.section.map.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit" class="btn btn-primary btn-sm">Ajouter</button>
+                </form>
+            </div>
+        </div>
+
+
     </div>
+
+
 
     <table class="table rounded-lg shadow w-full">
         <thead>

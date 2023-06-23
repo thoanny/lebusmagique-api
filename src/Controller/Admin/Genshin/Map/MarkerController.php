@@ -20,15 +20,25 @@ class MarkerController extends AbstractController
     #[Route('/admin/genshin/maps/markers', name: 'app_admin_genshin_maps_markers')]
     public function appAdminMapsMarkers(GroupRepository $groupRepository, MarkerRepository $markerRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $filters = [
+            'query' => $request->query->get('query'),
+            'group' => $request->query->getInt('group'),
+            'format' => $request->query->getAlpha('format'),
+            'active' => $request->query->getInt('active'),
+        ];
+
         $markers = $paginator->paginate(
-            $markerRepository->findAll(),
+            $markerRepository->findByFilters($filters),
             $request->query->getInt('page', 1),
             25
         );
+
         $groups = $groupRepository->findAll();
+
         return $this->render('admin/genshin/map/marker/index.html.twig', [
             'markers' => $markers,
             'groups' => $groups,
+            'filters' => $filters
         ]);
     }
 

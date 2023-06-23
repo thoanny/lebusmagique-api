@@ -78,4 +78,40 @@ class MarkerRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findByFilters($filters) {
+        $q = $this->createQueryBuilder('m')
+            ->leftJoin('m.markerGroup', 'g');
+
+        if($filters['query']) {
+            $q
+                ->andWhere('m.id = :query OR m.title LIKE :likeQuery OR m.text LIKE :likeQuery OR g.text LIKE :likeQuery')
+                ->setParameter('query', $filters['query'])
+                ->setParameter('likeQuery', "%".$filters['query']."%")
+            ;
+        }
+
+        if($filters['group']) {
+            $q
+                ->andWhere('g.id = :group')
+                ->setParameter('group', $filters['group'])
+            ;
+        }
+
+        if($filters['format']) {
+            $q
+                ->andWhere('m.format = :format OR (m.format IS NULL AND g.format = :format)')
+                ->setParameter('format', $filters['format'])
+            ;
+        }
+
+        if($filters['active']) {
+            $q
+                ->andWhere('m.active = :active')
+                ->setParameter('active', !($filters['active'] < 0))
+            ;
+        }
+
+        return $q->getQuery();
+    }
 }

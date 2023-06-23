@@ -51,7 +51,7 @@
                     </div>
                 </td>
                 <td class="text-center">
-                    <span class="btn btn-xs btn-outline">{{ group.format }}</span>
+                    {% if group.format %}<span class="btn btn-xs btn-outline">{{ group.format }}</span>{% endif %}
                 </td>
                 <td class="text-center">{{ group.position }}</td>
                 <td class="text-center">

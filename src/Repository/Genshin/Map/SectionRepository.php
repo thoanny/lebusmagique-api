@@ -77,4 +77,15 @@ class SectionRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findAllOrdered() {
+        return $this->createQueryBuilder('s')
+            ->select('m.id AS mapId, m.name AS mapName, s.id, s.name')
+            ->leftJoin('s.map', 'm')
+            ->orderBy('m.name', 'ASC')
+            ->addOrderBy('s.name', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

@@ -80,4 +80,49 @@ class GroupRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findAllOrdered() {
+        return $this->createQueryBuilder('g')
+            ->select('m.id AS mapId, m.name AS mapName, g.id, g.title')
+            ->leftJoin('g.section', 's')
+            ->leftJoin('s.map', 'm')
+            ->orderBy('m.name', 'ASC')
+            ->addOrderBy('g.title', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findByFilters($filters) {
+        $q = $this->createQueryBuilder('g')
+            ->leftJoin('g.section', 's')
+            ->leftJoin('s.map', 'm')
+            ->orderBy('m.name', 'ASC')
+            ->addOrderBy('g.position', 'ASC')
+        ;
+
+        if($filters['query']) {
+            $q
+                ->andWhere('g.id = :query OR g.title LIKE :likeQuery OR g.text LIKE :likeQuery')
+                ->setParameter('query', $filters['query'])
+                ->setParameter('likeQuery', "%".$filters['query']."%")
+            ;
+        }
+
+        if($filters['map']) {
+            $q
+                ->andWhere('m.id = :map')
+                ->setParameter('map', $filters['map'])
+            ;
+        }
+
+        if($filters['active']) {
+            $q
+                ->andWhere('g.active = :active')
+                ->setParameter('active', !($filters['active'] < 0))
+            ;
+        }
+
+        return $q->getQuery();
+    }
 }

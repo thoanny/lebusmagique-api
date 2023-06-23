@@ -80,4 +80,16 @@ class GroupRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findAllOrdered() {
+        return $this->createQueryBuilder('g')
+            ->select('m.id AS mapId, m.name AS mapName, g.id, g.title')
+            ->leftJoin('g.section', 's')
+            ->leftJoin('s.map', 'm')
+            ->orderBy('m.name', 'ASC')
+            ->addOrderBy('g.title', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

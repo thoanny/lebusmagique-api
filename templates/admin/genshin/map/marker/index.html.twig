@@ -11,14 +11,17 @@
 
     <div class="mb-4">
         <h1 class="mb-4">Marqueurs</h1>
-
         <div class="flex w-full items-center justify-between">
             <form class="flex gap-2 items-center">
                 <input type="text" class="input input-bordered input-sm" placeholder="Chercher..." name="query" value="{{ filters.query }}">
                 <select name="group" id="" class="select select-bordered select-sm" style="max-width: 8rem;">
                     <option value="">-- Groupe --</option>
-                    {% for group in groups %}
-                        <option value="{{ group.id }}" {% if filters.group == group.id %}selected{% endif %}>{{ group.title }} - {{ group.section.map.name }}</option>
+                    {% for map in maps %}
+                        <optgroup label="{{ map.name }}">
+                            {% for id, title in map.groups %}
+                                <option value="{{ id }}" {% if filters.group == id %}selected{% endif %}>{{ title }}</option>
+                            {% endfor %}
+                        </optgroup>
                     {% endfor %}
                 </select>
                 <select name="format" id="" class="select select-bordered select-sm">
@@ -45,19 +48,19 @@
                 <form method="get" action="{{ path('app_admin_genshin_maps_marker_edit') }}" class="flex gap-2 items-center">
                     <select name="group" class="select select-bordered select-sm" style="max-width: 8rem;" required>
                         <option value="" selected disabled>-- Groupe --</option>
-                        {% for group in groups %}
-                            <option value="{{ group.id }}">{{ group.title }} - {{ group.section.map.name }}</option>
+                        {% for map in maps %}
+                            <optgroup label="{{ map.name }}">
+                                {% for id, title in map.groups %}
+                                    <option value="{{ id }}">{{ title }}</option>
+                                {% endfor %}
+                            </optgroup>
                         {% endfor %}
                     </select>
                     <button type="submit" class="btn btn-primary btn-sm">Ajouter</button>
                 </form>
             </div>
         </div>
-
-
     </div>
-
-
 
     <table class="table rounded-lg shadow w-full">
         <thead>

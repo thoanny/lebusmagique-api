@@ -33,11 +33,22 @@ class MarkerController extends AbstractController
             25
         );
 
-        $groups = $groupRepository->findAll();
+        $groups = $groupRepository->findAllOrdered();
+        $maps = [];
+        foreach ($groups as $group) {
+            if(!isset($maps[$group['mapId']])) {
+                $maps[$group['mapId']] = [
+                    'name' => $group['mapName'],
+                    'groups' => []
+                ];
+            }
+
+            $maps[$group['mapId']]['groups'][$group['id']] = $group['title'];
+        }
 
         return $this->render('admin/genshin/map/marker/index.html.twig', [
             'markers' => $markers,
-            'groups' => $groups,
+            'maps' => $maps,
             'filters' => $filters
         ]);
     }

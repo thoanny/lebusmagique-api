@@ -114,4 +114,17 @@ class MarkerRepository extends ServiceEntityRepository
 
         return $q->getQuery();
     }
+
+    public function findByMap($mapId)
+    {
+        return $this->createQueryBuilder('m')
+            ->leftJoin('m.markerGroup', 'g')
+            ->leftJoin('g.section', 's')
+            ->leftJoin('s.map', 'map')
+            ->where('map.id = :mapId')
+            ->setParameter('mapId', $mapId)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

@@ -21,3 +21,9 @@ Si vous rencontrez des bugs, des erreurs ou si vous souhaitez partager des idée
 ```bash
   symfony server:start
 ```
+
+## Commandes
+
+### genshin:map-markers-update
+
+Mettre à jour les positions X et Y des marqueurs d'une carte de Genshin Impact.

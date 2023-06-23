@@ -15,7 +15,7 @@
         <div class="flex w-full items-center justify-between">
             <form class="flex gap-2 items-center">
                 <input type="text" class="input input-bordered input-sm" placeholder="Chercher..." name="query" value="{{ filters.query }}">
-                <select name="group" id="" class="select select-bordered select-sm">
+                <select name="group" id="" class="select select-bordered select-sm" style="max-width: 8rem;">
                     <option value="">-- Groupe --</option>
                     {% for group in groups %}
                         <option value="{{ group.id }}" {% if filters.group == group.id %}selected{% endif %}>{{ group.title }} - {{ group.section.map.name }}</option>
@@ -43,7 +43,7 @@
             </form>
             <div class="">
                 <form method="get" action="{{ path('app_admin_genshin_maps_marker_edit') }}" class="flex gap-2 items-center">
-                    <select name="group" class="select select-bordered select-sm" required>
+                    <select name="group" class="select select-bordered select-sm" style="max-width: 8rem;" required>
                         <option value="" selected disabled>-- Groupe --</option>
                         {% for group in groups %}
                             <option value="{{ group.id }}">{{ group.title }} - {{ group.section.map.name }}</option>

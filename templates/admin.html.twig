@@ -25,7 +25,7 @@
     {% if is_granted('ROLE_MANAGER') %}
     <div class="container mx-auto mb-6 gap-6 flex">
         <div class="w-56 z-50 flex-shrink-0">
-            <ul class="menu bg-base-100 w-full p-2 rounded-lg shadow sticky top-4">
+            <ul class="menu menu-compact bg-base-100 w-full p-2 rounded-lg shadow sticky top-4">
                 {% if is_granted('ROLE_ADMIN') %}
                     <li class="menu-title">
                         <span>Le Bus Magique</span>
@@ -150,6 +150,7 @@
                             <li><a href="{{ path('app_admin_genshin_maps_groups') }}">Groupes</a></li>
                             <li><a href="{{ path('app_admin_genshin_maps_markers') }}">Marqueurs</a></li>
                             <li><a href="{{ path('app_admin_genshin_maps_icons') }}">Icônes</a></li>
+                            {% if is_granted('ROLE_ADMIN') %}<li><a href="{{ path('app_admin_genshin_maps_markers_import') }}">Importer</a></li>{% endif %}
                         </ul>
                     </li>
                 {% endif %}

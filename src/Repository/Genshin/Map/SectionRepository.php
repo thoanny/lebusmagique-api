@@ -4,6 +4,8 @@ namespace App\Repository\Genshin\Map;
 
 use App\Entity\Genshin\Map\Section;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -86,6 +88,19 @@ class SectionRepository extends ServiceEntityRepository
             ->addOrderBy('s.name', 'ASC')
             ->getQuery()
             ->getResult()
+        ;
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
+    public function getCount()
+    {
+        return $this->createQueryBuilder('s')
+            ->select('COUNT(s)')
+            ->getQuery()
+            ->getSingleScalarResult()
         ;
     }
 }

@@ -4,7 +4,7 @@ gesdinet_jwt_refresh_token:
     single_use: true
     cookie:
         enabled: true
-        remove_token_from_body: true
+        remove_token_from_body: false
         http_only: true
         same_site: strict
         secure: true

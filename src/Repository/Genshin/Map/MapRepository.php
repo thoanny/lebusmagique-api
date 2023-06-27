@@ -110,4 +110,17 @@ class MapRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
+    public function getCount()
+    {
+        return $this->createQueryBuilder('m')
+            ->select('COUNT(m)')
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
 }

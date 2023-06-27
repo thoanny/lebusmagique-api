@@ -11,8 +11,8 @@
 
     <div class="mb-4">
         <h1 class="mb-4">Groupes</h1>
-        <div class="flex w-full items-center justify-between">
-            <form class="flex gap-2 items-center">
+        <div class="flex flex-wrap xl:flex-nowrap w-full items-center justify-between">
+            <form class="flex flex-wrap md:flex-nowrap gap-2 items-center mb-4 xl:mb-0 w-full">
                 <input type="text" class="input input-bordered input-sm" placeholder="Chercher..." name="query" value="{{ filters.query }}">
                 <select name="map" id="" class="select select-bordered select-sm" style="max-width: 8rem;">
                     <option value="">-- Carte --</option>
@@ -70,14 +70,16 @@
                 <td>
                     <div class="flex items-center space-x-4">
                         <div class="avatar">
-                            <div class="rounded bg-primary w-12 h-12">
+                            <div class="rounded bg-primary w-8 md:w-12 h-8 md:h-12">
                                 <img src="{{ vich_uploader_asset(group.icon) }}" class="p-2" />
                             </div>
                         </div>
                         <div>
                             <div class="font-bold">{{ group.title }}</div>
-                            <span class="badge badge-sm badge-primary">{{ group.section.map.name }}</span>
-                            <span class="badge badge-sm badge-secondary">{{ group.section.name }}</span>
+                            <div class="hidden md:block">
+                                <span class="badge badge-sm badge-primary">{{ group.section.map.name }}</span>
+                                <span class="badge badge-sm badge-secondary">{{ group.section.name }}</span>
+                            </div>
                         </div>
                     </div>
                 </td>
@@ -111,7 +113,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="5" class="text-center">Aucun groupe</td>
+                <td colspan="6" class="text-center">Aucun groupe</td>
             </tr>
         {% endfor %}
         </tbody>

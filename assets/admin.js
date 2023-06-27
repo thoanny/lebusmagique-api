@@ -77,3 +77,6 @@ if(document.getElementById('genshin-map')) {
     genshinMap.on('click', onMapClick);
 }
 
+document.getElementById('menu-toggle').addEventListener('click', (e) => {
+    document.getElementById('menu').classList.toggle('hidden');
+})

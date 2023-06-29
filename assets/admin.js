@@ -79,4 +79,14 @@ if(document.getElementById('genshin-map')) {
 
 document.getElementById('menu-toggle').addEventListener('click', (e) => {
     document.getElementById('menu').classList.toggle('hidden');
-})
+});
+
+import $ from 'jquery';
+import 'webpack-jquery-ui';
+
+$(document).ready(function() {
+    $('#sortable').sortable({
+        placeholder: "ui-state-highlight"
+    });
+    $("#sortable").disableSelection();
+});

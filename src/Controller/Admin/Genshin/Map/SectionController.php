@@ -4,6 +4,7 @@ namespace App\Controller\Admin\Genshin\Map;
 
 use App\Entity\Genshin\Map\Section;
 use App\Form\Admin\Genshin\Map\SectionType;
+use App\Repository\Genshin\Map\GroupRepository;
 use App\Repository\Genshin\Map\SectionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -27,6 +28,40 @@ class SectionController extends AbstractController
 
         return $this->render('admin/genshin/map/section/index.html.twig', [
             'sections' => $sections,
+        ]);
+    }
+
+    #[Route('/admin/genshin/maps/sections/order/{id}', name: 'app_admin_genshin_maps_section_order')]
+    public function appAdminGenshinMapsSectionOrder($id, GroupRepository $groupRepository, SectionRepository $sectionRepository, Request $request, EntityManagerInterface $em): Response
+    {
+        $section = $sectionRepository->findOneBy(['id' => $id]);
+        if(!$section) {
+            $this->addFlash('error', 'Aucune section trouvée');
+            return $this->redirectToRoute('app_admin_genshin_maps_sections');
+        }
+
+        $groups = $groupRepository->findBySection($id);
+        if(!$groups) {
+            $this->addFlash('error', 'Aucun groupe trouvé dans cette section');
+            return $this->redirectToRoute('app_admin_genshin_maps_sections');
+        }
+
+        if($request->isMethod('POST')) {
+            $groupsOrder = $request->request->get('group');
+            foreach($groupsOrder as $i => $id) {
+                $group = $groupRepository->findOneBy(['id' => $id]);
+                $group->setPosition($i);
+                $em->persist($group);
+            }
+            $em->flush();
+
+            $this->addFlash('success', 'Ordre des groupes de la section enregistré');
+            return $this->redirectToRoute('app_admin_genshin_maps_sections');
+        }
+
+        return $this->render('admin/genshin/map/section/order.html.twig', [
+            'section' => $section,
+            'groups' => $groups,
         ]);
     }
 

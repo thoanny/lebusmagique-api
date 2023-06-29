@@ -31,7 +31,9 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "jquery": "^3.7.0",
         "leaflet": "^1.9.4",
-        "marked": "^4.3.0"
+        "marked": "^4.3.0",
+        "webpack-jquery-ui": "^2.0.1"
     }
 }

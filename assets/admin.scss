@@ -189,3 +189,11 @@ h2 {
         @apply checkbox;
     }
 }
+
+.ui-sortable-placeholder {
+    @apply h-12 bg-secondary rounded-lg;
+}
+
+.ui-sortable-helper {
+    @apply text-secondary;
+}

@@ -12,7 +12,7 @@
     <div class="mb-4">
         <h1 class="mb-4">Icônes</h1>
         <div class="flex flex-wrap xl:flex-nowrap w-full items-center justify-between">
-            <form class="flex flex-wrap md:flex-nowrap gap-2 items-center">
+            <form class="flex flex-wrap md:flex-nowrap gap-2 items-center" autocomplete="off">
                 <input type="text" class="input input-bordered input-sm" placeholder="Chercher..." name="query" value="{{ filters.query }}">
                 <button type="submit" class="btn btn-secondary btn-sm">Filtrer</button>
                 {% if filters.query %}

@@ -37,7 +37,7 @@ class MarkerType extends AbstractType
             ->add('format', ChoiceType::class, [
                 'required' => false,
                 'label' => 'Format',
-                'attr' => ['class' => 'input input-bordered'],
+                'attr' => ['class' => 'select select-bordered'],
                 'label_attr' => ['class' => 'label-text'],
                 'choices' => [
                     'Todo' => 'todo',
@@ -105,7 +105,7 @@ class MarkerType extends AbstractType
             ->add('submit', SubmitType::class, [
                 'label' => 'Enregistrer',
                 'attr' => [
-                    'class' => 'btn btn-primary'
+                    'class' => 'btn btn-primary btn-block mt-4'
                 ]
             ])
         ;

@@ -19,13 +19,18 @@ class IconController extends AbstractController
     #[Route('/admin/genshin/maps/icons', name: 'app_admin_genshin_maps_icons')]
     public function appAdminGenshinMapsIcons(IconRepository $iconRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $filters = [
+            'query' => $request->query->get('query'),
+        ];
+
         $icons = $paginator->paginate(
-            $iconRepository->findAll(),
+            $iconRepository->findByFilters($filters),
             $request->query->getInt('page', 1),
             25
         );
         return $this->render('admin/genshin/map/icon/index.html.twig', [
             'icons' => $icons,
+            'filters' => $filters
         ]);
     }
 

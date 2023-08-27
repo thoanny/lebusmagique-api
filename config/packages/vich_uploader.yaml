@@ -10,3 +10,23 @@ vich_uploader:
             uri_prefix: /uploads/api/genshin/maps/medias
             upload_destination: '%kernel.project_dir%/public/uploads/api/genshin/maps/medias'
             namer: Vich\UploaderBundle\Naming\UniqidNamer
+        palia_item_icon:
+            uri_prefix: /uploads/api/palia/items
+            upload_destination: '%kernel.project_dir%/public/uploads/api/palia/items'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+        palia_currency_icon:
+            uri_prefix: /uploads/api/palia/currencies
+            upload_destination: '%kernel.project_dir%/public/uploads/api/palia/currencies'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+        palia_skill_icon:
+            uri_prefix: /uploads/api/palia/skills
+            upload_destination: '%kernel.project_dir%/public/uploads/api/palia/skills'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+        palia_character_avatar:
+            uri_prefix: /uploads/api/palia/characters/avatars
+            upload_destination: '%kernel.project_dir%/public/uploads/api/palia/characters/avatars'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+        palia_character_illustration:
+            uri_prefix: /uploads/api/palia/characters/illustrations
+            upload_destination: '%kernel.project_dir%/public/uploads/api/palia/characters/illustrations'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer

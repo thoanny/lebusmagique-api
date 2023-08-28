@@ -6,6 +6,7 @@ use App\Repository\Palia\CharacterGroupRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CharacterGroupRepository::class)]
 #[ORM\Table(name: 'palia_character_group')]
@@ -14,9 +15,11 @@ class CharacterGroup
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['api'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['api'])]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'characterGroup', targetEntity: Character::class)]

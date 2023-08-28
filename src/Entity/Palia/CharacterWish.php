@@ -13,6 +13,7 @@ class CharacterWish
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['api'])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'characterWishes')]

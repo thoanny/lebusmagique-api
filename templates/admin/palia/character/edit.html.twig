@@ -1,0 +1,67 @@
+{% extends 'admin.html.twig' %}
+
+{% block body %}
+    <div class="text-sm breadcrumbs">
+        <ul>
+            <li>Palia</li>
+            <li><a href="{{ path('app_admin_palia_characters') }}">Personnages</a></li>
+            <li>{{ (character.id)?'Modifier':'Ajouter' }}</li>
+        </ul>
+    </div>
+
+    <h1 class="flex flex-start justify-start gap-4 pl-1 items-center mt-2">
+        {% if character.id %}
+            {% if character.avatar %}
+                <div class="avatar">
+                    <div class="rounded w-12 h-12">
+                        <img src="{{ vich_uploader_asset(character) }}" />
+                    </div>
+                </div>
+            {% endif %}
+            Modifier&nbsp;: {{ character.name }}
+        {% else %}
+            Ajouter un personnage
+        {% endif %}
+
+    </h1>
+
+    {{ form_start(form) }}
+
+    <div class="flex gap-4">
+        <div class="w-3/4">
+            <div class="grid grid-cols-5 gap-4">
+                {{ form_row(form.name) }}
+                {{ form_row(form.characterGroup) }}
+                {{ form_row(form.skill) }}
+            </div>
+
+            <div class="flex gap-4 mt-2">
+                <div class="form-control">
+                    <label class="cursor-pointer label justify-start gap-2">
+                        {{ form_widget(form.romance) }}
+                        {{ form_label(form.romance) }}
+                    </label>
+                </div>
+
+                <div class="form-control">
+                    <label class="cursor-pointer label justify-start gap-2">
+                        {{ form_widget(form.shepp) }}
+                        {{ form_label(form.shepp) }}
+                    </label>
+                </div>
+            </div>
+
+            {{ form_row(form.avatarFile) }}
+            {{ form_row(form.locations) }}
+            {{ form_row(form.wishes) }}
+            {{ form_row(form.add_wish) }}
+{#            {{ form_row(form.add_gift) }}#}
+        </div>
+        <div class="w-1/4">
+            {{ form_row(form.illustrationFile) }}
+        </div>
+    </div>
+
+    {{ form(form) }}
+    {{ form_end(form) }}
+{% endblock %}

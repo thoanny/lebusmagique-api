@@ -23,7 +23,7 @@ class Item
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 10)]
+    #[ORM\Column(length: 10, nullable: true)]
     private ?string $rarity = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -32,10 +32,10 @@ class Item
     #[ORM\Column(nullable: true)]
     private ?int $focus = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $priceBase = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $priceQuality = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -345,5 +345,10 @@ class Item
     public function getIcon(): ?string
     {
         return $this->icon;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
     }
 }

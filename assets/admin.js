@@ -90,3 +90,48 @@ $(document).ready(function() {
     });
     $("#sortable").disableSelection();
 });
+
+
+
+
+const addFormToCollection = (e) => {
+    const collectionHolder = document.querySelector('#' + e.currentTarget.dataset.collectionHolderId);
+    const collectionLimit = e.currentTarget.dataset.collectionLimit;
+    const item = document.createElement('div');
+    const numberOfChildren = collectionHolder.children.length;
+
+    if(typeof collectionLimit !== 'undefined') {
+        if(numberOfChildren >= collectionLimit) {
+            return;
+        }
+    }
+
+    item.innerHTML = collectionHolder
+        .dataset
+        .prototype
+        .replace(
+            /__name__/g,
+            numberOfChildren
+        );
+
+    item.querySelector('.remove-item').addEventListener('click', (e) => {
+        e.target.parentNode.parentNode.parentNode.parentNode.remove()
+        // el.parentNode.parentNode.parentNode.remove()
+    })
+
+    collectionHolder.appendChild(item);
+};
+
+['#character_add_wish'].forEach(el => {
+    if(document.querySelector(el)) {
+        document.querySelector(el).addEventListener("click", addFormToCollection);
+    }
+});
+
+if(document.querySelectorAll('.remove-item')) {
+    document.querySelectorAll('.remove-item').forEach(el => {
+        el.addEventListener('click', () => {
+            el.parentNode.parentNode.parentNode.remove()
+        })
+    })
+}

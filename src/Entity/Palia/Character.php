@@ -37,7 +37,7 @@ class Character
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?Skill $skill = null;
 
-    #[ORM\OneToMany(mappedBy: 'paliaCharacter', targetEntity: CharacterWish::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'paliaCharacter', targetEntity: CharacterWish::class, cascade: ['persist'], orphanRemoval: true)]
     private Collection $wishes;
 
     #[ORM\OneToMany(mappedBy: 'paliaCharacter', targetEntity: CharacterGift::class, orphanRemoval: true)]

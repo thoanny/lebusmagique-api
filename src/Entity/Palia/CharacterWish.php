@@ -4,6 +4,7 @@ namespace App\Entity\Palia;
 
 use App\Repository\Palia\CharacterWishRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CharacterWishRepository::class)]
 #[ORM\Table(name: 'palia_character_wish')]
@@ -16,6 +17,7 @@ class CharacterWish
 
     #[ORM\ManyToOne(inversedBy: 'characterWishes')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['api'])]
     private ?Item $item = null;
 
     #[ORM\ManyToOne(inversedBy: 'wishes')]

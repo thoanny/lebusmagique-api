@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ItemRepository::class)]
@@ -18,30 +19,39 @@ class Item
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['api'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['api'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 10, nullable: true)]
+    #[Groups(['api'])]
     private ?string $rarity = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['api'])]
     private ?string $description = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['api'])]
     private ?int $focus = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['api'])]
     private ?int $priceBase = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['api'])]
     private ?int $priceQuality = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['api'])]
     private ?string $comment = null;
 
     #[ORM\ManyToOne(inversedBy: 'items')]
+    #[Groups(['api'])]
     private ?ItemCategory $category = null;
 
     #[ORM\OneToMany(mappedBy: 'item', targetEntity: CharacterWish::class, orphanRemoval: true)]
@@ -55,6 +65,7 @@ class Item
 
     #[ORM\ManyToMany(targetEntity: Location::class)]
     #[ORM\JoinTable(name: 'palia_item_location')]
+    #[Groups(['api'])]
     private Collection $locations;
 
     #[ORM\OneToMany(mappedBy: 'item', targetEntity: ItemBuy::class, orphanRemoval: true)]
@@ -64,6 +75,7 @@ class Item
     private ?File $iconFile = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['api'])]
     private ?string $icon = null;
 
     #[ORM\Column(nullable: true)]

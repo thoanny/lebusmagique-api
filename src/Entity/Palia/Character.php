@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[ORM\Entity(repositoryClass: CharacterRepository::class)]
 #[ORM\Table(name: 'palia_character')]
@@ -16,28 +17,36 @@ class Character
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['api'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['api'])]
     private ?string $name = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['api'])]
     private ?bool $romance = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['api'])]
     private ?bool $shepp = null;
 
     #[ORM\ManyToMany(targetEntity: Location::class, inversedBy: 'characters')]
     #[ORM\JoinTable(name: 'palia_character_location')]
+    #[Groups(['api'])]
     private Collection $locations;
 
     #[ORM\ManyToOne(inversedBy: 'characters')]
+    #[Groups(['api'])]
     private ?CharacterGroup $characterGroup = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[Groups(['api'])]
     private ?Skill $skill = null;
 
     #[ORM\OneToMany(mappedBy: 'paliaCharacter', targetEntity: CharacterWish::class, cascade: ['persist'], orphanRemoval: true)]
+    #[Groups(['api'])]
     private Collection $wishes;
 
     #[ORM\OneToMany(mappedBy: 'paliaCharacter', targetEntity: CharacterGift::class, orphanRemoval: true)]
@@ -47,12 +56,14 @@ class Character
     private ?File $avatarFile = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['api'])]
     private ?string $avatar = null;
 
     #[Vich\UploadableField(mapping: 'palia_character_illustration', fileNameProperty: 'illustration')]
     private ?File $illustrationFile = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['api'])]
     private ?string $illustration = null;
 
     #[ORM\Column(nullable: true)]

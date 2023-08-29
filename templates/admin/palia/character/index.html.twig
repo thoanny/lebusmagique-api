@@ -18,6 +18,7 @@
         <tr>
             <th width="1" class="text-center">#</th>
             <th>Personnage</th>
+            <th class="text-center">Souhaits</th>
             <th width="1">&nbsp;</th>
         </tr>
         </thead>
@@ -25,7 +26,7 @@
         {% for character in characters %}
             <tr>
                 <td class="text-center">{{ character.id }}</td>
-                <td class="">
+                <td>
                     <div class="flex items-center space-x-4">
                         {% if character.avatar %}
                             <div class="avatar">
@@ -35,6 +36,17 @@
                             </div>
                         {% endif %}
                         <div class="font-bold my-1">{{ character.name }}</div>
+                    </div>
+                </td>
+                <td>
+                    <div class="flex items-center gap-4 justify-center">
+                        {% for wish in character.wishes %}
+                            {% if wish.item.icon %}
+                                <img src="{{ vich_uploader_asset(wish.item) }}" title="{{ wish.item.name }}" class="w-12 h-12 object-contain" />
+                            {% else %}
+                                <span class="badge">{{ wish.item.name }}</span>
+                            {% endif %}
+                        {% endfor %}
                     </div>
                 </td>
                 <td>
@@ -56,7 +68,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="3" class="text-center">Aucun personnage</td>
+                <td colspan="4" class="text-center">Aucun personnage</td>
             </tr>
         {% endfor %}
         </tbody>

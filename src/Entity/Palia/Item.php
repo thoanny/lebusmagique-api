@@ -40,6 +40,10 @@ class Item
 
     #[ORM\Column(nullable: true)]
     #[Groups(['api'])]
+    private ?int $focusQuality = null;
+
+    #[ORM\Column(nullable: true)]
+    #[Groups(['api'])]
     private ?int $priceBase = null;
 
     #[ORM\Column(nullable: true)]
@@ -139,6 +143,18 @@ class Item
     public function setFocus(?int $focus): self
     {
         $this->focus = $focus;
+
+        return $this;
+    }
+
+    public function getFocusQuality(): ?int
+    {
+        return $this->focusQuality;
+    }
+
+    public function setFocusQuality(?int $focusQuality): self
+    {
+        $this->focusQuality = $focusQuality;
 
         return $this;
     }

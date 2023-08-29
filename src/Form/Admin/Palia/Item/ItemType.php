@@ -81,8 +81,21 @@ class ItemType extends AbstractType
                 ],
                 'required' => false,
             ])
+            ->add('focusQuality', IntegerType::class, [
+                'label' => '⭐Focus',
+                'label_attr' => [
+                    'class' => 'label label-text'
+                ],
+                'attr' => [
+                    'class' => 'input input-bordered'
+                ],
+                'row_attr' => [
+                    'class' => 'form-control'
+                ],
+                'required' => false,
+            ])
             ->add('priceBase', IntegerType::class, [
-                'label' => 'Prix de base',
+                'label' => 'Prix',
                 'label_attr' => [
                     'class' => 'label label-text'
                 ],
@@ -95,7 +108,7 @@ class ItemType extends AbstractType
                 'required' => false,
             ])
             ->add('priceQuality', IntegerType::class, [
-                'label' => 'Prix de qualité',
+                'label' => '⭐Prix',
                 'label_attr' => [
                     'class' => 'label label-text'
                 ],
@@ -132,6 +145,7 @@ class ItemType extends AbstractType
                     'class' => 'form-control'
                 ],
                 'required' => false,
+                'download_uri' => false,
             ])
             ->add('category', EntityType::class, [
                 'label' => 'Catégorie',

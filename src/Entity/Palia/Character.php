@@ -9,6 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Gedmo\Mapping\Annotation as Gedmo;
+
 #[ORM\Entity(repositoryClass: CharacterRepository::class)]
 #[ORM\Table(name: 'palia_character')]
 #[Vich\Uploadable]
@@ -17,7 +19,6 @@ class Character
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['api'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -68,6 +69,11 @@ class Character
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
+
+    #[ORM\Column(length: 128, unique: true)]
+    #[Gedmo\Slug(fields: ['name'])]
+    #[Groups(['api'])]
+    private $slug;
 
     public function __construct()
     {
@@ -271,5 +277,10 @@ class Character
     public function getIllustration(): ?string
     {
         return $this->illustration;
+    }
+
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }

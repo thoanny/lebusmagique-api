@@ -24,7 +24,7 @@ class ItemController extends AbstractController
     public function appAdminPaliaItems(ItemRepository $itemRepository, Request $request, PaginatorInterface $paginator): Response
     {
         $items = $paginator->paginate(
-            $itemRepository->findAll(),
+            $itemRepository->findBy([], ['name' => 'ASC']),
             $request->query->getInt('page', 1),
             25
         );

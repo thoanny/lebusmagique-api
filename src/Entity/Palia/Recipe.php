@@ -6,6 +6,7 @@ use App\Repository\Palia\RecipeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: RecipeRepository::class)]
 #[ORM\Table(name: 'palia_recipe')]
@@ -14,24 +15,34 @@ class Recipe
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups('recipe')]
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'recipes')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups('recipe')]
     private ?Item $item = null;
 
     #[ORM\Column]
+    #[Groups('recipe')]
     private ?int $quantity = null;
 
     #[ORM\ManyToOne(inversedBy: 'recipes')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups('recipe')]
     private ?Item $workshop = null;
 
     #[ORM\ManyToOne(inversedBy: 'recipes')]
+    #[Groups('recipe')]
     private ?Skill $skill = null;
 
-    #[ORM\OneToMany(mappedBy: 'recipe', targetEntity: RecipeIngredient::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'recipe', targetEntity: RecipeIngredient::class, cascade: ['persist'], orphanRemoval: true)]
+    #[Groups('recipe')]
     private Collection $ingredients;
+
+    #[ORM\Column(nullable: true)]
+    #[Groups('recipe')]
+    private ?int $craftTime = null;
 
     public function __construct()
     {
@@ -117,6 +128,18 @@ class Recipe
                 $ingredient->setRecipe(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCraftTime(): ?int
+    {
+        return $this->craftTime;
+    }
+
+    public function setCraftTime(?int $craftTime): static
+    {
+        $this->craftTime = $craftTime;
 
         return $this;
     }

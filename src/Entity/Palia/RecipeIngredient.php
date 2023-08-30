@@ -4,6 +4,7 @@ namespace App\Entity\Palia;
 
 use App\Repository\Palia\RecipeIngredientRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: RecipeIngredientRepository::class)]
 #[ORM\Table(name: 'palia_recipe_ingredient')]
@@ -16,9 +17,11 @@ class RecipeIngredient
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups('recipe')]
     private ?Item $item = null;
 
     #[ORM\Column]
+    #[Groups('recipe')]
     private ?int $quantity = null;
 
     #[ORM\ManyToOne(inversedBy: 'ingredients')]

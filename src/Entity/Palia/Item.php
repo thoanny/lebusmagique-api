@@ -23,7 +23,7 @@ class Item
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['api'])]
+    #[Groups(['api', 'recipe'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 10, nullable: true)]
@@ -79,7 +79,7 @@ class Item
     private ?File $iconFile = null;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(['api'])]
+    #[Groups(['api', 'recipe'])]
     private ?string $icon = null;
 
     #[ORM\Column(nullable: true)]
@@ -87,7 +87,7 @@ class Item
 
     #[ORM\Column(length: 128, unique: true)]
     #[Gedmo\Slug(fields: ['name'])]
-    #[Groups(['api'])]
+    #[Groups(['api', 'recipe'])]
     private $slug;
 
     public function __construct()
@@ -388,5 +388,9 @@ class Item
     public function getSlug()
     {
         return $this->slug;
+    }
+    #[Groups('api')]
+    public function getRecipesCount() {
+        return count($this->getRecipes());
     }
 }

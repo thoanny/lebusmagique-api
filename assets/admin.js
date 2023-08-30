@@ -122,7 +122,7 @@ const addFormToCollection = (e) => {
     collectionHolder.appendChild(item);
 };
 
-['#character_add_wish'].forEach(el => {
+['#character_add_wish', '#recipe_add_ingredient'].forEach(el => {
     if(document.querySelector(el)) {
         document.querySelector(el).addEventListener("click", addFormToCollection);
     }

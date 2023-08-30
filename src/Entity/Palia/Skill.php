@@ -18,11 +18,11 @@ class Skill
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['api'])]
+    #[Groups(['api', 'recipe'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['api'])]
+    #[Groups(['api', 'recipe'])]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'skill', targetEntity: Recipe::class)]

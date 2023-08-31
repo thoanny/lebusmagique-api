@@ -11,9 +11,16 @@ use Symfony\Component\Serializer\SerializerInterface;
 class CharacterController extends AbstractController
 {
     #[Route('/api/palia/characters', name: 'app_api_palia_characters')]
-    public function index(CharacterRepository $characterRepository, SerializerInterface $serializer): JsonResponse
+    public function appApiPaliaCharacters(CharacterRepository $characterRepository, SerializerInterface $serializer): JsonResponse
     {
         $characters = $characterRepository->findAll();
         return new JsonResponse($serializer->serialize($characters, 'json', ['groups' => ['api']]), 200, [], true);
+    }
+
+    #[Route('/api/palia/characters/{slug}', name: 'app_api_palia_character')]
+    public function appApiPaliaCharacter($slug, CharacterRepository $characterRepository, SerializerInterface $serializer): JsonResponse
+    {
+        $character = $characterRepository->findOneBy(['slug' => $slug]);
+        return new JsonResponse($serializer->serialize($character, 'json', ['groups' => ['api']]), 200, [], true);
     }
 }

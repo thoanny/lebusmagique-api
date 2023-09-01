@@ -4,6 +4,7 @@ namespace App\Repository\Palia;
 
 use App\Entity\Palia\Item;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -37,6 +38,27 @@ class ItemRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function adminItems($s = null): QueryBuilder
+    {
+        $q = $this->createQueryBuilder('i');
+
+        if($s) {
+            $q
+                ->where('i.name LIKE :s')
+                ->orWhere('i.description LIKE :s OR i.comment LIKE :s')
+                ->orWhere('i.comment LIKE :s')
+                ->setParameter('s', '%'.$s.'%')
+            ;
+        }
+
+        $q
+            ->orderBy('i.name', 'ASC')
+            ->getQuery()
+        ;
+
+        return $q;
     }
 
 //    /**

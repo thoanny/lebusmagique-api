@@ -23,14 +23,16 @@ class ItemController extends AbstractController
     #[Route('/admin/palia/items', name: 'app_admin_palia_items')]
     public function appAdminPaliaItems(ItemRepository $itemRepository, Request $request, PaginatorInterface $paginator): Response
     {
+        $s = $request->query->get('s');
         $items = $paginator->paginate(
-            $itemRepository->findBy([], ['name' => 'ASC']),
+            $itemRepository->adminItems($s),
             $request->query->getInt('page', 1),
             25
         );
 
         return $this->render('admin/palia/item/index.html.twig', [
             'items' => $items,
+            's' => $s,
         ]);
     }
 

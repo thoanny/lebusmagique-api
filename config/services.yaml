@@ -6,7 +6,8 @@
 parameters:
     gw2.api.url: 'https://api.guildwars2.com/v2'
     api.uploads.gw2.items: '%kernel.project_dir%/public/uploads/api/gw2/items'
-
+    mailer.from.email: '%env(MAILER_FROM_EMAIL)%'
+    mailer.from.name: '%env(MAILER_FORM_NAME)%'
 services:
     # default configuration for services in *this* file
     _defaults:

@@ -4,6 +4,7 @@ namespace App\Form\Admin\Genshin\Map;
 
 use App\Entity\Genshin\Map\Icon;
 use App\Entity\Genshin\Map\Marker;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -36,7 +37,7 @@ class MarkerType extends AbstractType
             ->add('format', ChoiceType::class, [
                 'required' => false,
                 'label' => 'Format',
-                'attr' => ['class' => 'input input-bordered'],
+                'attr' => ['class' => 'select select-bordered'],
                 'label_attr' => ['class' => 'label-text'],
                 'choices' => [
                     'Todo' => 'todo',
@@ -83,6 +84,10 @@ class MarkerType extends AbstractType
             ->add('icon', EntityType::class, [
                 'required' => false,
                 'class' => Icon::class,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('i')
+                        ->orderBy('i.name', 'ASC');
+                },
                 'choice_label' => 'name',
                 'label' => 'Icône',
                 'attr' => ['class' => 'select select-bordered'],
@@ -100,7 +105,7 @@ class MarkerType extends AbstractType
             ->add('submit', SubmitType::class, [
                 'label' => 'Enregistrer',
                 'attr' => [
-                    'class' => 'btn btn-primary'
+                    'class' => 'btn btn-primary btn-block mt-4'
                 ]
             ])
         ;

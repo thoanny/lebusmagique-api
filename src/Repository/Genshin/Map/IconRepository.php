@@ -87,4 +87,19 @@ class IconRepository extends ServiceEntityRepository
             ->getSingleScalarResult()
         ;
     }
+
+    public function findByFilters(array $filters)
+    {
+        $q = $this->createQueryBuilder('i');
+
+        if($filters['query']) {
+            $q
+                ->andWhere('i.id = :query OR i.name LIKE :likeQuery')
+                ->setParameter('query', $filters['query'])
+                ->setParameter('likeQuery', "%".$filters['query']."%")
+            ;
+        }
+
+        return $q->getQuery();
+    }
 }

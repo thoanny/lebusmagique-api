@@ -67,7 +67,6 @@ class MapRepository extends ServiceEntityRepository
 //    }
     /**
      * @throws NonUniqueResultException
-     * @throws NoResultException
      */
     public function findOneBySlug($slug = null)
     {
@@ -78,10 +77,9 @@ class MapRepository extends ServiceEntityRepository
                 ->leftJoin('m.icon', 'i')
                 ->where('m.active = :active')
                 ->orderBy('m.position', 'ASC')
-                ->setMaxResults(1)
                 ->setParameter('active', true)
                 ->getQuery()
-                ->getSingleResult();
+                ->getOneOrNullResult();
         } else {
             return $this->createQueryBuilder('m')
                 ->select('m.id', 'm.name', 'i.imageName AS iconUrl', 'm.bounds', 'm.center', 'm.zoom', 'm.tiles', 'm.minZoom', 'm.maxZoom')
@@ -89,11 +87,10 @@ class MapRepository extends ServiceEntityRepository
                 ->where('m.active = :active')
                 ->andWhere('m.slug = :slug')
                 ->orderBy('m.position', 'ASC')
-                ->setMaxResults(1)
                 ->setParameter('active', true)
                 ->setParameter('slug', $slug)
                 ->getQuery()
-                ->getSingleResult();
+                ->getOneOrNullResult();
         }
 
     }

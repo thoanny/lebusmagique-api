@@ -7,6 +7,7 @@ use App\Repository\Genshin\Map\IconRepository;
 use App\Repository\Genshin\Map\MapRepository;
 use App\Repository\Genshin\Map\MarkerRepository;
 use App\Repository\Genshin\Map\SectionRepository;
+use App\Service\Api;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,12 +26,17 @@ class MapController extends AbstractController
      * Informations sur la carte interactive
      *
      * Expose les informations de la carte, de ses sections, groupes, marqueurs et icônes et les autres cartes disponibles.
+     * @throws NonUniqueResultException
      */
     #[Route('/api/genshin/map/{slug}', name: 'app_api_genshin_map', defaults: ['slug' => null], methods: ['GET'])]
     #[OA\Tag(name: 'Genshin')]
-    public function index(MapRepository $mapRepository, SectionRepository $sectionRepository, GroupRepository $groupRepository, MarkerRepository $markerRepository, IconRepository $iconRepository, $slug): Response
+    public function index(MapRepository $mapRepository, SectionRepository $sectionRepository, GroupRepository $groupRepository, MarkerRepository $markerRepository, IconRepository $iconRepository, Api $api, $slug): Response
     {
         $map = $mapRepository->findOneBySlug($slug);
+        if(!$map) {
+            return $api->respondNotFound('Map not found');
+        }
+
         $maps = $mapRepository->findActiveMaps();
 
         $sectionsIds = [];

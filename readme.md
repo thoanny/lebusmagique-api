@@ -21,6 +21,11 @@ Si vous rencontrez des bugs, des erreurs ou si vous souhaitez partager des idée
 ```bash
   symfony server:start
 ```
+## Traductions
+
+Pour générer les fichiers de traductions :
+
+``php bin/console translation:extract --force fr --format=json``
 
 ## Commandes
 

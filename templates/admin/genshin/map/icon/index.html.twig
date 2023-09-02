@@ -9,9 +9,24 @@
         </ul>
     </div>
 
-    <div class="flex justify-between items-center gap-4 mb-4">
-        <h1 class="mb-0">Icônes</h1>
-        <a href="{{ path('app_admin_genshin_maps_icon_edit') }}" class="btn btn-primary">Ajouter une icône</a>
+    <div class="mb-4">
+        <h1 class="mb-4">Icônes</h1>
+        <div class="flex flex-wrap xl:flex-nowrap w-full items-center justify-between">
+            <form class="flex flex-wrap md:flex-nowrap gap-2 items-center" autocomplete="off">
+                <input type="text" class="input input-bordered input-sm" placeholder="Chercher..." name="query" value="{{ filters.query }}">
+                <button type="submit" class="btn btn-secondary btn-sm">Filtrer</button>
+                {% if filters.query %}
+                    <a href="{{ path('app_admin_genshin_maps_icons') }}" class="btn btn-secondary btn-outline btn-square btn-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+                            <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
+                        </svg>
+                    </a>
+                {% endif %}
+            </form>
+            <div class="">
+                <a href="{{ path('app_admin_genshin_maps_icon_edit') }}" class="btn btn-primary btn-sm">Ajouter</a>
+            </div>
+        </div>
     </div>
 
     <table class="table rounded-lg shadow w-full">

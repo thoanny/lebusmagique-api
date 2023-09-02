@@ -98,6 +98,36 @@ table {
             --tw-ring-color: #AAAAAA;
         }
     }
+
+    &--palia-default {
+        .ring {
+            --tw-ring-color: #4f6372;
+        }
+    }
+
+    &--palia-common {
+        .ring {
+            --tw-ring-color: #0b1b38;
+        }
+    }
+
+    &--palia-uncommon {
+        .ring {
+            --tw-ring-color: #21471e;
+        }
+    }
+
+    &--palia-rare {
+        .ring {
+            --tw-ring-color: #216571;
+        }
+    }
+
+    &--palia-epic {
+        .ring {
+            --tw-ring-color: #573ed2;
+        }
+    }
 }
 
 h1 {
@@ -114,8 +144,8 @@ h2 {
             @apply label-text-alt;
         }
 
-        .label-text {
-            @apply font-semibold;
+        .label-text, &.label-text {
+            @apply font-semibold block;
 
             &.required {
                 &:after {
@@ -123,6 +153,30 @@ h2 {
                     content: '*';
                 }
             }
+        }
+    }
+
+    input[type="file"]{
+        @apply w-full;
+    }
+
+    .inline-checkboxes {
+        @apply flex flex-wrap items-center;
+
+        label {
+            @apply cursor-pointer;
+        }
+
+        input[type="checkbox"] {
+            @apply checkbox;
+        }
+
+        input[type="checkbox"]+label {
+            @apply pl-1;
+        }
+
+        label+input[type="checkbox"] {
+            @apply ml-4;
         }
     }
 }
@@ -188,4 +242,12 @@ h2 {
     input[type="checkbox"] {
         @apply checkbox;
     }
+}
+
+.ui-sortable-placeholder {
+    @apply h-12 bg-secondary rounded-lg;
+}
+
+.ui-sortable-helper {
+    @apply text-secondary;
 }

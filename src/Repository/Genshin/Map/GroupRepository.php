@@ -140,4 +140,17 @@ class GroupRepository extends ServiceEntityRepository
             ->getSingleScalarResult()
         ;
     }
+
+    public function findBySection($id)
+    {
+        return $this->createQueryBuilder('g')
+            ->leftJoin('g.section', 's')
+            ->where('s.id = :id')
+            ->setParameter('id', $id)
+            ->orderBy('g.position', 'ASC')
+            ->addOrderBy('g.title', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

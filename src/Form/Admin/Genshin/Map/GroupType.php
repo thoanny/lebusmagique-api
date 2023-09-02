@@ -4,6 +4,7 @@ namespace App\Form\Admin\Genshin\Map;
 
 use App\Entity\Genshin\Map\Group;
 use App\Entity\Genshin\Map\Icon;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -33,7 +34,6 @@ class GroupType extends AbstractType
                 'label_attr' => ['class' => 'label-text'],
             ])
             ->add('format', ChoiceType::class, [
-                'required' => false,
                 'label' => 'Format',
                 'attr' => ['class' => 'input input-bordered'],
                 'label_attr' => ['class' => 'label-text'],
@@ -95,6 +95,10 @@ class GroupType extends AbstractType
             ])
             ->add('icon', EntityType::class, [
                 'class' => Icon::class,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('i')
+                        ->orderBy('i.name', 'ASC');
+                },
                 'choice_label' => 'name',
                 'label' => 'Icône',
                 'attr' => ['class' => 'select select-bordered'],
@@ -103,7 +107,7 @@ class GroupType extends AbstractType
             ->add('submit', SubmitType::class, [
                 'label' => 'Enregistrer',
                 'attr' => [
-                    'class' => 'btn btn-primary'
+                    'class' => 'btn btn-primary btn-block mt-1'
                 ]
             ])
         ;

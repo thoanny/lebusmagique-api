@@ -27,35 +27,35 @@ class Item
     private ?string $name = null;
 
     #[ORM\Column(length: 10, nullable: true)]
-    #[Groups(['api'])]
+    #[Groups(['api', 'recipe'])]
     private ?string $rarity = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Groups(['api'])]
+    #[Groups(['api', 'recipe'])]
     private ?string $description = null;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(['api'])]
+    #[Groups(['api', 'recipe'])]
     private ?int $focus = null;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(['api'])]
+    #[Groups(['api', 'recipe'])]
     private ?int $focusQuality = null;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(['api'])]
+    #[Groups(['api', 'recipe'])]
     private ?int $priceBase = null;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(['api'])]
+    #[Groups(['api', 'recipe'])]
     private ?int $priceQuality = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Groups(['api'])]
+    #[Groups(['api', 'recipe'])]
     private ?string $comment = null;
 
     #[ORM\ManyToOne(inversedBy: 'items')]
-    #[Groups(['api'])]
+    #[Groups(['api', 'recipe'])]
     private ?ItemCategory $category = null;
 
     #[ORM\OneToMany(mappedBy: 'item', targetEntity: CharacterWish::class, orphanRemoval: true)]
@@ -69,7 +69,7 @@ class Item
 
     #[ORM\ManyToMany(targetEntity: Location::class)]
     #[ORM\JoinTable(name: 'palia_item_location')]
-    #[Groups(['api'])]
+    #[Groups(['api', 'recipe'])]
     private Collection $locations;
 
     #[ORM\OneToMany(mappedBy: 'item', targetEntity: ItemBuy::class, orphanRemoval: true)]

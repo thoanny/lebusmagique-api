@@ -83,6 +83,7 @@ class CharacterType extends AbstractType
                 ],
                 'required' => false,
                 'download_uri' => false,
+                'imagine_pattern' => 'palia_character_illustration'
             ])
             ->add('locations', EntityType::class, [
                 'label' => 'Localisations',

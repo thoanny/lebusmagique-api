@@ -31,7 +31,14 @@
                         {% if character.avatar %}
                             <div class="avatar">
                                 <div class="rounded w-12 h-12">
-                                    <img src="{{ vich_uploader_asset(character) }}" />
+                                    <img src="{{ vich_uploader_asset(character)|imagine_filter('palia_character_avatar') }}" />
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if character.illustration %}
+                            <div class="avatar">
+                                <div class="rounded w-12 h-12">
+                                    <img src="{{ vich_uploader_asset(character, 'illustrationFile')|imagine_filter('palia_character_illustration') }}" />
                                 </div>
                             </div>
                         {% endif %}

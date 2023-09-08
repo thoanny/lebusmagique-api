@@ -9,3 +9,11 @@ liip_imagine:
             filters:
                 downscale:
                     max: [ 80, 80 ]
+        palia_character_avatar:
+            filters:
+                downscale:
+                    max: [ 96, 96 ]
+        palia_character_illustration:
+            filters:
+                relative_resize:
+                    widen: 960

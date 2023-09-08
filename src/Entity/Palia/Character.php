@@ -75,6 +75,9 @@ class Character
     #[Groups(['api'])]
     private $slug;
 
+    private ?string $avatarEncoded = null;
+    private ?string $illustrationEncoded = null;
+
     public function __construct()
     {
         $this->locations = new ArrayCollection();
@@ -287,36 +290,20 @@ class Character
     #[Groups(['api'])]
     public function getAvatarEncoded(): ?string
     {
-        if(!$this->getAvatar()) {
-            return null;
-        }
-
-        $path = 'uploads/api/palia/characters/avatars/'.$this->getAvatar();
-        $data = @file_get_contents($path);
-
-        if(!$data) {
-            return null;
-        }
-
-        $type = pathinfo($path, PATHINFO_EXTENSION);
-        return 'data:image/' . $type . ';base64,' . base64_encode($data);
+        return $this->avatarEncoded;
     }
 
-    #[Groups(['api'])]
+    public function setAvatarEncoded($avatarEncoded) {
+        $this->avatarEncoded = $avatarEncoded;
+    }
+
+    #[Groups(['character'])]
     public function getIllustrationEncoded(): ?string
     {
-        if(!$this->getIllustration()) {
-            return null;
-        }
+        return $this->illustrationEncoded;
+    }
 
-        $path = 'uploads/api/palia/characters/illustrations/'.$this->getIllustration();
-        $data = @file_get_contents($path);
-
-        if(!$data) {
-            return null;
-        }
-
-        $type = pathinfo($path, PATHINFO_EXTENSION);
-        return 'data:image/' . $type . ';base64,' . base64_encode($data);
+    public function setIllustrationEncoded($illustrationEncoded) {
+        $this->illustrationEncoded = $illustrationEncoded;
     }
 }

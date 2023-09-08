@@ -40,7 +40,7 @@
                             {% if item.icon %}
                                 <div class="avatar">
                                     <div class="rounded ring ring-offset-base-100 ring-offset-2 w-12 h-12">
-                                        <img src="{{ vich_uploader_asset(item) }}" />
+                                        <img src="{{ vich_uploader_asset(item)|imagine_filter('palia_item_icon') }}" />
                                     </div>
                                 </div>
                             {% endif %}

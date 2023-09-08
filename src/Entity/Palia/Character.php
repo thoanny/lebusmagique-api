@@ -283,4 +283,40 @@ class Character
     {
         return $this->slug;
     }
+
+    #[Groups(['api'])]
+    public function getAvatarEncoded(): ?string
+    {
+        if(!$this->getAvatar()) {
+            return null;
+        }
+
+        $path = 'uploads/api/palia/characters/avatars/'.$this->getAvatar();
+        $data = @file_get_contents($path);
+
+        if(!$data) {
+            return null;
+        }
+
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        return 'data:image/' . $type . ';base64,' . base64_encode($data);
+    }
+
+    #[Groups(['api'])]
+    public function getIllustrationEncoded(): ?string
+    {
+        if(!$this->getIllustration()) {
+            return null;
+        }
+
+        $path = 'uploads/api/palia/characters/illustrations/'.$this->getIllustration();
+        $data = @file_get_contents($path);
+
+        if(!$data) {
+            return null;
+        }
+
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        return 'data:image/' . $type . ';base64,' . base64_encode($data);
+    }
 }

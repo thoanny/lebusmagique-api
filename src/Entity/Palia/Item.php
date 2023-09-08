@@ -396,7 +396,8 @@ class Item
     }
 
     #[Groups(['api', 'recipe'])]
-    public function getIconEncoded() {
+    public function getIconEncoded(): ?string
+    {
         if(!$this->getIcon()) {
             return null;
         }
@@ -409,8 +410,6 @@ class Item
         }
 
         $type = pathinfo($path, PATHINFO_EXTENSION);
-        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
-
-        return $base64;
+        return 'data:image/' . $type . ';base64,' . base64_encode($data);
     }
 }

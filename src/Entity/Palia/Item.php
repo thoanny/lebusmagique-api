@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -392,5 +393,24 @@ class Item
     #[Groups('api')]
     public function getRecipesCount() {
         return count($this->getRecipes());
+    }
+
+    #[Groups(['api', 'recipe'])]
+    public function getIconEncoded() {
+        if(!$this->getIcon()) {
+            return null;
+        }
+
+        $path = 'uploads/api/palia/items/'.$this->getIcon();
+        $data = @file_get_contents($path);
+
+        if(!$data) {
+            return null;
+        }
+
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+
+        return $base64;
     }
 }

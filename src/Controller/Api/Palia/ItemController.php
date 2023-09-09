@@ -14,7 +14,7 @@ class ItemController extends AbstractController
     #[Route('/api/palia/items', name: 'app_api_palia_items')]
     public function appApiPaliaItems(ItemRepository $itemRepository, SerializerInterface $serializer, ImageEncoded $imageEncoded): JsonResponse
     {
-        $items = $itemRepository->findAll();
+        $items = $itemRepository->findBy([], ['name' => 'ASC']);
         foreach($items as $i) {
             $i->setIconEncoded($imageEncoded->get($i->getIcon(), '/uploads/api/palia/items/', 'palia_item_icon'));
         }

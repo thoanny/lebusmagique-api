@@ -1,3 +1,5 @@
+import './bootstrap.js';
+
 import './admin.scss';
 import 'leaflet/dist/leaflet'
 import 'leaflet/dist/leaflet.css'

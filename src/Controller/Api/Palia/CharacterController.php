@@ -14,7 +14,7 @@ class CharacterController extends AbstractController
     #[Route('/api/palia/characters', name: 'app_api_palia_characters')]
     public function appApiPaliaCharacters(CharacterRepository $characterRepository, SerializerInterface $serializer, ImageEncoded $imageEncoded): JsonResponse
     {
-        $characters = $characterRepository->findAll();
+        $characters = $characterRepository->findBy([], ['name' => 'ASC']);
         foreach($characters as $character) {
             $character->setAvatarEncoded($imageEncoded->get($character->getAvatar(), '/uploads/api/palia/characters/avatars/', 'palia_character_avatar'));
             $character->setIllustrationEncoded($imageEncoded->get($character->getIllustration(), '/uploads/api/palia/characters/illustrations/', 'palia_character_illustration'));

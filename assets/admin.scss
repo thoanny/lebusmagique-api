@@ -251,3 +251,7 @@ h2 {
 .ui-sortable-helper {
     @apply text-secondary;
 }
+
+div[id^="item_purchases_"] {
+    @apply grid grid-cols-5 gap-2;
+}

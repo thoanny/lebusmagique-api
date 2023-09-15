@@ -73,6 +73,7 @@ class Item
     private Collection $locations;
 
     #[ORM\OneToMany(mappedBy: 'item', targetEntity: ItemBuy::class, cascade: ['persist'], orphanRemoval: true)]
+    #[Groups(['item'])]
     private Collection $purchases;
 
     #[Vich\UploadableField(mapping: 'palia_item_icon', fileNameProperty: 'icon')]

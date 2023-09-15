@@ -4,6 +4,7 @@ namespace App\Entity\Palia;
 
 use App\Repository\Palia\ItemBuyRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ItemBuyRepository::class)]
 #[ORM\Table(name: 'palia_item_buy')]
@@ -15,16 +16,20 @@ class ItemBuy
     private ?int $id = null;
 
     #[ORM\Column(length: 55)]
+    #[Groups(['item'])]
     private ?string $source = null;
 
     #[ORM\Column]
+    #[Groups(['item'])]
     private ?int $price = null;
 
     #[ORM\ManyToOne(inversedBy: 'itemBuys')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['item'])]
     private ?Currency $currency = null;
 
     #[ORM\Column]
+    #[Groups(['item'])]
     private ?int $quantity = null;
 
     #[ORM\ManyToOne(inversedBy: 'purchases')]

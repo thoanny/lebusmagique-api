@@ -52,6 +52,7 @@ class ItemType extends AbstractType
                     'Peu commun' => 'uncommon',
                     'Rare' => 'rare',
                     'Épique' => 'epic',
+                    'Légendaire' => 'legendary',
                 ],
                 'row_attr' => [
                     'class' => 'form-control'

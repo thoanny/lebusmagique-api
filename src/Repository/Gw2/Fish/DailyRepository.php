@@ -4,6 +4,7 @@ namespace App\Repository\Gw2\Fish;
 
 use App\Entity\Gw2\Fish\Daily;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -45,4 +46,17 @@ class DailyRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function findTodayFish()
+    {
+        return $this->createQueryBuilder('d')
+            ->where('d.day = :today')
+            ->setParameter('today', (new \DateTimeImmutable())->format('Y-m-d'))
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 }

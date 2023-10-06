@@ -32,7 +32,11 @@ class DailyType extends AbstractType
                     return $er->createQueryBuilder('i')
                         ->orderBy('i.name', 'ASC')
                         ->where('i.isFish = :true')
-                        ->setParameter('true', true);
+                        ->andWhere('i.rarity = :rarity')
+                        ->setParameters([
+                            'true' => true,
+                            'rarity' => 'Rare'
+                        ]);
                 },
                 'choice_label' => 'name',
                 'label' => 'Poisson',

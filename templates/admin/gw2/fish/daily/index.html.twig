@@ -1,0 +1,78 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Poissons quotidiens | GW2 | {{ parent() }}{% endblock %}
+
+{% block body %}
+    <div class="text-sm breadcrumbs">
+        <ul>
+            <li>Guild Wars 2</li>
+            <li>Pêche</li>
+            <li>Poissons quotidiens</li>
+        </ul>
+    </div>
+
+    <h1>Poissons quotidiens</h1>
+
+    <div class="flex gap-4">
+        <div class="w-3/4">
+
+        <table class="table rounded-lg shadow w-full">
+            <thead>
+            <tr>
+                <th>Poisson</th>
+                <th>Jour</th>
+                <th width="1">&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for daily in dailies %}
+                <tr>
+                    <td class="rarity--{{ daily.fish.rarity }}">
+                        <div class="flex items-center space-x-4">
+                            <div class="avatar">
+                                <div class="rounded ring ring-offset-base-100 ring-offset-2 w-12 h-12">
+                                    <img src="/uploads/api/gw2/items/{{ daily.fish.uid }}.png" />
+                                </div>
+                            </div>
+                            <div>
+                                <div class="font-bold">{{ daily.fish.name }}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        {{ daily.day|format_date('long') }}
+                    </td>
+                    <td>
+                        <div class="flex gap-3">
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a href="{{ path('app_admin_gw2_fish_daily_delete', {id: daily.id}) }}" class="btn btn-sm btn-secondary btn-outline btn-square">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                    </svg>
+                                </a>
+                            {% endif %}
+                        </div>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3" class="text-center">Aucun poisson quotidien</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        {{ knp_pagination_render(dailies) }}
+    </div>
+
+    <div class="w-1/4">
+        <div class="bg-white rounded-lg shadow w-full p-4">
+            <h4 class="text-xl font-semibold text-primary -mt-2">
+                    Ajouter un poisson quotidien
+            </h4>
+            {{ form(form) }}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -40,20 +40,11 @@ class FishesController extends AbstractController
 
             if($achievement = $fish->getFishAchievement()) {
                 $data['daily']['achievement'] = [
+                    'id' => $achievement->getId(),
                     'uid' => $achievement->getAchievementId(),
                     'repeatUid' => $achievement->getAchievementRepeatId(),
                     'name' => $achievement->getName(),
-                    'maps' => [],
                 ];
-
-                if($maps = $achievement->getMaps()) {
-                    foreach($maps as $m) {
-                        $data['daily']['achievement']['maps'][] = [
-                            'uid' => $m->getMapId(),
-                            'name' => $m->getName(),
-                        ];
-                    }
-                }
             }
 
             if($bait = $fish->getFishBaitItem()) {
@@ -89,20 +80,11 @@ class FishesController extends AbstractController
 
             if($achievement = $fish->getFishAchievement()) {
                 $data['fishes'][$k]['achievement'] = [
+                    'id' => $achievement->getId(),
                     'uid' => $achievement->getAchievementId(),
                     'repeatUid' => $achievement->getAchievementRepeatId(),
                     'name' => $achievement->getName(),
-                    'maps' => []
                 ];
-
-                if($maps = $fish->getFishAchievement()->getMaps()) {
-                    foreach($maps as $m) {
-                        $data['fishes'][$k]['achievement']['maps'][] = [
-                            'uid' => $m->getMapId(),
-                            'name' => $m->getName(),
-                        ];
-                    }
-                }
             }
 
             if($bait = $fish->getFishBaitItem()) {

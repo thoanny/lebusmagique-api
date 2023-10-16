@@ -18,7 +18,7 @@ class Gw2Api
     public function get($endpoint = null, $data = [], $attr = [], $token = null)
     {
         if (!$endpoint) {
-            return;
+            return false;
         }
 
         if ($data) {
@@ -75,5 +75,15 @@ class Gw2Api
 
     public function getRecipe($uid) {
         return $this->get('/recipes/:uid', ['uid' => $uid]);
+    }
+
+    public function getAchievements(array $achievementsIds)
+    {
+        $ids = join(',', $achievementsIds);
+        return $this->get('/achievements', [], ['ids' => $ids]);
+    }
+
+    public function getAccountAchievement(string $token) {
+        return $this->get('/account/achievements', [], [], $token);
     }
 }

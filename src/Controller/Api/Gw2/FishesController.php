@@ -169,6 +169,9 @@ class FishesController extends AbstractController
             }
         }
 
+        // Réindexer les poissons
+        $data['fishes'] = array_values($data['fishes']);
+
         return $this->json($data);
     }
 }

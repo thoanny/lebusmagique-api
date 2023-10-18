@@ -7,8 +7,8 @@ use Symfony\Component\HttpClient\HttpClient;
 
 class Gw2Api
 {
-    private $locale = 'fr';
-    private $parameterBag;
+    private string $locale = 'fr';
+    private ParameterBagInterface $parameterBag;
 
     public function __construct(ParameterBagInterface $parameterBag)
     {
@@ -35,15 +35,13 @@ class Gw2Api
         }
 
         if ($this->locale) {
-            $_lang = ['fr', 'en', 'de', 'es'];
-            $lang = ($this->locale && in_array($this->locale, $_lang)) ? strtolower($this->locale) : 'fr';
-            $query = array_merge($query, ['lang' => $lang]);
+            $query = array_merge($query, ['lang' => $this->locale]);
         }
 
         try {
             $client = HttpClient::create();
             $response = $client->request('GET', $this->parameterBag->get('gw2.api.url') . $endpoint, ['query' => $query]);
-            if($response->getStatusCode() !== 200) {
+            if($response->getStatusCode() !== 200 && $response->getStatusCode() !== 206) {
                 return false;
             }
             return $response->toArray();

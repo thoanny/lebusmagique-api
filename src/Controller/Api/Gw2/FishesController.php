@@ -94,11 +94,11 @@ class FishesController extends AbstractController
                     'bits' => []
                 ];
 
-                if($token && !in_array($achievement->getAchievementId(), $achievementsIds)) {
+                if($token && !in_array($achievement->getAchievementId(), $achievementsIds) && $achievement->getAchievementId() > 0) {
                     $achievementsIds[] = $achievement->getAchievementId();
                 }
 
-                if($token && !in_array($achievement->getAchievementRepeatId(), $achievementsIds)) {
+                if($token && !in_array($achievement->getAchievementRepeatId(), $achievementsIds) && $achievement->getAchievementRepeatId() > 0) {
                     $achievementsIds[] = $achievement->getAchievementRepeatId();
                 }
             }
@@ -147,10 +147,10 @@ class FishesController extends AbstractController
                         if($achievement !== false) {
                             $aa = $accountAchievements[$achievement];
                             if($aa['done']) {
-                                $data['fishes'][$k]['status'] = 'donea';
+                                $data['fishes'][$k]['status'] = 'done';
                             } else {
                                 if(isset($fish['achievement']['bits'][$fish['achievement']['uid']]) && in_array($fish['achievement']['bits'][$fish['achievement']['uid']], $aa['bits'])) {
-                                    $data['fishes'][$fish['uid']]['status'] = 'doneb';
+                                    $data['fishes'][$fish['uid']]['status'] = 'done';
                                 }
                             }
                         }
@@ -162,10 +162,10 @@ class FishesController extends AbstractController
                         if($achievement !== false) {
                             $aa = $accountAchievements[$achievement];
                             if($aa['done']) {
-                                $data['fishes'][$k]['status'] = 'repeata';
+                                $data['fishes'][$k]['status'] = 'repeat';
                             } else {
                                 if(isset($fish['achievement']['bits'][$fish['achievement']['repeatUid']]) && in_array($fish['achievement']['bits'][$fish['achievement']['repeatUid']], $aa['bits'])) {
-                                    $data['fishes'][$k]['status'] = 'repeatb';
+                                    $data['fishes'][$k]['status'] = 'repeat';
                                 }
                             }
                         }
@@ -173,6 +173,8 @@ class FishesController extends AbstractController
                 }
             }
         }
+
+        $data['fishes'] = array_values($data['fishes']);
 
         return $this->json($data);
     }

@@ -150,7 +150,7 @@ class FishesController extends AbstractController
                                 $data['fishes'][$k]['status'] = 'done';
                             } else {
                                 if(isset($fish['achievement']['bits'][$fish['achievement']['uid']]) && in_array($fish['achievement']['bits'][$fish['achievement']['uid']], $aa['bits'])) {
-                                    $data['fishes'][$fish['uid']]['status'] = 'done';
+                                    $data['fishes'][$k]['status'] = 'done';
                                 }
                             }
                         }

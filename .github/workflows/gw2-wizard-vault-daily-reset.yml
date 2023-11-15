@@ -1,0 +1,18 @@
+name: Palia weekly characters' wishes reset
+on:
+  schedule:
+    - cron: "0 0 * * *"
+jobs:
+  cron:
+    runs-on: ubuntu-latest
+    steps:
+      - name: multiple command
+        uses: appleboy/ssh-action@v0.1.9
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd sites/api.lebusmagique.fr
+            php bin/console gw2-wizard-vault:daily-reset

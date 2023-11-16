@@ -76,5 +76,11 @@
     "Gw2.Item.Subtype.Warhorn": "Cor de guerre",
     "Gw2.Item.FishTime.d": "Jour",
     "Gw2.Item.FishTime.n": "Nuit",
-    "Gw2.Item.FishTime.dd": "Aube\/Cr\u00e9puscule"
+    "Gw2.Item.FishTime.dd": "Aube\/Cr\u00e9puscule",
+    "Gw2.WizardVault.Period.daily": "Quotidien",
+    "Gw2.WizardVault.Period.weekly": "Hebdomadaire",
+    "Gw2.WizardVault.Period.special": "Spécial",
+    "Gw2.WizardVault.Type.pve": "JcE",
+    "Gw2.WizardVault.Type.pvp": "JcJ",
+    "Gw2.WizardVault.Type.wvw": "McM"
 }

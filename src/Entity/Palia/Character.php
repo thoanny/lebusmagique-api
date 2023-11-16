@@ -75,6 +75,9 @@ class Character
     #[Groups(['api'])]
     private $slug;
 
+    private ?string $avatarEncoded = null;
+    private ?string $illustrationEncoded = null;
+
     public function __construct()
     {
         $this->locations = new ArrayCollection();
@@ -282,5 +285,25 @@ class Character
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    #[Groups(['api'])]
+    public function getAvatarEncoded(): ?string
+    {
+        return $this->avatarEncoded;
+    }
+
+    public function setAvatarEncoded($avatarEncoded) {
+        $this->avatarEncoded = $avatarEncoded;
+    }
+
+    #[Groups(['character'])]
+    public function getIllustrationEncoded(): ?string
+    {
+        return $this->illustrationEncoded;
+    }
+
+    public function setIllustrationEncoded($illustrationEncoded) {
+        $this->illustrationEncoded = $illustrationEncoded;
     }
 }

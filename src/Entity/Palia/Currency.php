@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: CurrencyRepository::class)]
@@ -21,6 +22,7 @@ class Currency
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['item'])]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -124,5 +126,23 @@ class Currency
     public function getIcon(): ?string
     {
         return $this->icon;
+    }
+
+    #[Groups(['item'])]
+    public function getIconEncoded(): ?string
+    {
+        if(!$this->getIcon()) {
+            return null;
+        }
+
+        $path = 'uploads/api/palia/currencies/'.$this->getIcon();
+        $data = @file_get_contents($path);
+
+        if(!$data) {
+            return null;
+        }
+
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        return 'data:image/' . $type . ';base64,' . base64_encode($data);
     }
 }

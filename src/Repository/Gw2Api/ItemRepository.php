@@ -83,6 +83,7 @@ class ItemRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('i')
             ->where('i.isFish = :true')
             ->setParameter('true', true)
+            ->orderBy('i.name', 'ASC')
             ->getQuery()
             ->getResult();
     }

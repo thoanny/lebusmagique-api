@@ -127,6 +127,10 @@ class ItemType extends AbstractType
             ])
             ->add('fishHole', EntityType::class, [
                 'class' => Hole::class,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('h')
+                        ->orderBy('h.name', 'ASC');
+                },
                 'choice_label' => 'name',
                 'attr' => ['class' => 'select select-bordered'],
                 'label_attr' => ['class' => 'label-text'],
@@ -150,6 +154,10 @@ class ItemType extends AbstractType
             ])
             ->add('fishAchievement', EntityType::class, [
                 'class' => Achievement::class,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('a')
+                        ->orderBy('a.name', 'ASC');
+                },
                 'choice_label' => 'name',
                 'attr' => ['class' => 'select select-bordered'],
                 'label_attr' => ['class' => 'label-text'],

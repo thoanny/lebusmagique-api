@@ -5,12 +5,14 @@ namespace App\Form\Admin\Palia\Item;
 use App\Entity\Palia\Item;
 use App\Entity\Palia\ItemCategory;
 use App\Entity\Palia\Location;
+use App\Form\Admin\Palia\ItemBuyType;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -50,6 +52,7 @@ class ItemType extends AbstractType
                     'Peu commun' => 'uncommon',
                     'Rare' => 'rare',
                     'Épique' => 'epic',
+                    'Légendaire' => 'legendary',
                 ],
                 'row_attr' => [
                     'class' => 'form-control'
@@ -185,6 +188,25 @@ class ItemType extends AbstractType
                 'row_attr' => [
                     'class' => 'form-control'
                 ],
+            ])
+            ->add('purchases', CollectionType::class, [
+                'entry_type' => ItemBuyType::class,
+                'entry_options' => ['label' => false],
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
+                'label' => 'Acheter',
+                'label_attr' => [
+                    'class' => 'text-xl text-secondary font-semibold mt-4 inline-block'
+                ],
+                'attr' => ['class' => 'grid grid-cols-1 gap-2 mt-4'],
+            ])
+            ->add('add_purchase', ButtonType::class, [
+                'label' => 'Ajouter un moyen d\'acheter',
+                'attr' => [
+                    'data-collection-holder-id' => 'item_purchases',
+                    'class' => 'btn btn-secondary btn-sm mt-4'
+                ]
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Enregistrer',

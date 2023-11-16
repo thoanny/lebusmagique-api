@@ -19,7 +19,7 @@ class ItemCategory
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['api'])]
+    #[Groups(['api', 'recipe'])]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Item::class)]

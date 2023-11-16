@@ -113,4 +113,22 @@ class Skill
     {
         return $this->icon;
     }
+
+    #[Groups(['api'])]
+    public function getIconEncoded(): ?string
+    {
+        if(!$this->getIcon()) {
+            return null;
+        }
+
+        $path = 'uploads/api/palia/skills/'.$this->getIcon();
+        $data = @file_get_contents($path);
+
+        if(!$data) {
+            return null;
+        }
+
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        return 'data:image/' . $type . ';base64,' . base64_encode($data);
+    }
 }

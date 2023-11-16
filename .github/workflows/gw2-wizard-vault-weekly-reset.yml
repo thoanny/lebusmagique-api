@@ -1,4 +1,4 @@
-name: Palia weekly characters' wishes reset
+name: GW2 Wizard Vault weekly reset
 on:
   schedule:
     - cron: "30 7 * * 1"

@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use OpenApi\Attributes as OA;
 
 class FishesController extends AbstractController
 {
@@ -17,6 +18,7 @@ class FishesController extends AbstractController
      * @throws NonUniqueResultException
      */
     #[Route('/api/gw2/fishes', name: 'app_api_gw2_fishes', methods: ['GET'])]
+    #[OA\Tag(name: 'GW2')]
     public function index(ItemRepository $itemRepository, DailyRepository $dailyRepository, Request $request, Gw2Api $gw2Api): Response
     {
         $token = $request->query->get('token');

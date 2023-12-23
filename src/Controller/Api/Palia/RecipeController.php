@@ -8,10 +8,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+use OpenApi\Attributes as OA;
 
 class RecipeController extends AbstractController
 {
-    #[Route('/api/palia/recipes', name: 'app_api_palia_recipes')]
+    #[Route('/api/palia/recipes', name: 'app_api_palia_recipes', methods: ['GET'])]
+    #[OA\Tag(name: 'Palia')]
     public function appApiPaliaItems(RecipeRepository $recipeRepository, SerializerInterface $serializer, ImageEncoded $imageEncoded): JsonResponse
     {
         $recipes = $recipeRepository->findAll();

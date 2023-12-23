@@ -7,10 +7,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+use OpenApi\Attributes as OA;
 
 class WizardVaultController extends AbstractController
 {
-    #[Route('/api/gw2/wizard-vault/objectives', name: 'app_api_gw2_wizard_vault_objectives')]
+    #[Route('/api/gw2/wizard-vault/objectives', name: 'app_api_gw2_wizard_vault_objectives', methods: ['GET'])]
+    #[OA\Tag(name: 'GW2')]
     public function index(WizardVaultObjectiveRepository $objectiveRepository, SerializerInterface $serializer): JsonResponse
     {
         $objectives = $objectiveRepository->findBy(['active' => true], ['title' => 'ASC']);

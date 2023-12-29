@@ -46,8 +46,6 @@
                 <th>Objet</th>
                 {% if filters.is == 'fish' %}
                     <th class="text-center">Puissance</th>
-                    <th class="text-center">Horaire</th>
-                    <th class="text-center">Zone</th>
                     <th class="text-center">Appât</th>
                     <th class="text-center">Succès</th>
                 {% elseif filters.is == 'fish-bait' %}
@@ -76,8 +74,7 @@
                                     <div class="flex flex-wrap gap-1">
                                         {% if item.type %}<span class="badge badge-sm badge-primary">{{ ('Gw2.Item.Type.'~item.type)|trans }}</span>{% endif %}
                                         {% if item.subtype %}<span class="badge badge-sm badge-secondary">{{ ('Gw2.Item.Subtype.'~item.subtype)|trans }}</span>{% endif %}
-                                        {% if item.isFish %}<span class="badge badge-sm">Poisson</span>{% endif %}
-                                        {% if item.isFishBait %}<span class="badge badge-sm">Appât</span>{% endif %}
+
                                     </div>
                                 {% endif %}
                             </div>
@@ -85,9 +82,7 @@
                     </td>
                     {% if filters.is == 'fish' %}
                         <td class="text-center">{{ item.fishPower }}</td>
-                        <td class="text-center">{{ item.fishTime ? ('Gw2.Item.FishTime.'~item.fishTime)|trans }}</td>
-                        <td class="text-center">{{ item.holeName }}</td>
-                        <td class="text-center">{{ item.baitName }}</td>
+                        <td class="text-center">{{ (item.baitAny) ? 'Quelconque' : (item.baitName) ? item.baitName : 'Aucun' }}</td>
                         <td class="text-center">{{ item.achievementName }}</td>
                     {% elseif filters.is == 'fish-bait' %}
                         <td class="text-center">{{ item.fishBaitPower }}</td>

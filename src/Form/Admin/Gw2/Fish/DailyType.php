@@ -3,7 +3,7 @@
 namespace App\Form\Admin\Gw2\Fish;
 
 use App\Entity\Gw2\Fish\Daily;
-use App\Entity\Gw2Api\Item;
+use App\Entity\Gw2\Fish\Fish;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -27,18 +27,14 @@ class DailyType extends AbstractType
                 'label_attr' => ['class' => 'label label-text'],
             ])
             ->add('fish', EntityType::class, [
-                'class' => Item::class,
+                'class' => Fish::class,
                 'query_builder' => function (EntityRepository $er): QueryBuilder {
-                    return $er->createQueryBuilder('i')
+                    return $er->createQueryBuilder('f')
+                        ->innerJoin('f.item', 'i')
                         ->orderBy('i.name', 'ASC')
-                        ->where('i.isFish = :true')
                         ->andWhere('i.rarity = :rarity')
-                        ->setParameters([
-                            'true' => true,
-                            'rarity' => 'Rare'
-                        ]);
+                        ->setParameter('rarity', 'Rare');
                 },
-                'choice_label' => 'name',
                 'label' => 'Poisson',
                 'row_attr' => [ 'class' => 'form-control' ],
                 'attr' => ['class' => 'select select-bordered w-full'],

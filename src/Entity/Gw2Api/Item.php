@@ -2,8 +2,8 @@
 
 namespace App\Entity\Gw2Api;
 
-use App\Entity\Gw2\Fish\Achievement;
-use App\Entity\Gw2\Fish\Hole;
+use App\Entity\Gw2\Fish\Bait;
+use App\Entity\Gw2\Fish\Fish;
 use App\Repository\Gw2Api\ItemRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -21,11 +21,11 @@ class Item
     private ?int $id = null;
 
     #[ORM\Column(unique: true)]
-    #[Groups('item')]
+    #[Groups(['item', 'fish'])]
     private ?int $uid = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups('item')]
+    #[Groups(['item', 'fish'])]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -40,7 +40,7 @@ class Item
     private ?string $subtype = null;
 
     #[ORM\Column(length: 25)]
-    #[Groups('item')]
+    #[Groups(['item', 'fish'])]
     private ?string $rarity = null;
 
     #[ORM\Column(nullable: true)]
@@ -48,7 +48,7 @@ class Item
     private ?bool $blackmarket = null;
 
     #[ORM\Column]
-    #[Groups('item')]
+    #[Groups(['item'])]
     private array $data = [];
 
     #[ORM\Column]
@@ -60,39 +60,6 @@ class Item
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $obteningTip = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?bool $isFish = null;
-
-    #[ORM\Column(length: 55, nullable: true)]
-    private ?string $fishPower = null;
-
-    #[ORM\Column(length: 2, nullable: true)]
-    private ?string $fishTime = null;
-
-    #[ORM\Column(length: 25, nullable: true)]
-    private ?string $fishSpecialization = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?bool $isFishStrangeDietAchievement = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?bool $isFishBait = null;
-
-    #[ORM\Column(length: 25, nullable: true)]
-    private ?string $fishBaitPower = null;
-
-    #[ORM\ManyToOne(inversedBy: 'items')]
-    private ?Achievement $fishAchievement = null;
-
-    #[ORM\ManyToOne(inversedBy: 'items')]
-    private ?Hole $fishHole = null;
-
-    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'baitItems')]
-    private ?self $fishBaitItem = null;
-
-    #[ORM\OneToMany(mappedBy: 'fishBaitItem', targetEntity: self::class)]
-    private Collection $baitItems;
-
     #[ORM\OneToOne(mappedBy: 'item', cascade: ['persist', 'remove'])]
     #[Groups('item')]
     private ?ItemPrice $itemPrice = null;
@@ -101,9 +68,14 @@ class Item
     #[Groups('item')]
     private Collection $recipes;
 
+    #[ORM\OneToOne(mappedBy: 'item', cascade: ['persist', 'remove'], orphanRemoval: true)]
+    private ?Bait $bait = null;
+
+    #[ORM\OneToOne(mappedBy: 'item', cascade: ['persist', 'remove'], orphanRemoval: true)]
+    private ?Fish $fish = null;
+
     public function __construct()
     {
-        $this->baitItems = new ArrayCollection();
         $this->recipes = new ArrayCollection();
     }
 
@@ -244,156 +216,6 @@ class Item
         return $this;
     }
 
-    public function isFish(): ?bool
-    {
-        return $this->isFish;
-    }
-
-    public function setIsFish(?bool $isFish): self
-    {
-        $this->isFish = $isFish;
-
-        return $this;
-    }
-
-    public function getFishPower(): ?string
-    {
-        return $this->fishPower;
-    }
-
-    public function setFishPower(?string $fishPower): self
-    {
-        $this->fishPower = $fishPower;
-
-        return $this;
-    }
-
-    public function getFishTime(): ?string
-    {
-        return $this->fishTime;
-    }
-
-    public function setFishTime(?string $fishTime): self
-    {
-        $this->fishTime = $fishTime;
-
-        return $this;
-    }
-
-    public function getFishSpecialization(): ?string
-    {
-        return $this->fishSpecialization;
-    }
-
-    public function setFishSpecialization(?string $fishSpecialization): self
-    {
-        $this->fishSpecialization = $fishSpecialization;
-
-        return $this;
-    }
-
-    public function isFishStrangeDietAchievement(): ?bool
-    {
-        return $this->isFishStrangeDietAchievement;
-    }
-
-    public function setIsFishStrangeDietAchievement(?bool $isFishStrangeDietAchievement): self
-    {
-        $this->isFishStrangeDietAchievement = $isFishStrangeDietAchievement;
-
-        return $this;
-    }
-
-    public function isFishBait(): ?bool
-    {
-        return $this->isFishBait;
-    }
-
-    public function setIsFishBait(?bool $isFishBait): self
-    {
-        $this->isFishBait = $isFishBait;
-
-        return $this;
-    }
-
-    public function getFishBaitPower(): ?string
-    {
-        return $this->fishBaitPower;
-    }
-
-    public function setFishBaitPower(?string $fishBaitPower): self
-    {
-        $this->fishBaitPower = $fishBaitPower;
-
-        return $this;
-    }
-
-    public function getFishAchievement(): ?Achievement
-    {
-        return $this->fishAchievement;
-    }
-
-    public function setFishAchievement(?Achievement $fishAchievement): self
-    {
-        $this->fishAchievement = $fishAchievement;
-
-        return $this;
-    }
-
-    public function getFishHole(): ?Hole
-    {
-        return $this->fishHole;
-    }
-
-    public function setFishHole(?Hole $fishHole): self
-    {
-        $this->fishHole = $fishHole;
-
-        return $this;
-    }
-
-    public function getFishBaitItem(): ?self
-    {
-        return $this->fishBaitItem;
-    }
-
-    public function setFishBaitItem(?self $fishBaitItem): self
-    {
-        $this->fishBaitItem = $fishBaitItem;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, self>
-     */
-    public function getBaitItems(): Collection
-    {
-        return $this->baitItems;
-    }
-
-    public function addBaitItem(self $baitItem): self
-    {
-        if (!$this->baitItems->contains($baitItem)) {
-            $this->baitItems->add($baitItem);
-            $baitItem->setFishBaitItem($this);
-        }
-
-        return $this;
-    }
-
-    public function removeBaitItem(self $baitItem): self
-    {
-        if ($this->baitItems->removeElement($baitItem)) {
-            // set the owning side to null (unless already changed)
-            if ($baitItem->getFishBaitItem() === $this) {
-                $baitItem->setFishBaitItem(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getItemPrice(): ?ItemPrice
     {
         return $this->itemPrice;
@@ -439,5 +261,53 @@ class Item
         }
 
         return $this;
+    }
+
+    public function getBait(): ?Bait
+    {
+        return $this->bait;
+    }
+
+    public function setBait(?Bait $bait): static
+    {
+        // unset the owning side of the relation if necessary
+        if($bait === null && $this->bait !== null) {
+            $this->bait->setItem(null);
+        }
+        // set the owning side of the relation if necessary
+        if ($bait !== null && $bait->getItem() !== $this) {
+            $bait->setItem($this);
+        }
+
+        $this->bait = $bait;
+
+        return $this;
+    }
+
+    public function getFish(): ?Fish
+    {
+        return $this->fish;
+    }
+
+    public function setFish(?Fish $fish): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($fish === null && $this->fish !== null) {
+            $this->fish->setItem(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($fish !== null && $fish->getItem() !== $this) {
+            $fish->setItem($this);
+        }
+
+        $this->fish = $fish;
+
+        return $this;
+    }
+
+    #[Groups(['fish'])]
+    public function getIcon() {
+        return (isset($this->data['icon'])) ? $this->data['icon'] : null;
     }
 }

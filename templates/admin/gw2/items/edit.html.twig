@@ -49,7 +49,7 @@
 
         <div class="form-control">
             <label class="cursor-pointer label justify-start gap-2">
-                {{ form_widget(form.isFish) }}
+                {{ form_widget(form.isFish, {attr: {checked: ((item.fish) ? true : false)}}) }}
                 {{ form_label(form.isFish) }}
             </label>
         </div>
@@ -58,45 +58,50 @@
             <h2>Poisson</h2>
             <div class="grid grid-cols-4 gap-4">
                 <div class="form-control">
-                    <label class="label">{{ form_label(form.fishPower) }}</label>
-                    {{ form_widget(form.fishPower) }}
+                    <label class="label">{{ form_label(form.fish.power) }}</label>
+                    {{ form_widget(form.fish.power) }}
                 </div>
                 <div class="form-control">
-                    <label class="label">{{ form_label(form.fishTime) }}</label>
-                    {{ form_widget(form.fishTime) }}
-                </div>
-                <div class="form-control">
-                    <label class="label">{{ form_label(form.fishHole) }}</label>
-                    {{ form_widget(form.fishHole) }}
-                </div>
-                <div class="form-control">
-                    <label class="label">{{ form_label(form.fishBaitItem) }}</label>
-                    {{ form_widget(form.fishBaitItem) }}
+                    <label class="label">{{ form_label(form.fish.bait) }}</label>
+                    {{ form_widget(form.fish.bait) }}
                 </div>
             </div>
 
             <div class="grid grid-cols-2 gap-4">
                 <div class="form-control">
-                    <label class="label">{{ form_label(form.fishAchievement) }}</label>
-                    {{ form_widget(form.fishAchievement) }}
+                    <label class="label">{{ form_label(form.fish.achievement) }}</label>
+                    {{ form_widget(form.fish.achievement) }}
                 </div>
                 <div class="form-control">
-                    <label class="label">{{ form_label(form.fishSpecialization) }}</label>
-                    {{ form_widget(form.fishSpecialization) }}
+                    <label class="label">{{ form_label(form.fish.specialization) }}</label>
+                    {{ form_widget(form.fish.specialization) }}
                 </div>
             </div>
 
             <div class="form-control">
                 <label class="cursor-pointer label justify-start gap-2">
-                    {{ form_widget(form.isFishStrangeDietAchievement) }}
-                    {{ form_label(form.isFishStrangeDietAchievement) }}
+                    {{ form_widget(form.fish.strangeDiet) }}
+                    {{ form_label(form.fish.strangeDiet) }}
                 </label>
             </div>
+
+            <div class="form-control">
+                <label class="cursor-pointer label justify-start gap-2">
+                    {{ form_widget(form.fish.baitAny) }}
+                    {{ form_label(form.fish.baitAny) }}
+                </label>
+            </div>
+
+            {{ form_row(form.fish.fishHoles) }}
+            {{ form_row(form.fish.add_hole) }}
+
+            {{ form_row(form.fish.fishTimes) }}
+            {{ form_row(form.fish.add_time) }}
         </div>
 
         <div class="form-control">
             <label class="cursor-pointer label justify-start gap-2">
-                {{ form_widget(form.isFishBait) }}
+                {{ form_widget(form.isFishBait, {attr: {checked: ((item.bait) ? true : false)}}) }}
                 {{ form_label(form.isFishBait) }}
             </label>
         </div>
@@ -104,8 +109,8 @@
         <div id="fishBaitFields" class="hidden border border-secondary rounded-lg bg-white p-6 mb-6">
             <h2>Appât</h2>
             <div class="form-control">
-                <label class="label">{{ form_label(form.fishBaitPower) }}</label>
-                {{ form_widget(form.fishBaitPower) }}
+                <label class="label">{{ form_label(form.bait.power) }}</label>
+                {{ form_widget(form.bait.power) }}
             </div>
         </div>
 
@@ -118,6 +123,7 @@
 {% endblock %}
 
 {% block javascripts %}
+    {{ parent() }}
     <script type="text/javascript">
         const isFish = document.querySelector('input#item_isFish');
         const fishFields = document.getElementById('fishFields');

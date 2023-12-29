@@ -41,24 +41,21 @@ class ItemRepository extends ServiceEntityRepository
 
     public function adminItems($filters) {
         $q = $this->createQueryBuilder('i')
-            ->select('i.id', 'i.uid', 'i.name', 'i.rarity', 'i.type', 'i.subtype', 'i.blackmarket', 'i.isFish', 'i.isFishBait')
-            ->orderBy('i.uid', 'DESC');
+            ->select('i.id', 'i.uid', 'i.name', 'i.rarity', 'i.type', 'i.subtype', 'i.blackmarket')
+            ->orderBy('i.uid', 'DESC')
+        ;
 
         if($filters['is']) {
             if($filters['is'] === 'fish') {
-                $q->addSelect('i.fishPower', 'i.fishTime', 'i.fishSpecialization', 'i.isFishStrangeDietAchievement');
-                $q->addSelect('b.name AS baitName');
-                $q->addSelect('h.name AS holeName');
-                $q->addSelect('a.name AS achievementName');
-                $q->leftJoin('i.fishBaitItem', 'b');
-                $q->leftJoin('i.fishHole', 'h');
-                $q->leftJoin('i.fishAchievement', 'a');
-                $q->where('i.isFish = :true')
-                    ->setParameter('true', true);
+                $q->addSelect('f.power AS fishPower', 'f.specialization', 'f.strangeDiet', 'f.baitAny');
+                $q->addSelect('bi.name AS baitName', 'a.name AS achievementName');
+                $q->innerJoin('i.fish', 'f');
+                $q->leftJoin('f.bait', 'b');
+                $q->leftJoin('b.item', 'bi');
+                $q->leftJoin('f.achievement', 'a');
             } else if($filters['is'] === 'fish-bait') {
-                $q->addSelect('i.fishBaitPower');
-                $q->where('i.isFishBait = :true')
-                    ->setParameter('true', true);
+                $q->addSelect('b.power AS fishBaitPower');
+                $q->innerJoin('i.bait', 'b');
             } else if($filters['is'] === 'blackmarket') {
                 $q->where('i.blackmarket = :true')
                     ->setParameter('true', true);
@@ -76,16 +73,6 @@ class ItemRepository extends ServiceEntityRepository
         }
 
         return $q->getQuery();
-    }
-
-    public function findFishes()
-    {
-        return $this->createQueryBuilder('i')
-            ->where('i.isFish = :true')
-            ->setParameter('true', true)
-            ->orderBy('i.name', 'ASC')
-            ->getQuery()
-            ->getResult();
     }
 
     public function adminItemsTypes(): array

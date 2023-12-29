@@ -3,6 +3,7 @@
 namespace App\Controller\Admin\Gw2;
 
 use App\Form\Admin\Gw2\ItemType;
+use App\Repository\Gw2\Fish\FishRepository;
 use App\Repository\Gw2Api\ItemRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -49,7 +50,7 @@ class ItemsController extends AbstractController
     }
 
     #[Route('/admin/gw2/items/{id}', name: 'app_admin_gw2_item_edit')]
-    public function appAdminGw2ItemEdit($id, ItemRepository $itemRepository, Request $request): Response
+    public function appAdminGw2ItemEdit($id, ItemRepository $itemRepository, Request $request, FishRepository $fishRepository): Response
     {
         $item = $itemRepository->findOneBy(['id' => $id]);
         if(!$item) {
@@ -63,17 +64,16 @@ class ItemsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $item = $form->getData();
 
-            if(!$item->isFish()) {
-                ($item)
-                    ->setFishPower(null)
-                    ->setFishTime(null)
-                    ->setFishSpecialization(null)
-                    ->setIsFishStrangeDietAchievement(null)
-                ;
+            if(!$form->get('isFish')->getData() && $item->getFish()) {
+                $item->setFish(null);
             }
 
-            if(!$item->isFishBait()) {
-                $item->setFishBaitPower(null);
+            if(!$form->get('isFishBait')->getData() && $item->getBait()) {
+                $fishes = $fishRepository->findBy(['bait' => $item->getBait()]);
+                foreach($fishes as $f) {
+                    $f->setBait(null);
+                }
+                $item->setBait(null);
             }
 
             $this->em->persist($item);

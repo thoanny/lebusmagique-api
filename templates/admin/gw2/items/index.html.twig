@@ -19,6 +19,7 @@
 
     {% if not filters.is %}
         <form method="get" class="flex gap-2 mb-4">
+            <input type="text" name="s" value="{{ filters.s }}" class="input input-bordered input-sm" placeholder="Chercher..." />
             <select name="type" class="select select-bordered select-sm">
                 <option value="">-- Type --</option>
                 {% for t in types %}

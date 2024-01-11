@@ -30,6 +30,7 @@ class ItemsController extends AbstractController
             'is' => (in_array($request->query->get('is'), ['fish', 'fish-bait', 'blackmarket'])) ? $request->query->get('is') : null,
             'type' => $request->query->get('type'),
             'subtype' => $request->query->get('subtype'),
+            's' => $request->query->get('s')
         ];
 
         $types = $itemRepository->adminItemsTypes();

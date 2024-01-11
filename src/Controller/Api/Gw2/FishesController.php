@@ -27,7 +27,7 @@ class FishesController extends AbstractController
 
         $fishBits = [];
 
-        // TODO : nouveau endpoint pour le daily
+        // TODO : voir pour changer l'ordre des poissons par nom ASC, si pas possible, en JS
 
         $fishes = $fishRepository->findAll();
 

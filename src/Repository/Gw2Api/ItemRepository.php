@@ -72,6 +72,17 @@ class ItemRepository extends ServiceEntityRepository
                 ->setParameter('subtype', $filters['subtype']);
         }
 
+        if($filters['s']) {
+            $q
+                ->andWhere('i.uid = :s')
+                ->orWhere('i.name LIKE :sLike')
+                ->setParameters([
+                    's' => $filters['s'],
+                    'sLike' => "%{$filters['s']}%"
+                ])
+            ;
+        }
+
         return $q->getQuery();
     }
 

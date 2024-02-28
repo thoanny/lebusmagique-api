@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20231229153131 extends AbstractMigration
+final class Version20240228164310 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,7 +20,6 @@ final class Version20231229153131 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE gw2_fish_daily DROP FOREIGN KEY FK_EFA096E78311A1E2');
         $this->addSql('ALTER TABLE gw2_fish_daily ADD CONSTRAINT FK_EFA096E78311A1E2 FOREIGN KEY (fish_id) REFERENCES gw2_fish (id)');
     }
 
@@ -28,6 +27,5 @@ final class Version20231229153131 extends AbstractMigration
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE gw2_fish_daily DROP FOREIGN KEY FK_EFA096E78311A1E2');
-        $this->addSql('ALTER TABLE gw2_fish_daily ADD CONSTRAINT FK_EFA096E78311A1E2 FOREIGN KEY (fish_id) REFERENCES gw2_api_item (id) ON UPDATE NO ACTION ON DELETE NO ACTION');
     }
 }

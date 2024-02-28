@@ -2,14 +2,6 @@
 
 {% block body %}
 
-    <!-- Définition des icônes -->
-    <svg viewBox="0 0 24 24" class="hidden" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-            <path id="x-circle" fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.72 6.97a.75.75 0 10-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 101.06 1.06L12 13.06l1.72 1.72a.75.75 0 101.06-1.06L13.06 12l1.72-1.72a.75.75 0 10-1.06-1.06L12 10.94l-1.72-1.72z" clip-rule="evenodd" />
-            <path id="check-circle" fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd" />
-        </defs>
-    </svg>
-
     <div class="text-sm breadcrumbs">
         <ul>
             <li>Guild Wars 2</li>
@@ -25,26 +17,12 @@
 
     <form method="get" class="flex gap-2 mb-4 items-center" autocomplete="off">
         <input type="text" class="input input-bordered input-sm" name="s" value="{{ filters.s }}" placeholder="Chercher...">
-        <select name="p" class="select select-bordered select-sm">
-            <option value="">-- Périodicité --</option>
-            {% for i in ['daily', 'weekly', 'special'] %}
-                <option value="{{ i }}" {% if filters.p == i %}selected{% endif %}>{{ ('Gw2.WizardVault.Period.'~i)|trans }}</option>
-            {% endfor %}
-        </select>
-        <select name="t" class="select select-bordered select-sm">
-            <option value="">-- Type --</option>
-            {% for i in ['pve', 'pvp', 'wvw'] %}
-                <option value="{{ i }}" {% if filters.t == i %}selected{% endif %}>{{ ('Gw2.WizardVault.Type.'~i)|trans }}</option>
-            {% endfor %}
-        </select>
-        <input type="checkbox" name="a" id="a" class="toggle toggle-primary toggle-sm" {% if filters.a %}checked{% endif %} />
-        <label for="a" class="cursor-pointer">Actif uniquement</label>
         <button type="submit" class="btn btn-sm btn-square ml-2">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
                 <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
             </svg>
         </button>
-        {% if filters.s or filters.p or filters.t or filters.a %}
+        {% if filters.s %}
             <a href="{{ path('app_admin_gw2_wizard_vault_objectives') }}" class="text-error font-semibold ml-2">
                 Réinitialiser
             </a>
@@ -54,27 +32,17 @@
     <table class="table rounded-lg shadow w-full">
         <thead>
             <tr>
-                <th width="1" class="text-center">#</th>
+                <th width="1" class="text-center">UID</th>
                 <th>Objectif</th>
-                <th class="text-center">Période</th>
-                <th class="text-center">Modes</th>
-                <th class="text-center">Actif</th>
                 <th width="1">&nbsp;</th>
             </tr>
         </thead>
         <tbody>
             {% for obj in objectives %}
                 <tr>
-                    <td class="text-center">{{ obj.id }}</td>
+                    <td class="text-center">{{ obj.uid }}</td>
                     <td>
                         <span class="font-bold">{{ obj.title }}</span>
-                    </td>
-                    <td class="text-center">{{ ('Gw2.WizardVault.Period.'~obj.period)|trans }}</td>
-                    <td class="text-center">{{ ('Gw2.WizardVault.Type.'~obj.type)|trans }}</td>
-                    <td class="text-center">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 inline-block text-{{ (obj.active)?'success':'error' }}">
-                            <use href="#{{ (obj.active)?'check':'x' }}-circle" fill="currentColor" />
-                        </svg>
                     </td>
                     <td>
                         <div class="flex gap-3">

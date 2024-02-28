@@ -22,18 +22,18 @@ class WizardVaultObjectiveType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-//            ->add('uid', IntegerType::class, [
-//                'label' => 'UID',
-//                'label_attr' => [
-//                    'class' => 'label label-text'
-//                ],
-//                'attr' => [
-//                    'class' => 'input input-bordered'
-//                ],
-//                'row_attr' => [
-//                    'class' => 'form-control'
-//                ]
-//            ])
+            ->add('uid', IntegerType::class, [
+                'label' => 'UID',
+                'label_attr' => [
+                    'class' => 'label label-text'
+                ],
+                'attr' => [
+                    'class' => 'input input-bordered'
+                ],
+                'row_attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
             ->add('title', TextType::class, [
                 'label' => 'Intitulé',
                 'label_attr' => [
@@ -46,40 +46,6 @@ class WizardVaultObjectiveType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
-            ->add('period', ChoiceType::class, [
-                'label' => 'Périodicité',
-                'choices' => [
-                    'Quotidien' => 'daily',
-                    'Hebdomadaire' => 'weekly',
-                    'Special' => 'special'
-                ],
-                'label_attr' => [
-                    'class' => 'label label-text'
-                ],
-                'attr' => [
-                    'class' => 'input input-bordered'
-                ],
-                'row_attr' => [
-                    'class' => 'form-control'
-                ]
-            ])
-            ->add('type', ChoiceType::class, [
-                'label' => 'Mode de jeu',
-                'choices' => [
-                    'JcE' => 'pve',
-                    'JcJ' => 'pvp',
-                    'McM' => 'wvw'
-                ],
-                'label_attr' => [
-                    'class' => 'label label-text'
-                ],
-                'attr' => [
-                    'class' => 'input input-bordered'
-                ],
-                'row_attr' => [
-                    'class' => 'form-control'
-                ],
-            ])
             ->add('tip', TextareaType::class, [
                 'label' => 'Conseil',
                 'label_attr' => [
@@ -88,44 +54,6 @@ class WizardVaultObjectiveType extends AbstractType
                 'attr' => [
                     'class' => 'textarea textarea-bordered',
                     'rows' => 5
-                ],
-                'row_attr' => [
-                    'class' => 'form-control'
-                ],
-            ])
-            ->add('astralAcclaim', IntegerType::class, [
-                'label' => 'Acclamations astrales',
-                'label_attr' => [
-                    'class' => 'label label-text'
-                ],
-                'attr' => [
-                    'class' => 'input input-bordered'
-                ],
-                'row_attr' => [
-                    'class' => 'form-control'
-                ],
-            ])
-            ->add('active', CheckboxType::class, [
-                'label' => 'Actif',
-                'label_attr' => [
-                    'class' => 'label-text'
-                ],
-                'attr' => [
-                    'class' => 'toggle toggle-primary'
-                ],
-                'required' => false,
-            ])
-            ->add('expansion', EntityType::class, [
-                'label' => 'Extensions',
-                'class' => Expansion::class,
-                'choice_label' => 'name',
-                'multiple' => true,
-                'expanded' => true,
-                'label_attr' => [
-                    'class' => 'label label-text'
-                ],
-                'attr' => [
-                    'class' => 'inline-checkboxes'
                 ],
                 'row_attr' => [
                     'class' => 'form-control'

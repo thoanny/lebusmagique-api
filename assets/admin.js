@@ -97,6 +97,7 @@ $(document).ready(function() {
 
 
 const addFormToCollection = (e) => {
+    console.log('click')
     const collectionHolder = document.querySelector('#' + e.currentTarget.dataset.collectionHolderId);
     const collectionLimit = e.currentTarget.dataset.collectionLimit;
     const item = document.createElement('div');
@@ -124,7 +125,7 @@ const addFormToCollection = (e) => {
     collectionHolder.appendChild(item);
 };
 
-['#character_add_wish', '#recipe_add_ingredient', '#item_add_purchase'].forEach(el => {
+['#character_add_wish', '#recipe_add_ingredient', '#item_add_purchase', '#item_fish_add_hole', '#item_fish_add_time'].forEach(el => {
     if(document.querySelector(el)) {
         document.querySelector(el).addEventListener("click", addFormToCollection);
     }

@@ -27,15 +27,15 @@
             <tbody>
             {% for daily in dailies %}
                 <tr>
-                    <td class="rarity--{{ daily.fish.rarity }}">
+                    <td class="rarity--{{ daily.fish.item.rarity }}">
                         <div class="flex items-center space-x-4">
                             <div class="avatar">
                                 <div class="rounded ring ring-offset-base-100 ring-offset-2 w-12 h-12">
-                                    <img src="/uploads/api/gw2/items/{{ daily.fish.uid }}.png" />
+                                    <img src="/uploads/api/gw2/items/{{ daily.fish.item.uid }}.png" />
                                 </div>
                             </div>
                             <div>
-                                <div class="font-bold">{{ daily.fish.name }}</div>
+                                <div class="font-bold">{{ daily.fish.item.name }}</div>
                             </div>
                         </div>
                     </td>

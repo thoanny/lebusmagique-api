@@ -21,10 +21,7 @@ class WizardVaultController extends AbstractController
     public function appAdminGw2WizardVaultObjectives(WizardVaultObjectiveRepository $objectiveRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $filters = [
-            's' => $request->query->get('s'),
-            'p' => $request->query->get('p'),
-            't' => $request->query->get('t'),
-            'a' => $request->query->getBoolean('a')
+            's' => $request->query->get('s')
         ];
 
         $objectives = $paginator->paginate(

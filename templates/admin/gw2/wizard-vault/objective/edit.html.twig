@@ -19,20 +19,9 @@
     </h1>
 
     {{ form_start(form) }}
+        {{ form_row(form.uid) }}
         {{ form_row(form.title) }}
-        <div class="grid grid-cols-3 gap-4">
-            {{ form_row(form.period) }}
-            {{ form_row(form.type) }}
-            {{ form_row(form.astralAcclaim) }}
-        </div>
         {{ form_row(form.tip) }}
-        {{ form_row(form.expansion) }}
-        <div class="form-control mt-4">
-            <label class="cursor-pointer label justify-start gap-2">
-                {{ form_widget(form.active) }}
-                {{ form_label(form.active) }}
-            </label>
-        </div>
     {{ form_end(form) }}
 
 {% endblock %}

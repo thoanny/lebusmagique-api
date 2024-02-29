@@ -52,31 +52,13 @@ class WizardVaultObjectiveRepository extends ServiceEntityRepository
 
         if($filters['s']) {
             $q
-                ->andWhere('o.title LIKE :s OR o.tip LIKE :s')
+                ->andWhere('o.title LIKE :s OR o.tip LIKE :s OR o.uid = :uid')
                 ->setParameter('s', "%{$filters['s']}%")
+                ->setParameter('uid', $filters['s'])
             ;
         }
 
-        if(in_array($filters['p'], ['daily', 'weekly', 'special'])) {
-            $q
-                ->andWhere('o.period = :p')
-                ->setParameter('p', $filters['p'])
-            ;
-        }
-
-        if(in_array($filters['t'], ['pve', 'pvp', 'wvw'])) {
-            $q
-                ->andWhere('o.type = :t')
-                ->setParameter('t', $filters['t'])
-            ;
-        }
-
-        if($filters['a']) {
-            $q
-                ->andWhere('o.active = :a')
-                ->setParameter('a', true)
-            ;
-        }
+        $q->orderBy('o.uid', 'ASC');
 
         return $q->getQuery();
     }

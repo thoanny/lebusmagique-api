@@ -27,9 +27,7 @@ class FishesController extends AbstractController
 
         $fishBits = [];
 
-        // TODO : voir pour changer l'ordre des poissons par nom ASC, si pas possible, en JS
-
-        $fishes = $fishRepository->findAll();
+        $fishes = $fishRepository->findAllForAPI();
 
         if($token) {
             foreach($fishes as $f) {

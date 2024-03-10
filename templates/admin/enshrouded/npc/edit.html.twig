@@ -1,0 +1,10 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Modifier un personnage{% endblock %}
+
+{% block body %}
+    {% include '_breadcrumbs.html.twig' with {items: ['Enshrouded', 'Personnages', 'Modifier']} %}
+    <h1>Modifier un personnage</h1>
+    {{ include('admin/enshrouded/npc/_form.html.twig') }}
+    {{ include('admin/enshrouded/npc/_delete_form.html.twig') }}
+{% endblock %}

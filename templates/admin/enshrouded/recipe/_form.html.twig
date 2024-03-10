@@ -1,0 +1,25 @@
+{% form_theme form 'form/admin.twig' %}
+{{ form_start(form) }}
+
+    {{ form_row(form.source) }}
+    {{ form_row(form.outputItem) }}
+    {{ form_row(form.outputQuantity) }}
+    {{ form_row(form.outputDuration) }}
+    {{ form_row(form.category) }}
+
+    <h4 class="text-xl text-secondary font-semibold mt-4 inline-block">Prérequis</h4>
+    {{ form_row(form.requirements) }}
+    {{ form_row(form.add_requirement) }}
+
+    <h4 class="text-xl text-secondary font-semibold mt-4 inline-block">Ingrédients</h4>
+    {{ form_row(form.ingredients) }}
+    {{ form_row(form.add_ingredient) }}
+
+    {{ form_widget(form) }}
+
+    <div class="flex gap-4 justify-between">
+        <button class="btn btn-primary">Enregistrer</button>
+        <a href="{{ path('app_admin_enshrouded_recipe_index') }}" class="btn btn-outline">Retourner à la liste</a>
+    </div>
+
+{{ form_end(form) }}

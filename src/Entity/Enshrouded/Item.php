@@ -48,7 +48,7 @@ class Item
     private ?ItemCategory $category = null;
 
     #[ORM\Column(length: 25, nullable: true)]
-    #[Groups(['recipe', 'recipe'])]
+    #[Groups(['item', 'recipe', 'recipe'])]
     private ?string $equippable = null;
 
     #[ORM\OneToMany(mappedBy: 'outputItem', targetEntity: Recipe::class)]

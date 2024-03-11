@@ -13,7 +13,7 @@ class ItemController extends AbstractController
     #[Route('/api/enshrouded/items', name: 'app_api_enshrouded_items')]
     public function appApiEnshroudedItems(SerializerInterface $serializer, ItemRepository $itemRepository): JsonResponse
     {
-        $items = $itemRepository->findAll();
+        $items = $itemRepository->findby([], ['name' => 'ASC']);
         return new JsonResponse($serializer->serialize($items, 'json', ['groups' => ['items']]), 200, [], true);
     }
 

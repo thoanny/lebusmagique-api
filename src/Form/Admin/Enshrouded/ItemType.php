@@ -40,8 +40,8 @@ class ItemType extends AbstractType
             ->add('quality', ChoiceType::class, [
                 'label' => 'Qualité',
                 'choices' => [
-                    'Commun' => 'common',
-                    'Peu commun' => 'uncommon',
+                    'Ordinaire' => 'common',
+                    'Peu courant' => 'uncommon',
                     'Rare' => 'rare',
                     'Épique' => 'epic',
                     'Légendaire' => 'legendary',

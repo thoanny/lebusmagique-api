@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api\Enshrouded;
 
+use App\Repository\Enshrouded\ItemCategoryRepository;
 use App\Repository\Enshrouded\ItemRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -15,6 +16,13 @@ class ItemController extends AbstractController
     {
         $items = $itemRepository->findby([], ['name' => 'ASC']);
         return new JsonResponse($serializer->serialize($items, 'json', ['groups' => ['items']]), 200, [], true);
+    }
+
+    #[Route('/api/enshrouded/items/categories', name: 'app_api_enshrouded_items_categories')]
+    public function appApiEnshroudedItemsCategories(SerializerInterface $serializer, ItemCategoryRepository $categoryRepository): JsonResponse
+    {
+        $categories = $categoryRepository->findBy([], ['name' => 'ASC']);
+        return new JsonResponse($serializer->serialize($categories, 'json', ['groups' => ['categories']]), 200, [], true);
     }
 
     #[Route('/api/enshrouded/items/{id}', name: 'app_api_enshrouded_item')]

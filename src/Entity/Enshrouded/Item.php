@@ -63,7 +63,7 @@ class Item
     private ?File $iconFile = null;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(['item', 'items', 'recipe'])]
+    #[Groups(['item', 'items', 'recipe', 'recipes', 'recipes_sources', 'recipes_categories'])]
     private ?string $icon = null;
 
     #[ORM\Column(nullable: true)]

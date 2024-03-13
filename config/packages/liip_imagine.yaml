@@ -17,3 +17,15 @@ liip_imagine:
             filters:
                 relative_resize:
                     widen: 960
+        enshrouded_item_icon_96:
+            filters:
+                downscale:
+                    max: [ 96, 96 ]
+        enshrouded_item_icon_48:
+            filters:
+                downscale:
+                    max: [ 48, 48 ]
+        enshrouded_item_icon_24:
+            filters:
+                downscale:
+                    max: [ 24, 24 ]

@@ -17,11 +17,11 @@ class Npc
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['recipe', 'recipes_sources'])]
+    #[Groups(['recipe'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['recipe', 'recipes_sources'])]
+    #[Groups(['recipe'])]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]

@@ -17,15 +17,15 @@ class RecipeCategory
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['recipes', 'recipes_categories'])]
+    #[Groups(['recipes'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['recipes', 'recipes_categories'])]
+    #[Groups(['recipes'])]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Recipe::class)]
-    #[Groups(['recipes_categories'])]
+    #[Groups(['recipes'])]
     private Collection $recipes;
 
     #[Gedmo\TreeLeft]
@@ -121,12 +121,12 @@ class RecipeCategory
         return $this->parent;
     }
 
-    #[Groups(['recipes_categories'])]
+    #[Groups(['recipes'])]
     public function getParentId(): ?int {
         return $this->parent?->id;
     }
 
-    #[Groups(['recipes_categories'])]
+    #[Groups(['recipes'])]
     public function getRecipesCount(): ?int {
         return count($this->recipes);
     }

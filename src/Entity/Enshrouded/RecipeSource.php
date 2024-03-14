@@ -19,10 +19,10 @@ abstract class RecipeSource
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['recipes', 'recipes_sources'])]
     private ?int $id = null;
 
     #[ORM\OneToMany(mappedBy: 'source', targetEntity: Recipe::class)]
-    #[Groups(['recipes_sources'])]
     private Collection $recipes;
 
     public function __construct()
@@ -63,10 +63,5 @@ abstract class RecipeSource
         }
 
         return $this;
-    }
-
-    #[Groups(['recipes_sources'])]
-    public function getRecipesCount(): ?int {
-        return count($this->recipes);
     }
 }

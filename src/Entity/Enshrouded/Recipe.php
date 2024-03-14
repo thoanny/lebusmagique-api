@@ -15,18 +15,19 @@ class Recipe
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['item', 'recipes', 'recipes_sources', 'recipes_categories'])]
+    #[Groups(['item', 'recipes'])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'recipes')]
     private ?RecipeCategory $category = null;
 
     #[ORM\ManyToOne(inversedBy: 'recipes')]
+    #[Groups(['recipes'])]
     private ?RecipeSource $source = null;
 
     #[ORM\ManyToOne(inversedBy: 'recipes')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['recipe', 'recipes', 'recipes_sources', 'recipes_categories'])]
+    #[Groups(['recipe', 'recipes'])]
     private ?Item $outputItem = null;
 
     #[ORM\Column]

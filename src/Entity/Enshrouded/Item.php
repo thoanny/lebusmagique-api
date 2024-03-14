@@ -19,11 +19,11 @@ class Item
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['items', 'recipe', 'recipes', 'recipes_sources', 'recipes_categories'])]
+    #[Groups(['items', 'recipe', 'recipes'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['item', 'items', 'recipe', 'recipes', 'recipes_sources', 'recipes_categories'])]
+    #[Groups(['item', 'items', 'recipe', 'recipes'])]
     private ?string $name = null;
 
     #[ORM\Column(nullable: true)]
@@ -63,7 +63,7 @@ class Item
     private ?File $iconFile = null;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(['item', 'items', 'recipe', 'recipes', 'recipes_sources', 'recipes_categories'])]
+    #[Groups(['item', 'items', 'recipe', 'recipes'])]
     private ?string $icon = null;
 
     #[ORM\Column(nullable: true)]
@@ -248,19 +248,19 @@ class Item
         return $this->icon;
     }
 
-    #[Groups(['item', 'items', 'recipe', 'recipes', 'recipes_sources', 'recipes_categories'])]
+    #[Groups(['item', 'items', 'recipe', 'recipes'])]
     public function getIcon96x96(): ?string
     {
         return ($this->icon) ? "/media/cache/resolve/enshrouded_item_icon_96/uploads/api/enshrouded/items/$this->icon" : null;
     }
 
-    #[Groups(['item', 'items', 'recipe', 'recipes', 'recipes_sources', 'recipes_categories'])]
+    #[Groups(['item', 'items', 'recipe', 'recipes'])]
     public function getIcon48x48(): ?string
     {
         return ($this->icon) ? "/media/cache/resolve/enshrouded_item_icon_48/uploads/api/enshrouded/items/$this->icon" : null;
     }
 
-    #[Groups(['item', 'items', 'recipe', 'recipes', 'recipes_sources', 'recipes_categories'])]
+    #[Groups(['item', 'items', 'recipe', 'recipes'])]
     public function getIcon24x24(): ?string
     {
         return ($this->icon) ? "/media/cache/resolve/enshrouded_item_icon_24/uploads/api/enshrouded/items/$this->icon" : null;

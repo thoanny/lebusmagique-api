@@ -13,7 +13,7 @@ class RecipeSourceItem extends RecipeSource
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['recipe', 'recipes_sources'])]
+    #[Groups(['recipe'])]
     private ?Item $item = null;
 
     public function getItem(): ?Item
@@ -30,6 +30,18 @@ class RecipeSourceItem extends RecipeSource
 
     public function __toString(): string
     {
+        return $this->getName();
+    }
+
+    #[Groups(['recipes', 'recipes_sources'])]
+    public function getName(): string
+    {
         return $this->getItem()->getName();
+    }
+
+    #[Groups(['recipe', 'recipes', 'recipes_sources'])]
+    public function getType(): string
+    {
+        return 'item';
     }
 }

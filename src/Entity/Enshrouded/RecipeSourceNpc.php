@@ -12,7 +12,7 @@ class RecipeSourceNpc extends RecipeSource
 {
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['recipe', 'recipes_sources'])]
+    #[Groups(['recipe'])]
     private ?Npc $npc = null;
 
     public function getNpc(): ?Npc
@@ -29,6 +29,18 @@ class RecipeSourceNpc extends RecipeSource
 
     public function __toString(): string
     {
+        return $this->getName();
+    }
+
+    #[Groups(['recipes', 'recipes_sources'])]
+    public function getName(): string
+    {
         return $this->getNpc()->getName();
     }
+    #[Groups(['recipe', 'recipes', 'recipes_sources'])]
+    public function getType(): string
+    {
+        return 'npc';
+    }
+
 }

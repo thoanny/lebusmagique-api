@@ -4,6 +4,8 @@ namespace App\Repository\Enshrouded;
 
 use App\Entity\Enshrouded\Recipe;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -45,4 +47,16 @@ class RecipeRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
+    public function getRecipesCount()
+    {
+        return $this->createQueryBuilder('r')
+            ->select('COUNT(r)')
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
 }

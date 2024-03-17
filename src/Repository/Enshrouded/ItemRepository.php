@@ -6,6 +6,7 @@ use App\Entity\Enshrouded\Item;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -58,5 +59,26 @@ class ItemRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleScalarResult()
         ;
+    }
+
+    public function adminItems(string|null $s): QueryBuilder
+    {
+        $q = $this->createQueryBuilder('i');
+
+        if($s) {
+            $q
+                ->where('i.name LIKE :s')
+                ->orWhere('i.description LIKE :s')
+                ->orWhere('i.comment LIKE :s')
+                ->setParameter('s', '%'.$s.'%')
+            ;
+        }
+
+        $q
+            ->orderBy('i.name', 'ASC')
+            ->getQuery()
+        ;
+
+        return $q;
     }
 }

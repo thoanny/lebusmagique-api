@@ -6,6 +6,7 @@ use App\Entity\Enshrouded\Item;
 use App\Form\Admin\Enshrouded\ItemType;
 use App\Repository\Enshrouded\ItemRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,10 +17,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class ItemController extends AbstractController
 {
     #[Route('/', name: 'app_admin_enshrouded_item_index', methods: ['GET'])]
-    public function index(ItemRepository $itemRepository): Response
+    public function index(ItemRepository $itemRepository, Request $request, PaginatorInterface $paginator): Response
     {
+        $s = $request->query->get('s');
+        $items = $paginator->paginate(
+            $itemRepository->adminItems($s),
+            $request->query->getInt('page', 1),
+            25
+        );
         return $this->render('admin/enshrouded/item/index.html.twig', [
-            'items' => $itemRepository->findAll(),
+            'items' => $items,
+            's' => $s,
         ]);
     }
 

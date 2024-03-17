@@ -6,6 +6,7 @@ use App\Entity\Enshrouded\Recipe;
 use App\Form\Admin\Enshrouded\RecipeType;
 use App\Repository\Enshrouded\RecipeRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,10 +17,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class RecipeController extends AbstractController
 {
     #[Route('/', name: 'app_admin_enshrouded_recipe_index', methods: ['GET'])]
-    public function index(RecipeRepository $recipeRepository): Response
+    public function index(RecipeRepository $recipeRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $recipes = $paginator->paginate(
+            $recipeRepository->findBy([], ['id' => 'DESC']),
+            $request->query->getInt('page', 1),
+            25
+        );
         return $this->render('admin/enshrouded/recipe/index.html.twig', [
-            'recipes' => $recipeRepository->findAll(),
+            'recipes' => $recipes,
         ]);
     }
 

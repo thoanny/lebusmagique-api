@@ -50,10 +50,16 @@ class ItemType extends AbstractType
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
                 'required' => false,
+                'attr' => [
+                    'rows' => 10
+                ]
             ])
             ->add('comment', TextareaType::class, [
                 'label' => 'Commentaire',
                 'required' => false,
+                'attr' => [
+                    'rows' => 10
+                ]
             ])
             ->add('equippable', ChoiceType::class, [
                 'label' => 'Équipable/Utilisation directe',

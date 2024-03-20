@@ -13,7 +13,7 @@ class ItemCategory
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['categories', 'item', 'items', 'recipe'])]
+    #[Groups(['categories', 'item', 'items', 'recipe', 'searchable'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]

@@ -19,11 +19,11 @@ class Item
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['items', 'recipe', 'recipes'])]
+    #[Groups(['items', 'recipe', 'recipes', 'searchable'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['item', 'items', 'recipe', 'recipes'])]
+    #[Groups(['item', 'items', 'recipe', 'recipes', 'searchable'])]
     private ?string $name = null;
 
     #[ORM\Column(nullable: true)]
@@ -31,11 +31,11 @@ class Item
     private ?int $level = null;
 
     #[ORM\Column(length: 25)]
-    #[Groups(['item', 'items', 'recipe'])]
+    #[Groups(['item', 'items', 'recipe', 'searchable'])]
     private ?string $quality = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Groups(['item', 'recipe'])]
+    #[Groups(['item', 'recipe', 'searchable'])]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -44,7 +44,7 @@ class Item
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['item', 'items', 'recipe'])]
+    #[Groups(['item', 'items', 'recipe', 'searchable'])]
     private ?ItemCategory $category = null;
 
     #[ORM\Column(length: 25, nullable: true)]
@@ -63,7 +63,7 @@ class Item
     private ?File $iconFile = null;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(['item', 'items', 'recipe', 'recipes'])]
+    #[Groups(['item', 'items', 'recipe', 'recipes', 'searchable'])]
     private ?string $icon = null;
 
     #[ORM\Column(nullable: true)]

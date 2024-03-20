@@ -59,4 +59,13 @@ class RecipeRepository extends ServiceEntityRepository
             ->getSingleScalarResult()
         ;
     }
+
+    public function getItemsId()
+    {
+        return $this->createQueryBuilder('r')
+            ->select('r.id')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

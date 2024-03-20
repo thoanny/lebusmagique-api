@@ -81,4 +81,13 @@ class ItemRepository extends ServiceEntityRepository
 
         return $q;
     }
+
+    public function getItemsId()
+    {
+        return $this->createQueryBuilder('i')
+            ->select('i.id')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

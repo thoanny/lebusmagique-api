@@ -84,4 +84,8 @@ class Gw2Api
     public function getAccountAchievement(string $token) {
         return $this->get('/account/achievements', [], [], $token);
     }
+
+    public function getAccount(string $token) {
+        return $this->get('/account', [], [], $token);
+    }
 }

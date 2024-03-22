@@ -267,7 +267,7 @@ class Item
     }
 
     #[Groups(['searchable'])]
-    public function qualityName(): ?string
+    public function getQualityName(): ?string
     {
         $qualityNames = [
             'common' => "Ordinaire",

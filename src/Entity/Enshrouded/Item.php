@@ -265,4 +265,28 @@ class Item
     {
         return ($this->icon) ? "/media/cache/resolve/enshrouded_item_icon_24/uploads/api/enshrouded/items/$this->icon" : null;
     }
+
+    #[Groups(['searchable'])]
+    public function qualityName(): ?string
+    {
+        $qualityNames = [
+            'common' => "Ordinaire",
+            'uncommon' => "Peu courant",
+            'rare' => "Rare",
+            'epic' => "Épique",
+            'legendary' => "Légendaire"
+        ];
+
+        if(!isset($qualityNames[$this->quality])) {
+            return $this->quality;
+        }
+
+        return $qualityNames[$this->quality];
+    }
+
+    #[Groups(['searchable'])]
+    public function hasRecipes(): ?bool
+    {
+        return $this->recipes > 0;
+    }
 }

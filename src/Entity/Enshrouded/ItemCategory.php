@@ -13,11 +13,11 @@ class ItemCategory
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['categories', 'item', 'items', 'recipe', 'searchable'])]
+    #[Groups(['categories', 'item', 'items', 'recipe'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['categories', 'item', 'items', 'recipe'])]
+    #[Groups(['categories', 'item', 'items', 'recipe', 'searchable'])]
     private ?string $name = null;
 
     public function getId(): ?int

@@ -285,7 +285,7 @@ class Item
     }
 
     #[Groups(['searchable'])]
-    public function hasRecipes(): ?bool
+    public function getHasRecipes(): ?bool
     {
         return count($this->recipes) > 0;
     }

@@ -1,0 +1,10 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Modifier une icône{% endblock %}
+
+{% block body %}
+    {% include '_breadcrumbs.html.twig' with {items: ['Enshrouded', 'Carte interactive', 'Icônes', 'Modifier']} %}
+    <h1>Modifier une icône</h1>
+    {{ include('admin/enshrouded/map_icon/_form.html.twig') }}
+    {{ include('admin/enshrouded/map_icon/_delete_form.html.twig') }}
+{% endblock %}

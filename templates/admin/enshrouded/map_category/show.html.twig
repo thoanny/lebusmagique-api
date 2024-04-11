@@ -1,0 +1,45 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Catégorie : {{ map_category.name }}{% endblock %}
+
+{% block body %}
+    {% include '_breadcrumbs.html.twig' with {items: ['Enshrouded', 'Carte interactive', 'Catégories', 'Afficher']} %}
+
+    <h1>Catégorie : {{ map_category.name }}</h1>
+
+    <table class="table rounded-lg shadow w-full my-4">
+        <tbody>
+            <tr>
+                <th width="1">Id</th>
+                <td>{{ map_category.id }}</td>
+            </tr>
+            <tr>
+                <th>Uid</th>
+                <td>{{ map_category.uid }}</td>
+            </tr>
+            <tr>
+                <th>Intitulé</th>
+                <td>{{ map_category.name }}</td>
+            </tr>
+            <tr>
+                <th>Visible</th>
+                <td>{{ map_category.visible ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Suivi</th>
+                <td>{{ map_category.checked ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Icône du menu</th>
+                <td>{% if map_category.iconMenu %}<img src="{{ vich_uploader_asset(map_category) }}" alt="">{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="flex gap-4 justify-between">
+        <a href="{{ path('app_admin_enshrouded_map_category_edit', {'id': map_category.id}) }}" class="btn btn-primary">Modifier</a>
+        <a href="{{ path('app_admin_enshrouded_map_category_index') }}" class="btn btn-outline">Retourner à la liste</a>
+    </div>
+
+    {{ include('admin/enshrouded/map_category/_delete_form.html.twig') }}
+{% endblock %}

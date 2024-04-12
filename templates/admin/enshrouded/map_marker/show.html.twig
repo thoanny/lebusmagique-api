@@ -34,8 +34,12 @@
                 <td>{{ map_marker.posY }}</td>
             </tr>
             <tr>
-                <th>Image</th>
-                <td>{% if map_marker.image %}<img src="{{ vich_uploader_asset(map_marker) }}" alt="">{% endif %}</td>
+                <th>Image (960x540)</th>
+                <td>{% if map_marker.image %}<img src="{{ vich_uploader_asset(map_marker)|imagine_filter('960x540') }}" alt="">{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Image (384x216)</th>
+                <td>{% if map_marker.image %}<img src="{{ vich_uploader_asset(map_marker)|imagine_filter('384x216') }}" alt="">{% endif %}</td>
             </tr>
             <tr>
                 <th>Vidéo</th>

@@ -1,8 +1,9 @@
 # All available configuration can be found here:
 # https://www.algolia.com/doc/api-client/symfony/configuration/
-algolia_search:
-    prefix: '%env(APP_ENV)%_'
-    indices:
-        - name: enshrouded_items
-          class: App\Entity\Enshrouded\Item
-          enable_serializer_groups: true
+when@prod:
+  algolia_search:
+      prefix: '%env(APP_ENV)%_'
+      indices:
+          - name: enshrouded_items
+            class: App\Entity\Enshrouded\Item
+            enable_serializer_groups: true

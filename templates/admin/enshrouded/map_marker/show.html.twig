@@ -1,0 +1,57 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Marqueur : {{ map_marker.name }}{% endblock %}
+
+{% block body %}
+    {% include '_breadcrumbs.html.twig' with {items: ['Enshrouded', 'Carte interactive', 'Icônes', 'Afficher']} %}
+
+    <h1>Marqueur : {{ map_marker.name }}</h1>
+
+    <table class="table rounded-lg shadow w-full my-4">
+        <tbody>
+            <tr>
+                <th width="1">Id</th>
+                <td>{{ map_marker.id }}</td>
+            </tr>
+            <tr>
+                <th>Uid</th>
+                <td>{{ map_marker.uid }}</td>
+            </tr>
+            <tr>
+                <th>Intitulé</th>
+                <td>{{ map_marker.name }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ map_marker.description }}</td>
+            </tr>
+            <tr>
+                <th>PosX</th>
+                <td>{{ map_marker.posX }}</td>
+            </tr>
+            <tr>
+                <th>PosY</th>
+                <td>{{ map_marker.posY }}</td>
+            </tr>
+            <tr>
+                <th>Image (960x540)</th>
+                <td>{% if map_marker.image %}<img src="{{ vich_uploader_asset(map_marker)|imagine_filter('960x540') }}" alt="">{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Image (384x216)</th>
+                <td>{% if map_marker.image %}<img src="{{ vich_uploader_asset(map_marker)|imagine_filter('384x216') }}" alt="">{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Vidéo</th>
+                <td>{{ map_marker.video }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="flex gap-4 justify-between">
+        <a href="{{ path('app_admin_enshrouded_map_marker_edit', {'id': map_marker.id}) }}" class="btn btn-primary">Modifier</a>
+        <a href="{{ path('app_admin_enshrouded_map_marker_index') }}" class="btn btn-outline">Retourner à la liste</a>
+    </div>
+
+    {{ include('admin/enshrouded/map_marker/_delete_form.html.twig') }}
+{% endblock %}

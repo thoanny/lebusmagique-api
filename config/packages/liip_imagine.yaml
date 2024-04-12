@@ -2,6 +2,7 @@
 liip_imagine:
     # valid drivers options include "gd" or "gmagick" or "imagick"
     driver: "gd"
+    messenger: true
     filter_sets:
 
         # name our filter set "my_thumb_filter"
@@ -29,3 +30,15 @@ liip_imagine:
             filters:
                 downscale:
                     max: [ 24, 24 ]
+        960x540:
+            quality: 80
+            filters:
+                fixed:
+                    width: 960
+                    height: 540
+        384x216:
+            quality: 80
+            filters:
+                fixed:
+                    width: 384
+                    height: 216

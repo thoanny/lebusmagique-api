@@ -40,11 +40,21 @@
                 <td>{{ item.equippable }}</td>
             </tr>
             <tr>
-                <th>Icône</th>
+                <th>Icône (96x96)</th>
                 <td>
-                    {% if item.icon %}
-                        <img src="{{ vich_uploader_asset(item) }}" alt="">
-                    {% endif %}
+                    {% if item.icon %}<img src="{{ vich_uploader_asset(item)|imagine_filter('enshrouded_item_icon_96') }}" alt="">{% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Icône (48x48)</th>
+                <td>
+                    {% if item.icon %}<img src="{{ vich_uploader_asset(item)|imagine_filter('enshrouded_item_icon_48') }}" alt="">{% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Icône (24x24)</th>
+                <td>
+                    {% if item.icon %}<img src="{{ vich_uploader_asset(item)|imagine_filter('enshrouded_item_icon_24') }}" alt="">{% endif %}
                 </td>
             </tr>
         </tbody>

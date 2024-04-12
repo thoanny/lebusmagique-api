@@ -248,26 +248,8 @@ class Item
         return $this->icon;
     }
 
-    #[Groups(['item', 'items', 'recipe', 'recipes'])]
-    public function getIcon96x96(): ?string
-    {
-        return ($this->icon) ? "/media/cache/resolve/enshrouded_item_icon_96/uploads/api/enshrouded/items/$this->icon" : null;
-    }
-
-    #[Groups(['item', 'items', 'recipe', 'recipes'])]
-    public function getIcon48x48(): ?string
-    {
-        return ($this->icon) ? "/media/cache/resolve/enshrouded_item_icon_48/uploads/api/enshrouded/items/$this->icon" : null;
-    }
-
-    #[Groups(['item', 'items', 'recipe', 'recipes'])]
-    public function getIcon24x24(): ?string
-    {
-        return ($this->icon) ? "/media/cache/resolve/enshrouded_item_icon_24/uploads/api/enshrouded/items/$this->icon" : null;
-    }
-
     #[Groups(['searchable'])]
-    public function qualityName(): ?string
+    public function getQualityName(): ?string
     {
         $qualityNames = [
             'common' => "Ordinaire",
@@ -285,8 +267,8 @@ class Item
     }
 
     #[Groups(['searchable'])]
-    public function hasRecipes(): ?bool
+    public function getHasRecipes(): ?bool
     {
-        return $this->recipes > 0;
+        return count($this->recipes) > 0;
     }
 }

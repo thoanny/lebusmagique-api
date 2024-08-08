@@ -1,0 +1,87 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Ticket index{% endblock %}
+
+{% block body %}
+    {% include '_breadcrumbs.html.twig' with {items: ['Le Bus Magique', 'Tickets', 'Tickets']} %}
+
+    <h1>Tickets</h1>
+
+    <table class="table w-full">
+        <thead>
+            <tr>
+                <th width="1">#</th>
+                <th>Compte</th>
+                <th>Âge</th>
+                <th>Notif.</th>
+                <th>Ticket</th>
+                <th>Statut</th>
+                <th width="1">&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ticket in tickets %}
+            <tr>
+                <td>{{ ticket.id }}</td>
+                <td>
+                    <strong>{{ ticket.accountName }}</strong>
+                    {% for access in ticket.accountAccess %}
+                        <span class="badge badge-primary badge-sm">
+                            {% if access == 'GuildWars2' %}
+                                GW2
+                            {% elseif access == 'PlayForFree' %}
+                                F2P
+                            {% elseif access == 'HeartOfThorns' %}
+                                HoT
+                            {% elseif access == 'PathOfFire' %}
+                                PoF
+                            {% elseif access == 'EndOfDragons' %}
+                                EoD
+                            {% else %}
+                                {{ access }}
+                            {% endif %}
+                        </span>
+                    {% endfor %}
+                    <br />
+                    {% for guild in ticket.accountGuilds %}
+                        <span class="badge badge-secondary badge-sm">
+                            {{ guild }}
+                        </span>
+                    {% endfor %}
+                </td>
+                <td>{{ ticket.accountCreated|format_datetime('medium', 'short') }}</td>
+                <td>{{ ticket.emailSent ? 'Yes' : 'No' }}</td>
+                <td>
+                    {{ ticket.updatedAt ? '[U] '~ticket.updatedAt|date('Y-m-d H:i:s') : '[C] '~ticket.createdAt|date('Y-m-d H:i:s') }}
+                </td>
+                <td>{{ ('LBM.Ticket.'~ticket.status)|trans }}</td>
+                <td>
+                    <a href="{{ path('app_admin_lbm_ticket_ticket_show', {'id': ticket.id}) }}" class="btn btn-sm btn-primary btn-outline btn-square">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                    </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .table :where(th, td) {
+           white-space: normal;
+        }
+
+        .badge {
+            white-space: nowrap;
+        }
+    </style>
+{% endblock %}

@@ -2,10 +2,14 @@
 
 namespace App\Controller\Api\Lbm;
 
+use App\Entity\Lbm\Ticket\Ticket;
 use App\Repository\Lbm\Ticket\GuildRepository;
+use App\Repository\Lbm\Ticket\TicketRepository;
 use App\Service\Api;
 use App\Service\Gw2Api;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +26,10 @@ class TicketController extends AbstractController
         return $this->json([]);
     }
 
-    #[Route('/api/lbm/tickets/request', name: 'app_api_lbm_tickets_request', methods: ['POST'])]
+    /**
+     * @throws \Exception
+     */
+    #[Route('/api/lbm/tickets/new', name: 'app_api_lbm_tickets_new', methods: ['POST'])]
     #[OA\Tag(name: 'LBM')]
     public function appApiLbmTicketsRequest(Request $request, Api $api, Gw2Api $gw2Api, EntityManagerInterface $em, GuildRepository $guildRepository): JsonResponse
     {
@@ -47,12 +54,19 @@ class TicketController extends AbstractController
             return $api->respondBadRequest("Guild Wars 2 API error");
         }
 
-        $ticketRequest = (new \App\Entity\Lbm\Ticket\Request())
+        // TODO : vérifier qu'il n'est pas blacklisté
+        // TODO : vérifier qu'il n'existe pas une demande avec cette adresse e-mail+guilde
+        // TODO : vérifier qu'il n'existe pas une demande avec ce nom de compte+guilde
+
+        $guilds = $gw2Api->getAccountGuildsName($account['guilds']);
+
+        $ticketRequest = (new Ticket())
             ->setEmail($email)
             ->setAccountName($account['name'])
-            ->setAccountAge($account['age'])
+            ->setAccountCreated(new \DateTime($account['created']))
             ->setAccountAccess($account['access'])
-            ->setAccountGuilds($account['guilds'])
+            ->setAccountGuilds($guilds)
+            ->setGuild($guildExists)
             ->setStatus('pending')
             ->setEmailSent(false)
             ->setCreatedAt(new \DateTimeImmutable())
@@ -61,14 +75,41 @@ class TicketController extends AbstractController
         $em->persist($ticketRequest);
         $em->flush();
 
-        return $api->respondCreated('Ticket request successfully created');
+        return new JsonResponse([
+            'accountname' => $account['name'],
+            'email' => $email
+        ], 201);
     }
 
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
     #[Route('/api/lbm/tickets/check', name: 'app_api_lbm_tickets_check', methods: ['POST'])]
     #[OA\Tag(name: 'LBM')]
-    public function appApiLbmTicketsCheck(): JsonResponse
+    public function appApiLbmTicketsCheck(Request $request, Api $api, TicketRepository $ticketRepository): JsonResponse
     {
-        return $this->json([]);
+        $request = $api->transformJsonBody($request);
+        $accountName = $request->get('accountname');
+        $email = $request->get('email');
+
+        $data = [];
+
+        $tickets = $ticketRepository->findBy(['accountName' => $accountName, 'email' => $email], ['id' => 'DESC']);
+        foreach($tickets as $ticket) {
+            $previous = $ticketRepository->countPreviousTickets($ticket->getId(), $ticket->getGuild()->getId());
+            $data[] = [
+                'guild' => $ticket->getGuild()->getName(),
+                'status' => $ticket->getStatus(),
+                'previous' => $previous
+            ];
+        }
+
+        return new JsonResponse([
+            'accountname' => $accountName,
+            'email' => $email,
+            'data' => $data
+        ]);
     }
 
     #[Route('/api/lbm/tickets/guilds', name: 'app_api_lbm_tickets_guilds', methods: ['GET'])]

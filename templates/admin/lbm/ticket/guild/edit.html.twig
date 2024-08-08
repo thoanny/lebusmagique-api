@@ -1,0 +1,10 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Edit Guild{% endblock %}
+
+{% block body %}
+    {% include '_breadcrumbs.html.twig' with {items: ['Le Bus Magique', 'Tickets', 'Guildes', 'Modifier']} %}
+    <h1>Modifier la guilde</h1>
+    {{ include('admin/lbm/ticket/guild/_form.html.twig') }}
+    {{ include('admin/lbm/ticket/guild/_delete_form.html.twig') }}
+{% endblock %}

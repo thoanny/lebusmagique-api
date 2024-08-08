@@ -7,10 +7,12 @@ use App\Repository\Enshrouded\RecipeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use OpenApi\Attributes as OA;
 
 class SitemapController extends AbstractController
 {
-    #[Route('/api/enshrouded/sitemap', name: 'app_api_enshrouded_sitemap')]
+    #[Route('/api/enshrouded/sitemap', name: 'app_api_enshrouded_sitemap', methods: ['GET'])]
+    #[OA\Tag(name: 'Enshrouded')]
     public function appApiEnshroudedSitemap(ItemRepository $itemRepository, RecipeRepository $recipeRepository): JsonResponse
     {
         $sitemap = [];

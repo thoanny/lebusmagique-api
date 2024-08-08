@@ -2,13 +2,13 @@
 
 namespace App\Entity\Lbm\Ticket;
 
-use App\Repository\Lbm\Ticket\RequestRepository;
+use App\Repository\Lbm\Ticket\TicketRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: RequestRepository::class)]
-#[ORM\Table(name: 'lbm_ticket_request')]
-class Request
+#[ORM\Entity(repositoryClass: TicketRepository::class)]
+#[ORM\Table(name: 'lbm_ticket')]
+class Ticket
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -20,9 +20,6 @@ class Request
 
     #[ORM\Column(type: Types::ARRAY)]
     private array $accountAccess = [];
-
-    #[ORM\Column]
-    private ?int $accountAge = null;
 
     #[ORM\Column(type: Types::ARRAY, nullable: true)]
     private ?array $accountGuilds = null;
@@ -45,6 +42,9 @@ class Request
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?Guild $guild = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $accountCreated = null;
 
     public function getId(): ?int
     {
@@ -71,18 +71,6 @@ class Request
     public function setAccountAccess(array $accountAccess): static
     {
         $this->accountAccess = $accountAccess;
-
-        return $this;
-    }
-
-    public function getAccountAge(): ?int
-    {
-        return $this->accountAge;
-    }
-
-    public function setAccountAge(int $accountAge): static
-    {
-        $this->accountAge = $accountAge;
 
         return $this;
     }
@@ -167,6 +155,18 @@ class Request
     public function setGuild(?Guild $guild): static
     {
         $this->guild = $guild;
+
+        return $this;
+    }
+
+    public function getAccountCreated(): ?\DateTimeInterface
+    {
+        return $this->accountCreated;
+    }
+
+    public function setAccountCreated(\DateTimeInterface $accountCreated): static
+    {
+        $this->accountCreated = $accountCreated;
 
         return $this;
     }

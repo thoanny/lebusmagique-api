@@ -1,0 +1,46 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Validate{% endblock %}
+
+{% block body %}
+    <h1>Validate</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ validate.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ validate.title }}</td>
+            </tr>
+            <tr>
+                <th>Leader</th>
+                <td>{{ validate.leader }}</td>
+            </tr>
+            <tr>
+                <th>Players</th>
+                <td>{{ validate.players ? validate.players|join(', ') : '' }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ validate.createdAt ? validate.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ validate.updatedAt ? validate.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Active</th>
+                <td>{{ validate.active ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_admin_lbm_ticket_validate_index') }}">back to list</a>
+
+    <a href="{{ path('app_admin_lbm_ticket_validate_edit', {'id': validate.id}) }}">edit</a>
+
+    {{ include('admin/lbm/ticket/validate/_delete_form.html.twig') }}
+{% endblock %}

@@ -71,11 +71,26 @@ class ItemType extends AbstractType
                     'class' => 'toggle toggle-primary'
                 ]
             ])
+            ->add('isDecoration', CheckboxType::class, [
+                'mapped' => false,
+                'required' => false,
+                'label' => 'Décoration',
+                'label_attr' => [
+                    'class' => 'label-text'
+                ],
+                'attr' => [
+                    'class' => 'toggle toggle-primary'
+                ]
+            ])
             ->add('fish', FishType::class, [
                 'label' => false,
                 'required' => false,
             ])
             ->add('bait', BaitType::class, [
+                'label' => false,
+                'required' => false,
+            ])
+            ->add('decoration', DecorationType::class, [
                 'label' => false,
                 'required' => false,
             ])

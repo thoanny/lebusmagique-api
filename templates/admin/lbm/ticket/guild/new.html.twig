@@ -1,0 +1,9 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}New Guild{% endblock %}
+
+{% block body %}
+    {% include '_breadcrumbs.html.twig' with {items: ['Le Bus Magique', 'Tickets', 'Guildes', 'Ajouter']} %}
+    <h1>Ajouter une guilde</h1>
+    {{ include('admin/lbm/ticket/guild/_form.html.twig') }}
+{% endblock %}

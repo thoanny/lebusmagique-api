@@ -82,5 +82,6 @@
     "Gw2.WizardVault.Period.special": "Spécial",
     "Gw2.WizardVault.Type.pve": "JcE",
     "Gw2.WizardVault.Type.pvp": "JcJ",
-    "Gw2.WizardVault.Type.wvw": "McM"
+    "Gw2.WizardVault.Type.wvw": "McM",
+    "LBM.Ticket.pending": "En attente"
 }

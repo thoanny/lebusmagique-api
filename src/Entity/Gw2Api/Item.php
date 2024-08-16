@@ -2,6 +2,7 @@
 
 namespace App\Entity\Gw2Api;
 
+use App\Entity\Gw2\Decoration;
 use App\Entity\Gw2\Fish\Bait;
 use App\Entity\Gw2\Fish\Fish;
 use App\Repository\Gw2Api\ItemRepository;
@@ -21,11 +22,11 @@ class Item
     private ?int $id = null;
 
     #[ORM\Column(unique: true)]
-    #[Groups(['item', 'fish'])]
+    #[Groups(['item', 'fish', 'decorations-categories', 'decoration'])]
     private ?int $uid = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['item', 'fish'])]
+    #[Groups(['item', 'fish', 'decorations-categories', 'decoration'])]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -40,7 +41,7 @@ class Item
     private ?string $subtype = null;
 
     #[ORM\Column(length: 25)]
-    #[Groups(['item', 'fish'])]
+    #[Groups(['item', 'fish', 'decoration'])]
     private ?string $rarity = null;
 
     #[ORM\Column(nullable: true)]
@@ -58,6 +59,7 @@ class Item
     private ?string $inventoryManagerTip = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['decoration'])]
     private ?string $obteningTip = null;
 
     #[ORM\OneToOne(mappedBy: 'item', cascade: ['persist', 'remove'])]
@@ -65,7 +67,7 @@ class Item
     private ?ItemPrice $itemPrice = null;
 
     #[ORM\OneToMany(mappedBy: 'item', targetEntity: Recipe::class, cascade: ['persist'], orphanRemoval: true)]
-    #[Groups('item')]
+    #[Groups(['item', 'decoration'])]
     private Collection $recipes;
 
     #[ORM\OneToOne(mappedBy: 'item', cascade: ['persist', 'remove'], orphanRemoval: true)]
@@ -73,6 +75,9 @@ class Item
 
     #[ORM\OneToOne(mappedBy: 'item', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private ?Fish $fish = null;
+
+    #[ORM\OneToOne(mappedBy: 'item', cascade: ['persist', 'remove'], orphanRemoval: true)]
+    private ?Decoration $decoration = null;
 
     public function __construct()
     {
@@ -306,8 +311,30 @@ class Item
         return $this;
     }
 
-    #[Groups(['fish'])]
+    #[Groups(['fish', 'decorations-categories', 'decoration'])]
     public function getIcon() {
         return (isset($this->data['icon'])) ? $this->data['icon'] : null;
+    }
+
+    public function getDecoration(): ?Decoration
+    {
+        return $this->decoration;
+    }
+
+    public function setDecoration(?Decoration $decoration): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($decoration === null && $this->decoration !== null) {
+            $this->decoration->setItem(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($decoration !== null && $decoration->getItem() !== $this) {
+            $decoration->setItem($this);
+        }
+
+        $this->decoration = $decoration;
+
+        return $this;
     }
 }

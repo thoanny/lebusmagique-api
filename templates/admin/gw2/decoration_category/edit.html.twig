@@ -1,0 +1,10 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Modifier une catégorie de décorations{% endblock %}
+
+{% block body %}
+    {% include '_breadcrumbs.html.twig' with {items: ['Guild Wars 2', 'Décorations', 'Catégories', 'Modifier']} %}
+    <h1>Modifier une catégorie de décorations</h1>
+    {{ include('admin/gw2/decoration_category/_form.html.twig') }}
+    {{ include('admin/gw2/decoration_category/_delete_form.html.twig') }}
+{% endblock %}

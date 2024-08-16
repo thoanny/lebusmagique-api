@@ -88,4 +88,22 @@ class Gw2Api
     public function getAccount(string $token) {
         return $this->get('/account', [], [], $token);
     }
+
+    public function getGuild($id) {
+        return $this->get('/guild/:id', ['id' => $id]);
+    }
+
+    public function getAccountGuildsName($ids): array
+    {
+        $guilds = [];
+
+        foreach($ids as $id) {
+            $guild = $this->getGuild($id);
+            if($guild) {
+                $guilds[] = "[{$guild['tag']}] {$guild['name']}";
+            }
+        }
+
+        return $guilds;
+    }
 }

@@ -46,3 +46,7 @@ vich_uploader:
             uri_prefix: /uploads/api/enshrouded/map/images
             upload_destination: '%kernel.project_dir%/public/uploads/api/enshrouded/map/images'
             namer: Vich\UploaderBundle\Naming\UniqidNamer
+        gw2_decoration_thumbnail:
+            uri_prefix: /uploads/api/gw2/decorations
+            upload_destination: '%kernel.project_dir%/public/uploads/api/gw2/decorations'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer

@@ -114,6 +114,29 @@
             </div>
         </div>
 
+        <div class="form-control">
+            <label class="cursor-pointer label justify-start gap-2">
+                {{ form_widget(form.isDecoration, {attr: {checked: ((item.decoration) ? true : false)}}) }}
+                {{ form_label(form.isDecoration) }}
+            </label>
+        </div>
+
+        <div id="decorationFields" class="hidden border border-secondary rounded-lg bg-white p-6 mb-6">
+            <h2>Décoration</h2>
+            <div class="form-control">
+                <label class="label">{{ form_label(form.decoration.type) }}</label>
+                {{ form_widget(form.decoration.type) }}
+            </div>
+            <div class="form-control">
+                <label class="label">{{ form_label(form.decoration.category, 'Catégorie') }}</label>
+                {{ form_widget(form.decoration.category, {attr: {class: 'select select-bordered w-full'}}) }}
+            </div>
+            <div class="form-control">
+                <label class="label">{{ form_label(form.decoration.thumbnailFile) }}</label>
+                {{ form_widget(form.decoration.thumbnailFile) }}
+            </div>
+        </div>
+
         <div class="mt-4">
             {{ form_row(form.submit) }}
         </div>
@@ -131,11 +154,16 @@
         const isFishBait = document.querySelector('input#item_isFishBait');
         const fishBaitFields = document.getElementById('fishBaitFields');
 
+        const isDecoration = document.querySelector('input#item_isDecoration');
+        const decorationFields = document.getElementById('decorationFields');
+
         function handleFishFields() {
             if(isFish.checked) {
                 fishFields.classList.remove('hidden');
                 isFishBait.checked = false;
+                isDecoration.checked = false;
                 handleFishBaitFields();
+                handleDecorationFields();
             } else {
                 fishFields.classList.add('hidden');
             }
@@ -145,14 +173,29 @@
             if(isFishBait.checked) {
                 fishBaitFields.classList.remove('hidden');
                 isFish.checked = false;
+                isDecoration.checked = false;
                 handleFishFields();
+                handleDecorationFields()
             } else {
                 fishBaitFields.classList.add('hidden');
             }
         }
 
+        function handleDecorationFields() {
+            if(isDecoration.checked) {
+                decorationFields.classList.remove('hidden');
+                isFish.checked = false;
+                isFishBait.checked = false;
+                handleFishFields();
+                handleFishBaitFields();
+            } else {
+                decorationFields.classList.add('hidden');
+            }
+        }
+
         handleFishFields();
         handleFishBaitFields();
+        handleDecorationFields();
 
         isFish.addEventListener('change', (e) => {
             handleFishFields();
@@ -160,6 +203,10 @@
 
         isFishBait.addEventListener('change', (e) => {
             handleFishBaitFields();
+        });
+
+        isDecoration.addEventListener('change', (e) => {
+            handleDecorationFields();
         });
     </script>
 {% endblock %}

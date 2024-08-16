@@ -77,6 +77,10 @@ class ItemsController extends AbstractController
                 $item->setBait(null);
             }
 
+            if(!$form->get('isDecoration')->getData() && $item->getDecoration()) {
+                $item->setDecoration(null);
+            }
+
             $this->em->persist($item);
             $this->em->flush();
 

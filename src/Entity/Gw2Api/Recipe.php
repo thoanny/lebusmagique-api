@@ -25,7 +25,7 @@ class Recipe
     private ?Item $item = null;
 
     #[ORM\Column]
-    #[Groups('recipe')]
+    #[Groups(['recipe', 'decoration-recipe'])]
     private ?int $quantity = null;
 
     #[ORM\Column]
@@ -33,7 +33,7 @@ class Recipe
     private array $data = [];
 
     #[ORM\OneToMany(mappedBy: 'recipe', targetEntity: RecipeIngredient::class, cascade: ['persist'], orphanRemoval: true)]
-    #[Groups('recipe')]
+    #[Groups(['recipe', 'decoration-recipe'])]
     private Collection $ingredients;
 
     public function __construct()
@@ -100,6 +100,12 @@ class Recipe
     public function getIngredients(): Collection
     {
         return $this->ingredients;
+    }
+
+    #[Groups(['decoration-recipe'])]
+    public function getGuildIngredients(): ?Array
+    {
+        return $this->data['guild_ingredients'];
     }
 
     public function addIngredient(RecipeIngredient $ingredient): self

@@ -129,4 +129,22 @@ class Recipe
 
         return $this;
     }
+
+    #[Groups(['decoration-recipe'])]
+    public function getDisciplines(): ?Array
+    {
+        return $this->data['disciplines'];
+    }
+
+    #[Groups(['decoration-recipe'])]
+    public function getMinRating(): ?int
+    {
+        return $this->data['min_rating'];
+    }
+
+    #[Groups(['decoration-recipe'])]
+    public function getFlags(): ?Array
+    {
+        return $this->data['flags'];
+    }
 }

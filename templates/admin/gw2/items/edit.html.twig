@@ -128,8 +128,8 @@
                 {{ form_widget(form.decoration.type) }}
             </div>
             <div class="form-control">
-                <label class="label">{{ form_label(form.decoration.category, 'Catégorie') }}</label>
-                {{ form_widget(form.decoration.category, {attr: {class: 'select select-bordered w-full'}}) }}
+                <label class="label">{{ form_label(form.decoration.categories, 'Catégories') }}</label>
+                {{ form_widget(form.decoration.categories) }}
             </div>
             <div class="form-control">
                 <label class="label">{{ form_label(form.decoration.thumbnailFile) }}</label>
@@ -209,4 +209,14 @@
             handleDecorationFields();
         });
     </script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        #item_decoration_categories label {
+            margin-right: 1rem;
+            padding-left: .25rem;
+        }
+    </style>
 {% endblock %}

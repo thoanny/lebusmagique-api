@@ -3,7 +3,7 @@
 namespace App\Controller\Admin\Gw2;
 
 use App\Entity\Gw2\DecorationCategory;
-use App\Form\Gw2\DecorationCategoryType;
+use App\Form\Admin\Gw2\DecorationCategoryType;
 use App\Repository\Gw2\DecorationCategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

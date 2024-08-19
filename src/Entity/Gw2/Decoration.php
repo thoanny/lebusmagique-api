@@ -4,6 +4,8 @@ namespace App\Entity\Gw2;
 
 use App\Entity\Gw2Api\Item;
 use App\Repository\Gw2\DecorationRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -24,11 +26,6 @@ class Decoration
     #[Groups(['decorations-categories', 'decoration'])]
     private ?Item $item = null;
 
-    #[ORM\ManyToOne(inversedBy: 'decorations')]
-    #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['decoration'])]
-    private ?DecorationCategory $category = null;
-
     #[Vich\UploadableField(mapping: 'gw2_decoration_thumbnail', fileNameProperty: 'thumbnail')]
     private ?File $thumbnailFile = null;
 
@@ -43,6 +40,15 @@ class Decoration
     #[Groups(['decorations-categories', 'decoration'])]
     private ?string $type = null;
 
+    #[ORM\ManyToMany(targetEntity: DecorationCategory::class, inversedBy: 'decorations')]
+    #[ORM\JoinColumn(nullable: false)]
+    private Collection $categories;
+
+    public function __construct()
+    {
+        $this->categories = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -56,18 +62,6 @@ class Decoration
     public function setItem(?Item $item): static
     {
         $this->item = $item;
-
-        return $this;
-    }
-
-    public function getCategory(): ?DecorationCategory
-    {
-        return $this->category;
-    }
-
-    public function setCategory(?DecorationCategory $category): static
-    {
-        $this->category = $category;
 
         return $this;
     }
@@ -104,6 +98,30 @@ class Decoration
     public function setType(string $type): static
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DecorationCategory>
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(DecorationCategory $category): static
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories->add($category);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(DecorationCategory $category): static
+    {
+        $this->categories->removeElement($category);
 
         return $this;
     }

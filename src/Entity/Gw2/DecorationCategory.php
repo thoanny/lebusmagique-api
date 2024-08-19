@@ -22,7 +22,7 @@ class DecorationCategory
     #[Groups(['decorations-categories'])]
     private ?string $name = null;
 
-    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Decoration::class, orphanRemoval: true)]
+    #[ORM\ManyToMany(targetEntity: Decoration::class, mappedBy: 'categories')]
     #[Groups(['decorations-categories'])]
     private Collection $decorations;
 
@@ -75,11 +75,10 @@ class DecorationCategory
     {
         if ($this->decorations->removeElement($decoration)) {
             // set the owning side to null (unless already changed)
-            if ($decoration->getCategory() === $this) {
-                $decoration->setCategory(null);
-            }
+            $decoration->removeCategory($this);
         }
 
         return $this;
     }
+
 }

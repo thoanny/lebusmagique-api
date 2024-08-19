@@ -3,9 +3,10 @@
 namespace App\Form\Admin\Gw2;
 
 use App\Entity\Gw2\Decoration;
+use App\Entity\Gw2\DecorationCategory;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichImageType;
@@ -30,7 +31,11 @@ class DecorationType extends AbstractType
                     'class' => 'select select-bordered w-full'
                 ]
             ])
-            ->add('category')
+            ->add('categories', EntityType::class, [
+                'class' => DecorationCategory::class,
+                'multiple' => true,
+                'expanded' => true
+            ])
         ;
     }
 

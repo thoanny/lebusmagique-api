@@ -52,6 +52,10 @@ jobs:
       - name: Build assets
         run: npm run build
 
+      - name: Chown user
+        run: |
+          sudo chown -R $USER:$USER $GITHUB_WORKSPACE
+
       - name: Clean unused files and directories
         run: rm -rf .git .github .idea assets node_modules tests .env .env.test .gitignore composer.lock package.json package-lock.json phpunit.xml.dist readme.md symfony.lock webpack.config.js var/cache/prod
 

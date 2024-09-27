@@ -37,7 +37,11 @@ jobs:
           args: --prefer-dist --no-progress --optimize-autoloader
 
       - name: Optimize dependencies
-        run: composer dump-autoload --optimize --classmap-authoritative
+        uses: php-actions/composer@v6
+        with:
+          php_version: "8.2"
+          command: dump-autoload
+          args: --optimize --classmap-authoritative
 
       - name: Install Node & dependencies
         uses: actions/setup-node@v3

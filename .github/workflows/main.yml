@@ -31,7 +31,10 @@ jobs:
             ${{ runner.os }}-php-
 
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --optimize-autoloader
+        uses: php-actions/composer@v6
+        with:
+          php_version: "8.2"
+          args: --prefer-dist --no-progress --optimize-autoloader
 
       - name: Optimize dependencies
         run: composer dump-autoload --optimize --classmap-authoritative

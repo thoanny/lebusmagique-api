@@ -60,8 +60,7 @@
         "twig/extra-bundle": "^3.5",
         "twig/intl-extra": "^3.5",
         "twig/twig": "^2.12|^3.0",
-        "vich/uploader-bundle": "^2.1",
-        "ext-http": "*"
+        "vich/uploader-bundle": "^2.1"
     },
     "config": {
         "allow-plugins": {

@@ -50,6 +50,7 @@ class DecorationCategoryRepository extends ServiceEntityRepository
     public function findAllForApi()
     {
         return $this->createQueryBuilder('c')
+            ->select('c.id', 'c.name')
             ->orderBy('c.name', 'ASC')
             ->getQuery()
             ->getResult()

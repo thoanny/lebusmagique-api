@@ -45,4 +45,28 @@ class DecorationRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    public function findAllForApi()
+    {
+        return $this->createQueryBuilder('d')
+            ->select('d.id', 'i.uid', 'i.name')
+            ->addSelect("JSON_UNQUOTE(JSON_EXTRACT(i.data, '$.icon')) AS icon")
+            ->addSelect('d.type')
+            ->addSelect('c.id AS cid')
+            ->leftJoin('d.item', 'i')
+            ->leftJoin('d.categories', 'c')
+            ->orderBy('i.name', 'ASC')
+            ->addOrderBy('c.name', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function getTotal()
+    {
+        return $this->createQueryBuilder('d')
+            ->select('COUNT(d)')
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
 }

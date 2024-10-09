@@ -27,6 +27,17 @@ Pour générer les fichiers de traductions :
 
 ``php bin/console translation:extract --force fr --format=json``
 
+## Mise en production
+
+Une fois l'action Github terminée, se connecter en SSH : 
+
+```bash
+cd sites/api.lebusmagique.fr
+rm -rf DOCKER_ENV docker_tag Dockerfile-php-build output.log
+php bin/console doctrine:migrations:migrate
+php bin/console cache:clear
+```
+
 ## Commandes
 
 ### genshin:map-markers-update

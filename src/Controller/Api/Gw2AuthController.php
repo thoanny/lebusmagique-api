@@ -32,17 +32,31 @@ class Gw2AuthController extends AbstractController
         $req = $api->transformJsonBody($request);
         $code = $req->get('code');
         $redirect = $req->get('redirect');
+        $refresh = $req->get('refresh', false);
 
         try {
-            $res = $client->request('POST', 'https://gw2auth.com/oauth2/token', [
-                'body' => [
-                    'grant_type' => 'authorization_code',
-                    'code' => $code,
-                    'client_id' => $clientId,
-                    'client_secret' => $clientSecret,
-                    'redirect_uri' => $redirect,
-                ]
-            ]);
+            if($refresh) {
+                $res = $client->request('POST', 'https://gw2auth.com/oauth2/token', [
+                    'body' => [
+                        'grant_type' => 'refresh_token',
+                        'refresh_token' => $code,
+                        'client_id' => $clientId,
+                        'client_secret' => $clientSecret,
+                        'redirect_uri' => $redirect,
+                    ]
+                ]);
+            } else {
+                $res = $client->request('POST', 'https://gw2auth.com/oauth2/token', [
+                    'body' => [
+                        'grant_type' => 'authorization_code',
+                        'code' => $code,
+                        'client_id' => $clientId,
+                        'client_secret' => $clientSecret,
+                        'redirect_uri' => $redirect,
+                    ]
+                ]);
+            }
+
             if($res->getStatusCode() !== 200) {
                 return $this->json([], $res->getStatusCode());
             }

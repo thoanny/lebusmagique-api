@@ -1,0 +1,9 @@
+FROM node:bookworm
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    coreutils \    
+    make
+
+WORKDIR /var/www/project/
+
+CMD tail -f /dev/null

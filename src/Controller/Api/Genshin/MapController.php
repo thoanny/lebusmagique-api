@@ -76,9 +76,9 @@ class MapController extends AbstractController
             $icons[$k]['popupAnchor'] = [(int) $popup[0], (int) $popup[1]];
         }
 
-        list($a, $b) = explode('|', $map['bounds']);
-        list($c, $d) = explode(',', $a);
-        list($e, $f) = explode(',', $b);
+        [$a, $b] = explode('|', $map['bounds']);
+        [$c, $d] = explode(',', $a);
+        [$e, $f] = explode(',', $b);
 
         $map['bounds'] = [$c, $d, $e, $f];
         $map['center'] = explode(',', $map['center']);

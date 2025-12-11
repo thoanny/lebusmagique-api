@@ -162,20 +162,16 @@ class ItemType extends AbstractType
                     'class' => 'form-control'
                 ],
                 'class' => ItemCategory::class,
-                'query_builder' => function (EntityRepository $er): QueryBuilder {
-                    return $er->createQueryBuilder('i')
-                        ->orderBy('i.name', 'ASC');
-                },
+                'query_builder' => fn(EntityRepository $er): QueryBuilder => $er->createQueryBuilder('i')
+                    ->orderBy('i.name', 'ASC'),
                 'choice_label' => 'name',
             ])
             ->add('locations', EntityType::class, [
                 'label' => 'Localisations',
                 'required' => false,
                 'class' => Location::class,
-                'query_builder' => function (EntityRepository $er): QueryBuilder {
-                    return $er->createQueryBuilder('l')
-                        ->orderBy('l.name', 'ASC');
-                },
+                'query_builder' => fn(EntityRepository $er): QueryBuilder => $er->createQueryBuilder('l')
+                    ->orderBy('l.name', 'ASC'),
                 'choice_label' => 'name',
                 'multiple' => true,
                 'expanded' => true,

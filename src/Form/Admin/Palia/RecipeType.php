@@ -58,10 +58,8 @@ class RecipeType extends AbstractType
                     'class' => 'form-control col-span-3'
                 ],
                 'class' => Item::class,
-                'query_builder' => function (EntityRepository $er): QueryBuilder {
-                    return $er->createQueryBuilder('i')
-                        ->orderBy('i.name', 'ASC');
-                },
+                'query_builder' => fn(EntityRepository $er): QueryBuilder => $er->createQueryBuilder('i')
+                    ->orderBy('i.name', 'ASC'),
                 'choice_label' => 'name',
             ])
             ->add('workshop', EntityType::class, [
@@ -76,10 +74,8 @@ class RecipeType extends AbstractType
                     'class' => 'form-control col-span-3'
                 ],
                 'class' => Item::class,
-                'query_builder' => function (EntityRepository $er): QueryBuilder {
-                    return $er->createQueryBuilder('i')
-                        ->orderBy('i.name', 'ASC');
-                },
+                'query_builder' => fn(EntityRepository $er): QueryBuilder => $er->createQueryBuilder('i')
+                    ->orderBy('i.name', 'ASC'),
                 'choice_label' => 'name',
             ])
             ->add('skill', EntityType::class, [
@@ -94,10 +90,8 @@ class RecipeType extends AbstractType
                     'class' => 'form-control'
                 ],
                 'class' => Skill::class,
-                'query_builder' => function (EntityRepository $er): QueryBuilder {
-                    return $er->createQueryBuilder('s')
-                        ->orderBy('s.name', 'ASC');
-                },
+                'query_builder' => fn(EntityRepository $er): QueryBuilder => $er->createQueryBuilder('s')
+                    ->orderBy('s.name', 'ASC'),
                 'choice_label' => 'name',
                 'required' => false,
             ])

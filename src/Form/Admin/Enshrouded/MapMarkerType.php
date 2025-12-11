@@ -24,10 +24,8 @@ class MapMarkerType extends AbstractType
             ->add('category', EntityType::class, [
                 'label' => 'Catégorie',
                 'class' => MapCategory::class,
-                'query_builder' => function (EntityRepository $er): QueryBuilder {
-                    return $er->createQueryBuilder('c')
-                        ->orderBy('c.name', 'ASC');
-                },
+                'query_builder' => fn(EntityRepository $er): QueryBuilder => $er->createQueryBuilder('c')
+                    ->orderBy('c.name', 'ASC'),
                 'choice_label' => 'name',
             ])
             ->add('name', TextType::class, [
@@ -58,20 +56,16 @@ class MapMarkerType extends AbstractType
             ->add('icon', EntityType::class, [
                 'label' => 'Icône',
                 'class' => MapIcon::class,
-                'query_builder' => function (EntityRepository $er): QueryBuilder {
-                    return $er->createQueryBuilder('i')
-                        ->orderBy('i.name', 'ASC');
-                },
+                'query_builder' => fn(EntityRepository $er): QueryBuilder => $er->createQueryBuilder('i')
+                    ->orderBy('i.name', 'ASC'),
                 'choice_label' => 'name',
                 'required' => false
             ])
             ->add('iconChecked', EntityType::class, [
                 'label' => 'Icône (terminé)',
                 'class' => MapIcon::class,
-                'query_builder' => function (EntityRepository $er): QueryBuilder {
-                    return $er->createQueryBuilder('i')
-                        ->orderBy('i.name', 'ASC');
-                },
+                'query_builder' => fn(EntityRepository $er): QueryBuilder => $er->createQueryBuilder('i')
+                    ->orderBy('i.name', 'ASC'),
                 'choice_label' => 'name',
                 'required' => false
             ])

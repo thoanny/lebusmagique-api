@@ -66,10 +66,8 @@ class MapType extends AbstractType
             ])
             ->add('icon', EntityType::class, [
                 'class' => Icon::class,
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('i')
-                        ->orderBy('i.name', 'ASC');
-                },
+                'query_builder' => fn(EntityRepository $er) => $er->createQueryBuilder('i')
+                    ->orderBy('i.name', 'ASC'),
                 'choice_label' => 'name',
                 'label' => 'Icône',
                 'attr' => ['class' => 'select select-bordered'],

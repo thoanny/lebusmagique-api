@@ -24,10 +24,8 @@ class RecipeType extends AbstractType
             ->add('outputItem', EntityType::class, [
                 'label' => 'Objet produit',
                 'class' => Item::class,
-                'query_builder' => function (EntityRepository $er): QueryBuilder {
-                    return $er->createQueryBuilder('i')
-                        ->orderBy('i.name', 'ASC');
-                },
+                'query_builder' => fn(EntityRepository $er): QueryBuilder => $er->createQueryBuilder('i')
+                    ->orderBy('i.name', 'ASC'),
                 'choice_label' => 'name'
             ])
             ->add('outputQuantity', IntegerType::class, [
@@ -40,10 +38,8 @@ class RecipeType extends AbstractType
             ->add('category', EntityType::class, [
                 'label' => 'Catégorie',
                 'class' => RecipeCategory::class,
-                'query_builder' => function (EntityRepository $er): QueryBuilder {
-                    return $er->createQueryBuilder('rc')
-                        ->orderBy('rc.root, rc.lft', 'ASC');
-                },
+                'query_builder' => fn(EntityRepository $er): QueryBuilder => $er->createQueryBuilder('rc')
+                    ->orderBy('rc.root, rc.lft', 'ASC'),
             ])
             ->add('requirements', CollectionType::class, [
                 'entry_type' => RecipeRequirementType::class,

@@ -19,10 +19,8 @@ class RecipeSourceItemType extends AbstractType
             ->add('item', EntityType::class, [
                 'label' => 'Objet',
                 'class' => Item::class,
-                'query_builder' => function (EntityRepository $er): QueryBuilder {
-                    return $er->createQueryBuilder('i')
-                        ->orderBy('i.name', 'ASC');
-                },
+                'query_builder' => fn(EntityRepository $er): QueryBuilder => $er->createQueryBuilder('i')
+                    ->orderBy('i.name', 'ASC'),
                 'choice_label' => 'name',
             ])
         ;

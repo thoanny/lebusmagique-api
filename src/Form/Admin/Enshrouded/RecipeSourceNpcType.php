@@ -19,10 +19,8 @@ class RecipeSourceNpcType extends AbstractType
             ->add('npc', EntityType::class, [
                 'label' => 'Personnage',
                 'class' => Npc::class,
-                'query_builder' => function (EntityRepository $er): QueryBuilder {
-                    return $er->createQueryBuilder('n')
-                        ->orderBy('n.name', 'ASC');
-                },
+                'query_builder' => fn(EntityRepository $er): QueryBuilder => $er->createQueryBuilder('n')
+                    ->orderBy('n.name', 'ASC'),
                 'choice_label' => 'name',
             ])
         ;

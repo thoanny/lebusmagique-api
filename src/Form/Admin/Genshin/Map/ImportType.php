@@ -23,9 +23,7 @@ class ImportType extends AbstractType
                 'attr' => ['class' => 'select select-bordered'],
                 'label_attr' => ['class' => 'label-text'],
                 'class' => Group::class,
-                'choice_label' => function ($group) {
-                    return $group->getTitle() . ' - ' . $group->getSection()->getMap()->getName();
-                }
+                'choice_label' => fn($group) => $group->getTitle() . ' - ' . $group->getSection()->getMap()->getName()
             ])
             ->add('title', TextType::class, [
                 'label' => 'Intitulé des marqueurs',

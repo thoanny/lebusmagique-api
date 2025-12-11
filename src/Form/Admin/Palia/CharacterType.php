@@ -89,10 +89,8 @@ class CharacterType extends AbstractType
                 'label' => 'Localisations',
                 'required' => false,
                 'class' => Location::class,
-                'query_builder' => function (EntityRepository $er): QueryBuilder {
-                    return $er->createQueryBuilder('l')
-                        ->orderBy('l.name', 'ASC');
-                },
+                'query_builder' => fn(EntityRepository $er): QueryBuilder => $er->createQueryBuilder('l')
+                    ->orderBy('l.name', 'ASC'),
                 'choice_label' => 'name',
                 'multiple' => true,
                 'expanded' => true,
@@ -118,10 +116,8 @@ class CharacterType extends AbstractType
                     'class' => 'form-control'
                 ],
                 'class' => CharacterGroup::class,
-                'query_builder' => function (EntityRepository $er): QueryBuilder {
-                    return $er->createQueryBuilder('g')
-                        ->orderBy('g.name', 'ASC');
-                },
+                'query_builder' => fn(EntityRepository $er): QueryBuilder => $er->createQueryBuilder('g')
+                    ->orderBy('g.name', 'ASC'),
                 'choice_label' => 'name',
                 'required' => false,
             ])
@@ -137,10 +133,8 @@ class CharacterType extends AbstractType
                     'class' => 'form-control'
                 ],
                 'class' => Skill::class,
-                'query_builder' => function (EntityRepository $er): QueryBuilder {
-                    return $er->createQueryBuilder('s')
-                        ->orderBy('s.name', 'ASC');
-                },
+                'query_builder' => fn(EntityRepository $er): QueryBuilder => $er->createQueryBuilder('s')
+                    ->orderBy('s.name', 'ASC'),
                 'choice_label' => 'name',
                 'required' => false,
             ])

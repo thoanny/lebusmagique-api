@@ -48,7 +48,7 @@ class RecipeCategory
     #[Gedmo\TreeParent]
     #[ORM\ManyToOne(targetEntity: RecipeCategory::class, inversedBy: 'children')]
     #[ORM\JoinColumn(name: 'parent_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
-    private ?RecipeCategory $parent;
+    private ?RecipeCategory $parent = null;
 
     #[ORM\OneToMany(targetEntity: RecipeCategory::class, mappedBy: 'parent')]
     #[ORM\OrderBy(['lft' => 'ASC'])]

@@ -21,10 +21,8 @@ class RecipeCategoryType extends AbstractType
             ])
             ->add('parent', EntityType::class, [
                 'class' => RecipeCategory::class,
-                'query_builder' => function (EntityRepository $er): QueryBuilder {
-                    return $er->createQueryBuilder('rc')
-                        ->orderBy('rc.root, rc.lft', 'ASC');
-                },
+                'query_builder' => fn(EntityRepository $er): QueryBuilder => $er->createQueryBuilder('rc')
+                    ->orderBy('rc.root, rc.lft', 'ASC'),
                 'required' => false,
             ])
         ;

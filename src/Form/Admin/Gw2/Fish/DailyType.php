@@ -28,13 +28,11 @@ class DailyType extends AbstractType
             ])
             ->add('fish', EntityType::class, [
                 'class' => Fish::class,
-                'query_builder' => function (EntityRepository $er): QueryBuilder {
-                    return $er->createQueryBuilder('f')
-                        ->innerJoin('f.item', 'i')
-                        ->orderBy('i.name', 'ASC')
-                        ->andWhere('i.rarity = :rarity')
-                        ->setParameter('rarity', 'Rare');
-                },
+                'query_builder' => fn(EntityRepository $er): QueryBuilder => $er->createQueryBuilder('f')
+                    ->innerJoin('f.item', 'i')
+                    ->orderBy('i.name', 'ASC')
+                    ->andWhere('i.rarity = :rarity')
+                    ->setParameter('rarity', 'Rare'),
                 'label' => 'Poisson',
                 'row_attr' => [ 'class' => 'form-control' ],
                 'attr' => ['class' => 'select select-bordered w-full'],

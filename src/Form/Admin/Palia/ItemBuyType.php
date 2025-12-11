@@ -75,10 +75,8 @@ class ItemBuyType extends AbstractType
                     'class' => 'form-control'
                 ],
                 'class' => Currency::class,
-                'query_builder' => function (EntityRepository $er): QueryBuilder {
-                    return $er->createQueryBuilder('c')
-                        ->orderBy('c.name', 'ASC');
-                },
+                'query_builder' => fn(EntityRepository $er): QueryBuilder => $er->createQueryBuilder('c')
+                    ->orderBy('c.name', 'ASC'),
                 'choice_label' => 'name',
             ])
             ->add('remove_item', ButtonType::class, [

@@ -36,3 +36,6 @@ yarn-error.log
 ###< liip/imagine-bundle ###
 
 /bruno/.env
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###

@@ -83,19 +83,6 @@ document.getElementById('menu-toggle').addEventListener('click', (e) => {
     document.getElementById('menu').classList.toggle('hidden');
 });
 
-import $ from 'jquery';
-import 'webpack-jquery-ui';
-
-$(document).ready(function() {
-    $('#sortable').sortable({
-        placeholder: "ui-state-highlight"
-    });
-    $("#sortable").disableSelection();
-});
-
-
-
-
 const addFormToCollection = (e) => {
     console.log('click')
     const collectionHolder = document.querySelector('#' + e.currentTarget.dataset.collectionHolderId);

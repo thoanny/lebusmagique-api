@@ -12,7 +12,7 @@ class Uid {
         $uid = '';
 
         for ($i = 0; $i < $limit; $i++) {
-            $uid .= $characters[rand(0, $max)];
+            $uid .= $characters[random_int(0, $max)];
         }
 
         return $uid;

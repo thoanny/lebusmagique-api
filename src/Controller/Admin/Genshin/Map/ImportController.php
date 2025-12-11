@@ -37,7 +37,7 @@ class ImportController extends AbstractController
 
                 $marker = (new Marker())
                     ->setActive(false)
-                    ->setTitle( (isset($m->title)) ? $m->title : str_replace('##', (int) $m->id, $form->get('title')->getData()) )
+                    ->setTitle( $m->title ?? str_replace('##', (int) $m->id, $form->get('title')->getData()) )
                     ->setMarkerGroup($group)
                     ->setX($m->coords[0])
                     ->setY($m->coords[1]);

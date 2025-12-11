@@ -313,7 +313,7 @@ class Item
 
     #[Groups(['fish', 'decorations-categories', 'decoration'])]
     public function getIcon() {
-        return (isset($this->data['icon'])) ? $this->data['icon'] : null;
+        return $this->data['icon'] ?? null;
     }
 
     public function getDecoration(): ?Decoration

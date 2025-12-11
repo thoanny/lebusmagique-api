@@ -3,7 +3,6 @@
     "User.Role.ROLE_ADMIN": "Administrateur",
     "User.Role.ROLE_MANAGER": "Manager",
     "User.Role.ROLE_GW2": "GW2",
-    "User.Role.ROLE_GENSHIN": "Genshin",
     "Gw2.Item.Type.Armor": "Armure",
     "Gw2.Item.Type.Back": "Objet de dos",
     "Gw2.Item.Type.Bag": "Sac",

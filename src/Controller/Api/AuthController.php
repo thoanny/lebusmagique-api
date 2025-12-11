@@ -39,7 +39,6 @@ class AuthController extends AbstractController
         $user->setPassword($hasher->hashPassword($user, $password));
         $user->setEmail($email);
         $user->setNickname($nickname);
-        $user->setCreatedAt(new \DateTimeImmutable());
 
         $em->persist($user);
         $em-> flush();

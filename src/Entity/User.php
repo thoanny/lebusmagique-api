@@ -4,11 +4,14 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[ORM\HasLifecycleCallbacks]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -99,17 +102,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * Returning a salt is only needed, if you are not using a modern
-     * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
-     *
-     * @see UserInterface
-     */
-    public function getSalt(): ?string
-    {
-        return null;
-    }
-
-    /**
      * @see UserInterface
      */
     public function eraseCredentials()
@@ -118,7 +110,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function toArray() {
+    public function toArray(): array
+    {
         return [
             'nickname' => $this->nickname,
             'avatar' => $this->getAvatar()
@@ -138,6 +131,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    #[ORM\PrePersist]
+    public function setCreatedAtValue(): self
+    {
+        $this->createdAt = new \DateTimeImmutable();
 
         return $this;
     }
@@ -168,7 +169,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getAvatar(): string
     {
-        // TODO : ajouter un choix d'avatar parmis une liste (GW2 + Genshin)
+        // TODO : ajouter un choix d'avatar parmis une liste
         return $this->getGravatar();
     }
 

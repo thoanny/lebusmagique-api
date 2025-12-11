@@ -11,7 +11,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: FishRepository::class)]
 #[ORM\Table(name: 'gw2_fish')]
-class Fish
+class Fish implements \Stringable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -226,6 +226,6 @@ class Fish
 
     public function __toString(): string
     {
-        return $this->item->getName();
+        return (string) $this->item->getName();
     }
 }

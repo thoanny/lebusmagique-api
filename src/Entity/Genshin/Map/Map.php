@@ -10,7 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: MapRepository::class)]
 #[ORM\Table(name: 'genshin_map')]
-class Map
+class Map implements \Stringable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -220,7 +220,7 @@ class Map
         return $this->slug;
     }
 
-    public function __toString() {
-        return $this->name;
+    public function __toString(): string {
+        return (string) $this->name;
     }
 }

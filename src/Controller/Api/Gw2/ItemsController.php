@@ -23,21 +23,8 @@ use OpenApi\Attributes as OA;
 class ItemsController extends AbstractController
 {
 
-    private ItemRepository $itemRepository;
-    private ItemPriceRepository $itemPriceRepository;
-    private RecipeRepository $recipeRepository;
-    private Gw2Api $Gw2Api;
-    private Api $api;
-    private EntityManagerInterface $em;
-
-    public function __construct(ItemRepository $itemRepository, ItemPriceRepository $itemPriceRepository, RecipeRepository $recipeRepository, Gw2Api $Gw2Api, Api $api, EntityManagerInterface $em)
+    public function __construct(private ItemRepository $itemRepository, private ItemPriceRepository $itemPriceRepository, private RecipeRepository $recipeRepository, private Gw2Api $Gw2Api, private Api $api, private EntityManagerInterface $em)
     {
-        $this->itemRepository = $itemRepository;
-        $this->itemPriceRepository = $itemPriceRepository;
-        $this->recipeRepository = $recipeRepository;
-        $this->Gw2Api = $Gw2Api;
-        $this->api = $api;
-        $this->em = $em;
     }
 
     protected function getGw2Item($uid, $withRecipes = true) {

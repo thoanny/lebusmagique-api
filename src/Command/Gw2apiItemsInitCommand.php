@@ -21,17 +21,9 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 )]
 class Gw2apiItemsInitCommand extends Command
 {
-    private Gw2Api $Gw2Api;
-    private ItemRepository $itemRepository;
-    private EntityManagerInterface $em;
-    private ParameterBagInterface $parameterBag;
-    public function __construct( Gw2Api $Gw2Api, ItemRepository $itemRepository, EntityManagerInterface $em, ParameterBagInterface $parameterBag, string $name = null)
+    public function __construct( private Gw2Api $Gw2Api, private ItemRepository $itemRepository, private EntityManagerInterface $em, private ParameterBagInterface $parameterBag, string $name = null)
     {
         parent::__construct($name);
-        $this->Gw2Api = $Gw2Api;
-        $this->itemRepository = $itemRepository;
-        $this->em = $em;
-        $this->parameterBag = $parameterBag;
     }
 
     protected function configure(): void

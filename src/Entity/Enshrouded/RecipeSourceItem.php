@@ -8,7 +8,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: RecipeSourceItemRepository::class)]
 #[ORM\Table(name: 'enshrouded_recipe_source_item')]
-class RecipeSourceItem extends RecipeSource
+class RecipeSourceItem extends RecipeSource implements \Stringable
 {
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]

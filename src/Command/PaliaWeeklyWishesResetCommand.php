@@ -13,14 +13,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 #[AsCommand(name: 'palia:weekly-wishes-reset')]
 class PaliaWeeklyWishesResetCommand extends Command
 {
-    private EntityManagerInterface $entityManager;
-    private CharacterWishRepository $characterWishRepository;
-
-    public function __construct(EntityManagerInterface $entityManager, CharacterWishRepository $characterWishRepository, string $name = null)
+    public function __construct(private EntityManagerInterface $entityManager, private CharacterWishRepository $characterWishRepository, string $name = null)
     {
         parent::__construct($name);
-        $this->entityManager = $entityManager;
-        $this->characterWishRepository = $characterWishRepository;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

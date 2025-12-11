@@ -15,7 +15,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 #[ORM\Entity(repositoryClass: ItemRepository::class)]
 #[ORM\Table(name: 'palia_item')]
 #[Vich\Uploadable]
-class Item
+class Item implements \Stringable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -385,7 +385,7 @@ class Item
 
     public function __toString(): string
     {
-        return $this->name;
+        return (string) $this->name;
     }
 
     public function getSlug()

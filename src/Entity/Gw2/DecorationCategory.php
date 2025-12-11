@@ -10,7 +10,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: DecorationCategoryRepository::class)]
 #[ORM\Table(name: 'gw2_decoration_category')]
-class DecorationCategory
+class DecorationCategory implements \Stringable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -50,7 +50,7 @@ class DecorationCategory
 
     public function __toString(): string
     {
-        return $this->name;
+        return (string) $this->name;
     }
 
     /**

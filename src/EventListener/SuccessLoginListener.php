@@ -5,11 +5,8 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 class SuccessLoginListener
 {
-    private EntityManagerInterface $em;
-
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(private EntityManagerInterface $em)
     {
-        $this->em = $em;
     }
 
     public function onSecurityInteractiveLogin(InteractiveLoginEvent $event): void

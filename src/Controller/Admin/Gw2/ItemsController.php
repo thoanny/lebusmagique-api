@@ -16,11 +16,8 @@ use Symfony\Component\Routing\Annotation\Route;
 #[IsGranted('ROLE_GW2')]
 class ItemsController extends AbstractController
 {
-    private EntityManagerInterface $em;
-
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(private EntityManagerInterface $em)
     {
-        $this->em = $em;
     }
 
     #[Route('/admin/gw2/items', name: 'app_admin_gw2_items')]

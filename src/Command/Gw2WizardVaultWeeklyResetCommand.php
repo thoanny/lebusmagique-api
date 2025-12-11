@@ -17,15 +17,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 class Gw2WizardVaultWeeklyResetCommand extends Command
 {
-    private EntityManagerInterface $entityManager;
-
-    private WizardVaultObjectiveRepository $objectiveRepository;
-
-    public function __construct(EntityManagerInterface $entityManager, WizardVaultObjectiveRepository $objectiveRepository, string $name = null)
+    public function __construct(private EntityManagerInterface $entityManager, private WizardVaultObjectiveRepository $objectiveRepository, string $name = null)
     {
         parent::__construct($name);
-        $this->entityManager = $entityManager;
-        $this->objectiveRepository = $objectiveRepository;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

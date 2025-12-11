@@ -8,11 +8,9 @@ use Symfony\Component\HttpClient\HttpClient;
 class Gw2Api
 {
     private string $locale = 'fr';
-    private ParameterBagInterface $parameterBag;
 
-    public function __construct(ParameterBagInterface $parameterBag)
+    public function __construct(private ParameterBagInterface $parameterBag)
     {
-        $this->parameterBag = $parameterBag;
     }
 
     public function get($endpoint = null, $data = [], $attr = [], $token = null)

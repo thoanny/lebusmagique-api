@@ -21,16 +21,9 @@ use Symfony\Component\Console\Question\Question;
 class GenshinMapMarkersUpdateCommand extends Command
 {
 
-    private MapRepository $mapRepository;
-    private MarkerRepository $markerRepository;
-    private $entityManager;
-
-    public function __construct(MapRepository $mapRepository, MarkerRepository $markerRepository, EntityManagerInterface $entityManager)
+    public function __construct(private MapRepository $mapRepository, private MarkerRepository $markerRepository, private EntityManagerInterface $entityManager)
     {
         parent::__construct();
-        $this->mapRepository = $mapRepository;
-        $this->markerRepository = $markerRepository;
-        $this->entityManager = $entityManager;
     }
 
     protected function configure(): void

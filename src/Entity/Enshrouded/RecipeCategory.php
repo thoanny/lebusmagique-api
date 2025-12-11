@@ -12,7 +12,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: NestedTreeRepository::class)]
 #[ORM\Table(name: 'enshrouded_recipe_category')]
 #[Gedmo\Tree(type: 'nested')]
-class RecipeCategory
+class RecipeCategory implements \Stringable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

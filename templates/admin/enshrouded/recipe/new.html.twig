@@ -1,9 +1,0 @@
-{% extends 'admin.html.twig' %}
-
-{% block title %}Ajouter une recette{% endblock %}
-
-{% block body %}
-    {% include '_breadcrumbs.html.twig' with {items: ['Enshrouded', 'Recettes', 'Ajouter']} %}
-    <h1>Ajouter une recette</h1>
-    {{ include('admin/enshrouded/recipe/_form.html.twig') }}
-{% endblock %}

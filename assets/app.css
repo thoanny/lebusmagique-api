@@ -1,5 +1,8 @@
-@import 'style.css';
+@import "tailwindcss";
+@plugin "daisyui";
+@source not "../../public";
 
-html, body {
-    @apply h-full;
+body {
+    min-height: 100dvh;
+    padding: 1rem;
 }

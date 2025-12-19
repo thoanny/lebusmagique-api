@@ -19,7 +19,7 @@ class HomepageController extends AbstractController
      * @throws NonUniqueResultException
      * @throws NoResultException
      */
-    #[Route('/admin', name: 'app_admin_homepage')]
+    #[Route('/admin-old', name: 'app_admin_homepage')]
     public function appAdminHomepage(
         MapRepository $mapRepository,
         SectionRepository $sectionRepository,

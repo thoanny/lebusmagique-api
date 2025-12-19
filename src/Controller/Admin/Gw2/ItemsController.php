@@ -20,7 +20,7 @@ class ItemsController extends AbstractController
     {
     }
 
-    #[Route('/admin/gw2/items', name: 'app_admin_gw2_items')]
+    #[Route('/admin-old/gw2/items', name: 'app_admin_gw2_items')]
     public function appAdminGw2Items(ItemRepository $itemRepository, Request $request, PaginatorInterface $paginator): Response
     {
         $filters = [
@@ -47,7 +47,7 @@ class ItemsController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/gw2/items/{id}', name: 'app_admin_gw2_item_edit')]
+    #[Route('/admin-old/gw2/items/{id}', name: 'app_admin_gw2_item_edit')]
     public function appAdminGw2ItemEdit($id, ItemRepository $itemRepository, Request $request, FishRepository $fishRepository): Response
     {
         $item = $itemRepository->findOneBy(['id' => $id]);

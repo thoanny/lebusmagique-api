@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/admin/lbm/tickets/validates')]
+#[Route('/admin-old/lbm/tickets/validates')]
 class ValidateController extends AbstractController
 {
     #[Route('/', name: 'app_admin_lbm_ticket_validate_index', methods: ['GET'])]

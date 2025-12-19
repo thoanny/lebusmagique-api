@@ -1,16 +1,20 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="w-screen h-screen flex flex-col items-center justify-center gap-6">
-        <div>Bonjour {{ app.user.nickname }}</div>
-        {% if is_granted('ROLE_USER') %}
-            <a class="btn btn-error" href="{{ path('app_logout') }}">Logout</a>
-        {% else %}
-            <a href="{{ path('app_login') }}" class="btn btn-ghost">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
-                </svg>
-            </a>
-        {% endif %}
+    <div class="card bg-base-100 shadow-sm max-w-xs mx-auto">
+        <div class="card-body">
+            <div class="avatar mx-auto">
+                <div class="ring-primary ring-offset-base-100 w-24 rounded-full ring-2 ring-offset-2">
+                    <img src="{{ app.user.avatar }}" />
+                </div>
+            </div>
+            <div class="card-title text-center justify-center">{{ app.user.nickname }}</div>
+            <div class="card-actions flex-col">
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('admin') }}" class="btn w-full">Administration</a>
+                {% endif %}
+                <a class="btn btn-error w-full" href="{{ path('app_logout') }}">Déconnexion</a>
+            </div>
+        </div>
     </div>
 {% endblock %}

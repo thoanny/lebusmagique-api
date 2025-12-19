@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[IsGranted('ROLE_GW2')]
 class WizardVaultController extends AbstractController
 {
-    #[Route('/admin/gw2/wizard-vault/objectives', name: 'app_admin_gw2_wizard_vault_objectives')]
+    #[Route('/admin-old/gw2/wizard-vault/objectives', name: 'app_admin_gw2_wizard_vault_objectives')]
     public function appAdminGw2WizardVaultObjectives(WizardVaultObjectiveRepository $objectiveRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $filters = [
@@ -35,7 +35,7 @@ class WizardVaultController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/gw2/wizard-vault/objectives/edit/{id}', name: 'app_admin_gw2_wizard_vault_objective_edit', defaults: ['id' => null])]
+    #[Route('/admin-old/gw2/wizard-vault/objectives/edit/{id}', name: 'app_admin_gw2_wizard_vault_objective_edit', defaults: ['id' => null])]
     public function appAdminGw2WizardVaultObjectiveEdit(WizardVaultObjectiveRepository $objectiveRepository, Request $request, EntityManagerInterface $em, $id): Response
     {
         if($id) {
@@ -74,7 +74,7 @@ class WizardVaultController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/gw2/wizard-vault/objectives/delete/{id}', name: 'app_admin_gw2_wizard_vault_objective_delete')]
+    #[Route('/admin-old/gw2/wizard-vault/objectives/delete/{id}', name: 'app_admin_gw2_wizard_vault_objective_delete')]
     #[IsGranted('ROLE_ADMIN')]
     public function appAdminGw2WizardVaultObjectiveDelete(WizardVaultObjectiveRepository $objectiveRepository, EntityManagerInterface $em, $id): RedirectResponse
     {

@@ -17,6 +17,11 @@ framework:
     php_errors:
         log: true
 
+    http_client:
+        default_options:
+            headers:
+                'User-Agent': 'LeBusMagique/1.0.0 api.lebusmagique.fr'
+
 when@test:
     framework:
         test: true

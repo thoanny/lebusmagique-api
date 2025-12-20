@@ -4,10 +4,13 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
-    gw2.api.url: 'https://api.guildwars2.com/v2'
+    aleeva.api.key: '%env(ALEEVA_API_KEY)%'
     api.uploads.gw2.items: '%kernel.project_dir%/public/uploads/api/gw2/items'
+    gw2.api.url: 'https://api.guildwars2.com/v2'
     mailer.from.email: '%env(MAILER_FROM_EMAIL)%'
     mailer.from.name: '%env(MAILER_FORM_NAME)%'
+    lbm.discord.id: '%env(LBM_DISCORD_ID)%'
+    lbm.event.image: '/uploads/lbm/events'
 services:
     # default configuration for services in *this* file
     _defaults:

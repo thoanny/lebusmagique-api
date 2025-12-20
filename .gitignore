@@ -41,3 +41,4 @@ phpstan.neon
 ###< phpstan/phpstan ###
 
 .idea/
+.env.dev

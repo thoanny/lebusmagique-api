@@ -6,7 +6,7 @@ use App\Repository\Palia\ItemRepository;
 use App\Service\ImageEncoded;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use OpenApi\Attributes as OA;
 

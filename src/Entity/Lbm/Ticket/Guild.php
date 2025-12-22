@@ -5,7 +5,7 @@ namespace App\Entity\Lbm\Ticket;
 use App\Repository\Lbm\Ticket\GuildRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: GuildRepository::class)]
 #[ORM\Table(name: 'lbm_ticket_guild')]

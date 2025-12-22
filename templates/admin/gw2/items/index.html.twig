@@ -52,9 +52,6 @@
                 {% elseif filters.is == 'fish-bait' %}
                     <th class="text-center">Puissance</th>
                 {% endif %}
-                {% if not filters.is %}
-                    <th class="text-center">Black Market</th>
-                {% endif %}
                 <th width="1">&nbsp;</th>
             </tr>
         </thead>
@@ -87,19 +84,6 @@
                         <td class="text-center">{{ item.achievementName }}</td>
                     {% elseif filters.is == 'fish-bait' %}
                         <td class="text-center">{{ item.fishBaitPower }}</td>
-                    {% endif %}
-                    {% if not filters.is %}
-                        <td class="text-center">
-                            {% if item.blackmarket %}
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mx-auto text-success">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                            {% else %}
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mx-auto text-error">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                            {% endif %}
-                        </td>
                     {% endif %}
                     <td>
                         <div class="flex gap-3">

@@ -4,7 +4,7 @@ namespace App\Entity\Enshrouded;
 
 use App\Repository\RecipeSourceItemRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: RecipeSourceItemRepository::class)]
 #[ORM\Table(name: 'enshrouded_recipe_source_item')]

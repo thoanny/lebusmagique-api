@@ -3,14 +3,12 @@
 namespace App\Entity\Gw2Api;
 
 use App\Entity\Gw2\Decoration;
-use App\Entity\Gw2\Fish\Bait;
-use App\Entity\Gw2\Fish\Fish;
 use App\Repository\Gw2Api\ItemRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: ItemRepository::class)]
 #[ORM\Table(name: 'gw2_api_item')]
@@ -22,11 +20,11 @@ class Item
     private ?int $id = null;
 
     #[ORM\Column(unique: true)]
-    #[Groups(['item', 'fish', 'decorations-categories', 'decoration'])]
+    #[Groups(['item', 'decorations-categories', 'decoration'])]
     private ?int $uid = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['item', 'fish', 'decorations-categories', 'decoration'])]
+    #[Groups(['item', 'decorations-categories', 'decoration'])]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -41,12 +39,12 @@ class Item
     private ?string $subtype = null;
 
     #[ORM\Column(length: 25)]
-    #[Groups(['item', 'fish', 'decoration'])]
+    #[Groups(['item', 'decoration'])]
     private ?string $rarity = null;
 
     #[ORM\Column(nullable: true)]
     #[Groups('item')]
-    private ?bool $blackmarket = null;
+    private ?bool $blackmarket = null; // TODO : remove blackmarket
 
     #[ORM\Column]
     #[Groups(['item'])]
@@ -69,12 +67,6 @@ class Item
     #[ORM\OneToMany(mappedBy: 'item', targetEntity: Recipe::class, cascade: ['persist'], orphanRemoval: true)]
     #[Groups(['item', 'decoration'])]
     private Collection $recipes;
-
-    #[ORM\OneToOne(mappedBy: 'item', cascade: ['persist', 'remove'], orphanRemoval: true)]
-    private ?Bait $bait = null;
-
-    #[ORM\OneToOne(mappedBy: 'item', cascade: ['persist', 'remove'], orphanRemoval: true)]
-    private ?Fish $fish = null;
 
     #[ORM\OneToOne(mappedBy: 'item', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private ?Decoration $decoration = null;
@@ -268,50 +260,7 @@ class Item
         return $this;
     }
 
-    public function getBait(): ?Bait
-    {
-        return $this->bait;
-    }
-
-    public function setBait(?Bait $bait): static
-    {
-        // unset the owning side of the relation if necessary
-        if($bait === null && $this->bait !== null) {
-            $this->bait->setItem(null);
-        }
-        // set the owning side of the relation if necessary
-        if ($bait !== null && $bait->getItem() !== $this) {
-            $bait->setItem($this);
-        }
-
-        $this->bait = $bait;
-
-        return $this;
-    }
-
-    public function getFish(): ?Fish
-    {
-        return $this->fish;
-    }
-
-    public function setFish(?Fish $fish): static
-    {
-        // unset the owning side of the relation if necessary
-        if ($fish === null && $this->fish !== null) {
-            $this->fish->setItem(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($fish !== null && $fish->getItem() !== $this) {
-            $fish->setItem($this);
-        }
-
-        $this->fish = $fish;
-
-        return $this;
-    }
-
-    #[Groups(['fish', 'decorations-categories', 'decoration'])]
+    #[Groups(['decorations-categories', 'decoration'])]
     public function getIcon() {
         return $this->data['icon'] ?? null;
     }

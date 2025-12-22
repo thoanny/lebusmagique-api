@@ -4,7 +4,7 @@ namespace App\Entity\Gw2Api;
 
 use App\Repository\Gw2Api\ItemPriceRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: ItemPriceRepository::class)]
 #[ORM\Table(name: 'gw2_api_item_price')]

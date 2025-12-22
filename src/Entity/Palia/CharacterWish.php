@@ -4,7 +4,7 @@ namespace App\Entity\Palia;
 
 use App\Repository\Palia\CharacterWishRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: CharacterWishRepository::class)]
 #[ORM\Table(name: 'palia_character_wish')]

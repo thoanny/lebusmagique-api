@@ -5,8 +5,7 @@ namespace App\Entity\Genshin\Map;
 use App\Repository\Genshin\Map\IconRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Vich\UploaderBundle\Mapping\Attribute as Vich;
 
 #[ORM\Entity(repositoryClass: IconRepository::class)]
 #[ORM\Table(name: 'genshin_map_icon')]

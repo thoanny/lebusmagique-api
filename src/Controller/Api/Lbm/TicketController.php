@@ -14,13 +14,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
-use OpenApi\Attributes as OA;
 use Symfony\Component\Serializer\SerializerInterface;
 
 class TicketController extends AbstractController
 {
     #[Route('/api/lbm/tickets/validate', name: 'app_api_lbm_tickets_validate', methods: ['POST'])]
-    #[OA\Tag(name: 'LBM')]
     public function appApiLbmTicketsValidate(): JsonResponse
     {
         return $this->json([]);
@@ -30,7 +28,6 @@ class TicketController extends AbstractController
      * @throws \Exception
      */
     #[Route('/api/lbm/tickets/new', name: 'app_api_lbm_tickets_new', methods: ['POST'])]
-    #[OA\Tag(name: 'LBM')]
     public function appApiLbmTicketsRequest(Request $request, Api $api, Gw2Api $gw2Api, EntityManagerInterface $em, GuildRepository $guildRepository): JsonResponse
     {
         $request = $api->transformJsonBody($request);
@@ -86,7 +83,6 @@ class TicketController extends AbstractController
      * @throws NoResultException
      */
     #[Route('/api/lbm/tickets/check', name: 'app_api_lbm_tickets_check', methods: ['POST'])]
-    #[OA\Tag(name: 'LBM')]
     public function appApiLbmTicketsCheck(Request $request, Api $api, TicketRepository $ticketRepository): JsonResponse
     {
         $request = $api->transformJsonBody($request);
@@ -113,7 +109,6 @@ class TicketController extends AbstractController
     }
 
     #[Route('/api/lbm/tickets/guilds', name: 'app_api_lbm_tickets_guilds', methods: ['GET'])]
-    #[OA\Tag(name: 'LBM')]
     public function appApiLbmTicketsGuilds(GuildRepository $guildRepository, SerializerInterface $serializer): JsonResponse
     {
         $guilds = $guildRepository->findBy(['active' => true], ['sortOrder' => 'ASC', 'name' => 'ASC']);

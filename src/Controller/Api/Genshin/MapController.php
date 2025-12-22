@@ -14,7 +14,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use OpenApi\Attributes as OA;
 
 class MapController extends AbstractController
 {
@@ -29,7 +28,6 @@ class MapController extends AbstractController
      * @throws NonUniqueResultException
      */
     #[Route('/api/genshin/map/{slug}', name: 'app_api_genshin_map', defaults: ['slug' => null], methods: ['GET'])]
-    #[OA\Tag(name: 'Genshin')]
     public function index(MapRepository $mapRepository, SectionRepository $sectionRepository, GroupRepository $groupRepository, MarkerRepository $markerRepository, IconRepository $iconRepository, Api $api, $slug): Response
     {
         $map = $mapRepository->findOneBySlug($slug);

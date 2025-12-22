@@ -9,12 +9,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
-use OpenApi\Attributes as OA;
 
 class RecipeController extends AbstractController
 {
     #[Route('/api/enshrouded/recipes', name: 'app_api_enshrouded_recipes', methods: ['GET'])]
-    #[OA\Tag(name: 'Enshrouded')]
     public function appApiEnshroudedRecipes(
         SerializerInterface $serializer,
         RecipeCategoryRepository $recipeCategoryRepository,
@@ -25,7 +23,6 @@ class RecipeController extends AbstractController
     }
 
     #[Route('/api/enshrouded/recipes/sources', name: 'app_api_enshrouded_recipes_sources', methods: ['GET'])]
-    #[OA\Tag(name: 'Enshrouded')]
     public function appApiEnshroudedRecipesSources(
         SerializerInterface $serializer,
         RecipeSourceRepository $recipeSourceRepository
@@ -36,7 +33,6 @@ class RecipeController extends AbstractController
     }
 
     #[Route('/api/enshrouded/recipes/{id}', name: 'app_api_enshrouded_recipe', methods: ['GET'])]
-    #[OA\Tag(name: 'Enshrouded')]
     public function appApiEnsourdedRecipe($id, RecipeRepository $recipeRepository, SerializerInterface $serializer): JsonResponse {
         $recipe = $recipeRepository->findOneBy(['id'=>$id]);
         return new JsonResponse($serializer->serialize($recipe, 'json', ['groups' => ['recipe']]), 200, [], true);

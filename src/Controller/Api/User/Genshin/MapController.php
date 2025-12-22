@@ -14,7 +14,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
-use OpenApi\Attributes as OA;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_USER')]
@@ -28,7 +27,6 @@ class MapController extends AbstractController
      * Marqueurs enregistrés de l'utilisateur
      */
     #[Route('/api/user/genshin/map/{slug}', name: 'app_api_user_genshin_map', methods: ['GET'])]
-    #[OA\Tag(name: 'Genshin')]
     public function appApiUserGenshinMap($slug, MapRepository $mapRepository, UserMarkerRepository $userMarkerRepository, Api $api): JsonResponse
     {
         $user = $this->getUser();
@@ -52,7 +50,6 @@ class MapController extends AbstractController
     }
 
     #[Route('/api/user/genshin/map/marker', name: 'app_api_user_genshin_map_marker', methods: ['POST'])]
-    #[OA\Tag(name: 'Genshin')]
     public function appApiUserGenshinMapMarker(MapRepository $mapRepository, MarkerRepository $markerRepository, UserMarkerRepository $userMarkerRepository, Api $api, Request $request, EntityManagerInterface $em): JsonResponse
     {
         $request = $api->transformJsonBody($request);
@@ -113,7 +110,6 @@ class MapController extends AbstractController
      * Réinitialiser le suivi des marqueurs
      */
     #[Route('/api/user/genshin/map/markers/reset', name: 'app_api_user_genshin_map_markers_reset', methods: ['POST'])]
-    #[OA\Tag(name: 'Genshin')]
     public function appApiUserGenshinMapMarkersReset(MapRepository $mapRepository, UserMarkerRepository $userMarkerRepository, Api $api, Request $request, EntityManagerInterface $em): JsonResponse
     {
 

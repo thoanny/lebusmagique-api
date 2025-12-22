@@ -18,7 +18,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
-use OpenApi\Attributes as OA;
 
 class ItemsController extends AbstractController
 {
@@ -154,7 +153,6 @@ class ItemsController extends AbstractController
     }
 
     #[Route('/api/gw2/items/{uid}', name: 'app_api_gw2_item', methods: ['GET'])]
-    #[OA\Tag(name: 'GW2')]
     public function appApiGw2Item(int $uid, SerializerInterface $serializer): JsonResponse
     {
         $item = $this->getGw2Item($uid);
@@ -166,7 +164,6 @@ class ItemsController extends AbstractController
     }
 
     #[Route('/api/gw2/items', name: 'app_api_gw2_items', methods: ['GET'])]
-    #[OA\Tag(name: 'GW2')]
     public function appApiGw2Items(SerializerInterface $serializer): JsonResponse
     {
         $items = $this->itemRepository->findBy([], ['updatedAt' => 'DESC'], 25);

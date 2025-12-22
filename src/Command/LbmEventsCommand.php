@@ -9,6 +9,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -36,7 +37,12 @@ class LbmEventsCommand extends Command
 
     protected function configure(): void
     {
-
+        $this
+            ->addOption(
+                name: 'clean',
+                mode: InputOption::VALUE_NONE,
+            )
+        ;
     }
 
     /**
@@ -49,6 +55,24 @@ class LbmEventsCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
+
+        $cleanOption = $input->getOption('clean');
+        if($cleanOption) {
+            $events = $this->em->getRepository(Event::class)->findOutdatedEventsForCleanup();
+
+            $progressBar = new ProgressBar($output, count($events));
+            $progressBar->start();
+
+            foreach($events as $event) {
+                $this->em->remove($event);
+                $this->em->flush();
+                $progressBar->advance();
+            }
+
+            $progressBar->finish();
+            $io->success(sprintf('LBM Events: %d cleaned', count($events)));
+            return Command::SUCCESS;
+        }
 
         try {
             $key = $this->parameter->get('aleeva.api.key');

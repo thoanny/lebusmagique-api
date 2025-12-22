@@ -40,4 +40,14 @@ class EventRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function findOutdatedEventsForCleanup(): array
+    {
+        return $this->createQueryBuilder('e')
+            ->where('e.startAt <= :past')
+            ->setParameter('past', (new \DateTimeImmutable())->modify('-7 months'))
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

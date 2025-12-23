@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Lbm\Event\Event;
+use App\Entity\Lbm\Event\Role;
 use App\Entity\Lbm\Ticket\Blacklist;
 use App\Entity\Lbm\Ticket\Guild;
 use App\Entity\User;
@@ -23,7 +24,8 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Administration');
+            ->setTitle('Administration')
+        ;
     }
 
     public function configureMenuItems(): iterable
@@ -34,7 +36,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::subMenu('Événements')
             ->setSubItems([
                 MenuItem::linkToCrud('Événements', 'fa fa-calendar', Event::class),
-                MenuItem::linkToCrud('Rôles', 'fa fa-user-tag', Guild::class),
+                MenuItem::linkToCrud('Rôles', 'fa fa-user-tag', Role::class),
                 MenuItem::linkToCrud('Statistiques', 'fa fa-chart-column', Guild::class),
             ]);
         yield MenuItem::subMenu('Tickets')

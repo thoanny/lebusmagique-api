@@ -18,9 +18,48 @@ Si vous souhaitez partiper au développement de l'API du Bus Magique, contactez 
 Si vous rencontrez des bugs, des erreurs ou si vous souhaitez partager des idées d'améliorations, de fonctionnalités, vous avez la possibilité d'[ouvrir un ticket](https://github.com/thoanny/lebusmagique-api/issues) (requiert un compte Github).
 ## Développement
 
+### Démarrer la machine
 ```bash
-  symfony server:start
+  make up
 ```
+
+### Premier lancement
+
+#### Accèder à la console sur le serveur
+```bash
+make bash
+```
+
+#### Installer les librairires Composer (Docker)
+```bash
+composer install
+```
+
+#### Exécuter les migrations (Docker)
+```bash
+php bin/console doctrine:migrations:migrate
+```
+
+#### Importer les fixtures (Docker)
+```bash
+php bin/console doctrine:fixtures:load
+```
+
+#### Générer les clés JWT (Docker)
+```bash
+php bin/console lexik:jwt:generate-keypair
+```
+
+#### Installer les librairies NPM (local)
+```bash
+npm i
+```
+
+#### Générer les assets (local)
+```bash
+npm run dev
+```
+
 ## Traductions
 
 Pour générer les fichiers de traductions :
@@ -29,6 +68,10 @@ Pour générer les fichiers de traductions :
 
 ## Commandes
 
-### genshin:map-markers-update
+### php bin/console lbm:events
 
-Mettre à jour les positions X et Y des marqueurs d'une carte de Genshin Impact.
+Ajouter/mettre à jour les événements.
+
+### php bin/console lbm:events --clean
+
+Supprimer les événements startAt > 7 mois.

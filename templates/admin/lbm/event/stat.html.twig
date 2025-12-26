@@ -1,0 +1,53 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block page_title %}Statistiques{% endblock %}
+{% block content_title %}Statistiques{% endblock %}
+
+{% block main %}
+    <table class="table datagrid">
+        <thead>
+            <tr>
+                <th>
+                    <span>Nom de compte</span>
+                </th>
+                <th class="text-center">
+                    <span>Rôle</span>
+                </th>
+                {% for month, count in total %}
+                <th class="text-center">
+                    <span>{{ month == 'TOTAL' ? 'LBM.Event.TOTAL'|trans : month|format_date(pattern: 'LLL yyyy')|capitalize }}</span>
+                </th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+        {% for username, events in users %}
+            <tr>
+                <td>
+                    <strong>{{ username }}</strong>
+                </td>
+                <td class="text-center">
+                    {{ roles[username] is defined ? ('LBM.Event.Role.'~roles[username])|trans : 'LBM.Event.Role.NONE'|trans }}
+                </td>
+                {% for date, count in events %}
+                    <td class="text-center {{ count == 0 ? 'text-danger table-danger' : 'text-success table-success' }}">
+                        {{ count }}
+                    </td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr class="table-light">
+                <th colspan="2">
+                    <span>TOTAL</span>
+                </th>
+                {% for month, count in total %}
+                    <th class="text-center">
+                        <span>{{ count }}</span>
+                    </th>
+                {% endfor %}
+            </tr>
+        </tfoot>
+    </table>
+{% endblock %}

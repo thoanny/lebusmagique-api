@@ -82,5 +82,10 @@
     "Gw2.WizardVault.Type.pve": "JcE",
     "Gw2.WizardVault.Type.pvp": "JcJ",
     "Gw2.WizardVault.Type.wvw": "McM",
-    "LBM.Ticket.pending": "En attente"
+    "LBM.Ticket.pending": "En attente",
+    "LBM.Event.TOTAL": "Total",
+    "LBM.Event.Role.NONE": "Sans rôle",
+    "LBM.Event.Role.ORGA": "Organisateur",
+    "LBM.Event.Role.EXT": "Lead ext.",
+    "LBM.Event.Role.STREAM": "Streamer"
 }

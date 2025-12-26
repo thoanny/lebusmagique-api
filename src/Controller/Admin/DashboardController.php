@@ -37,7 +37,7 @@ class DashboardController extends AbstractDashboardController
             ->setSubItems([
                 MenuItem::linkToCrud('Événements', 'fa fa-calendar', Event::class),
                 MenuItem::linkToCrud('Rôles', 'fa fa-user-tag', Role::class),
-                MenuItem::linkToCrud('Statistiques', 'fa fa-chart-column', Guild::class),
+                MenuItem::linkToRoute('Statistiques', 'fa fa-chart-column', 'admin_lbm_event_stat_index'),
             ]);
         yield MenuItem::subMenu('Tickets')
             ->setSubItems([

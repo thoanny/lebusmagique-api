@@ -63,4 +63,16 @@ class EventRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    public function findForStatistics(string $start, string $end)
+    {
+        return $this->createQueryBuilder('e')
+            ->where('e.startAt >= :start')
+            ->andWhere('e.startAt <= :end')
+            ->setParameter('start', $start)
+            ->setParameter('end', $end)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

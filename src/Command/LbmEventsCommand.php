@@ -3,6 +3,7 @@
 namespace App\Command;
 
 use App\Entity\Lbm\Event\Event;
+use App\Repository\Lbm\Event\EventRepository;
 use App\Service\ImageFromUrlUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -13,6 +14,11 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Notifier\Bridge\Discord\DiscordOptions;
+use Symfony\Component\Notifier\Bridge\Discord\Embeds\DiscordEmbed;
+use Symfony\Component\Notifier\Bridge\Discord\Embeds\DiscordFieldEmbedObject;
+use Symfony\Component\Notifier\ChatterInterface;
+use Symfony\Component\Notifier\Message\ChatMessage;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
@@ -29,7 +35,9 @@ class LbmEventsCommand extends Command
         private ParameterBagInterface $parameter,
         private HttpClientInterface $client,
         private EntityManagerInterface $em,
-        private ImageFromUrlUploader $imageFromUrlUploader
+        private ImageFromUrlUploader $imageFromUrlUploader,
+        private EventRepository $eventRepository,
+        private ChatterInterface $chatter,
     )
     {
         parent::__construct();
@@ -43,35 +51,33 @@ class LbmEventsCommand extends Command
                 mode: InputOption::VALUE_NONE,
             )
         ;
+        $this
+            ->addOption(
+                name: 'discord',
+                mode: InputOption::VALUE_NONE,
+            )
+        ;
     }
 
     /**
-     * @throws RedirectionExceptionInterface
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int
      * @throws ClientExceptionInterface
-     * @throws \DateMalformedStringException
-     * @throws TransportExceptionInterface
+     * @throws RedirectionExceptionInterface
      * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 
-        $cleanOption = $input->getOption('clean');
-        if($cleanOption) {
-            $events = $this->em->getRepository(Event::class)->findOutdatedEventsForCleanup();
+        if($input->getOption('clean')) {
+            return $this->execCleanEvents($input, $output);
+        }
 
-            $progressBar = new ProgressBar($output, count($events));
-            $progressBar->start();
-
-            foreach($events as $event) {
-                $this->em->remove($event);
-                $this->em->flush();
-                $progressBar->advance();
-            }
-
-            $progressBar->finish();
-            $io->success(sprintf('LBM Events: %d cleaned', count($events)));
-            return Command::SUCCESS;
+        if($input->getOption('discord')) {
+            return $this->execDiscordEvents($input, $output);
         }
 
         try {
@@ -106,7 +112,7 @@ class LbmEventsCommand extends Command
             foreach($data['content'] as $event) {
                 $progressBar->advance();
 
-                $lbmEvent = $this->em->getRepository(Event::class)->findOneBy(['uid' => $event['id']]);
+                $lbmEvent = $this->eventRepository->findOneBy(['uid' => $event['id']]);
                 if($lbmEvent)  {
                     if(
                         sha1(json_encode([
@@ -174,5 +180,81 @@ class LbmEventsCommand extends Command
             $io->error($e->getMessage());
             return Command::FAILURE;
         }
+    }
+
+    private function execCleanEvents(InputInterface $input, OutputInterface $output): int
+    {
+        $io = new SymfonyStyle($input, $output);
+
+        $events = $this->eventRepository->findOutdatedEventsForCleanup();
+
+        $progressBar = new ProgressBar($output, count($events));
+        $progressBar->start();
+
+        foreach($events as $event) {
+            $this->em->remove($event);
+            $this->em->flush();
+            $progressBar->advance();
+        }
+
+        $progressBar->finish();
+        $io->success(sprintf('LBM Events: %d cleaned', count($events)));
+        return Command::SUCCESS;
+    }
+
+    /**
+     * @throws \Symfony\Component\Notifier\Exception\TransportExceptionInterface
+     */
+    private function execDiscordEvents(InputInterface $input, OutputInterface $output): int
+    {
+        $io = new SymfonyStyle($input, $output);
+
+        $chatMessage = (new ChatMessage(':oncoming_bus::busstop: Inscrivez-vous à tous nos événements dans le canal <#696050811108720790> de notre Discord.'))
+            ->transport('discord');
+        $embed = new DiscordEmbed();
+
+        $events = $this->eventRepository->findNextDaysEvents(10);
+        $data = [];
+
+        foreach($events as $event) {
+            $day = $event->getStartAt()->format('Y-m-d');
+            if(!isset($data[$day])) {
+                $data[$day] = [];
+            }
+
+            $eventData = $event->getData();
+            $data[$day][] = [
+                'title' => $event->getTitle(),
+                'leader' => $event->getLeaderGw2(),
+                'seats' => $event->getSeats(),
+                'timestamp' => $event->getStartAt()->getTimestamp(),
+                'deeplink' => $eventData['deepLink'],
+            ];
+        }
+
+        foreach($data as $day => $events) {
+            $t = (new \DateTimeImmutable($day))->getTimestamp();
+            $name = "<t:$t:D>";
+            $values = [];
+            foreach($events as $event) {
+                $values[] = "— <t:{$event['timestamp']}:t> **[{$event['title']}]({$event['deeplink']})** / {$event['leader']} ({$event['seats']})";
+            }
+
+            $embed->addField((new DiscordFieldEmbedObject())
+                ->name($name)
+                ->value(join("\n", $values))
+            );
+        }
+
+
+        $discordOptions = (new DiscordOptions())
+            ->addEmbed($embed)
+        ;
+
+        $chatMessage->options($discordOptions);
+        $this->chatter->send($chatMessage);
+
+        $io->success('LBM Events: pushed to Discord');
+        return Command::SUCCESS;
     }
 }

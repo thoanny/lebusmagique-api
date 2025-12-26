@@ -75,4 +75,17 @@ class EventRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    public function findNextDaysEvents(int $days): array
+    {
+        return $this->createQueryBuilder('e')
+            ->where('e.startAt >= :now')
+            ->andWhere('e.startAt <= :future')
+            ->setParameter('now', new \DateTimeImmutable())
+            ->setParameter('future', (new \DateTimeImmutable())->modify("+${days} days"))
+            ->orderBy('e.startAt', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

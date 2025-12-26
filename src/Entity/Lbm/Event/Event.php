@@ -151,7 +151,7 @@ class Event
         if($this->data['maxSubscribers'] > 0) {
             return "{$this->data['subscriberCount']}/{$this->data['maxSubscribers']}";
         } else {
-            return $this->data['subscriberCount'] ?? 'Ø';
+            return "{$this->data['subscriberCount']}/∞" ?? 'N/A';
         }
 
     }

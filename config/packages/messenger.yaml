@@ -23,7 +23,7 @@ framework:
 
         routing:
             Symfony\Component\Mailer\Messenger\SendEmailMessage: sync
-            Symfony\Component\Notifier\Message\ChatMessage: async
+            Symfony\Component\Notifier\Message\ChatMessage: sync
             Symfony\Component\Notifier\Message\SmsMessage: async
             'Liip\ImagineBundle\Message\WarmupCache': liip_imagine
 

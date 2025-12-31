@@ -37,9 +37,9 @@ jobs:
         run: composer dump-autoload --optimize --classmap-authoritative
 
       - name: Install Node & dependencies
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v6
         with:
-          node-version: 16
+          node-version: 22
       - run: npm ci
 
       - name: Build assets

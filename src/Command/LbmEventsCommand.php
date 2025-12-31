@@ -2,6 +2,8 @@
 
 namespace App\Command;
 
+date_default_timezone_set('UTC');
+
 use App\Entity\Lbm\Event\Event;
 use App\Repository\Lbm\Event\EventRepository;
 use App\Service\ImageFromUrlUploader;

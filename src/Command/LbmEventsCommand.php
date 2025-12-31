@@ -83,6 +83,7 @@ class LbmEventsCommand extends Command
         try {
             $key = $this->parameter->get('aleeva.api.key');
             $discord = $this->parameter->get('lbm.discord.id');
+            $timezone = new \DateTimeZone('Europe/Paris');
 
             if(!$key) {
                 throw new \Error('Aleeva API Key is missing');
@@ -118,16 +119,16 @@ class LbmEventsCommand extends Command
                         sha1(json_encode([
                             $lbmEvent->getTitle(),
                             $lbmEvent->getDescription(),
-                            new \DateTimeImmutable($lbmEvent->getData()['dateTime']),
-                            new \DateTimeImmutable($lbmEvent->getData()['endDate']),
+                            (new \DateTimeImmutable($lbmEvent->getData()['dateTime']))->setTimezone($timezone),
+                            (new \DateTimeImmutable($lbmEvent->getData()['endDate']))->setTimezone($timezone),
                             $lbmEvent->getData()['image'],
                             $lbmEvent->getData()['subscriberCount'],
                             $lbmEvent->getData()['maxSubscribers'],
                         ])) !== sha1(json_encode([
                             $event['title'],
                             $event['description'],
-                            new \DateTimeImmutable($event['dateTime']),
-                            new \DateTimeImmutable($event['endDate']),
+                            (new \DateTimeImmutable($event['dateTime']))->setTimezone($timezone),
+                            (new \DateTimeImmutable($event['endDate']))->setTimezone($timezone),
                             $event['image'],
                             $event['subscriberCount'],
                             $event['maxSubscribers'],

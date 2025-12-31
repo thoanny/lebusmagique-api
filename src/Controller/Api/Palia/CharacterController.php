@@ -6,14 +6,12 @@ use App\Repository\Palia\CharacterRepository;
 use App\Service\ImageEncoded;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
-use OpenApi\Attributes as OA;
 
 class CharacterController extends AbstractController
 {
     #[Route('/api/palia/characters', name: 'app_api_palia_characters', methods: ['GET'])]
-    #[OA\Tag(name: 'Palia')]
     public function appApiPaliaCharacters(CharacterRepository $characterRepository, SerializerInterface $serializer, ImageEncoded $imageEncoded): JsonResponse
     {
         $characters = $characterRepository->findBy([], ['name' => 'ASC']);
@@ -28,7 +26,6 @@ class CharacterController extends AbstractController
     }
 
     #[Route('/api/palia/characters/{slug}', name: 'app_api_palia_character', methods: ['GET'])]
-    #[OA\Tag(name: 'Palia')]
     public function appApiPaliaCharacter($slug, CharacterRepository $characterRepository, SerializerInterface $serializer, ImageEncoded $imageEncoded): JsonResponse
     {
         $character = $characterRepository->findOneBy(['slug' => $slug]);

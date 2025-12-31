@@ -3,31 +3,26 @@
 namespace App\Controller\Admin\Gw2;
 
 use App\Form\Admin\Gw2\ItemType;
-use App\Repository\Gw2\Fish\FishRepository;
 use App\Repository\Gw2Api\ItemRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_GW2')]
 class ItemsController extends AbstractController
 {
-    private EntityManagerInterface $em;
-
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(private EntityManagerInterface $em)
     {
-        $this->em = $em;
     }
 
-    #[Route('/admin/gw2/items', name: 'app_admin_gw2_items')]
+    #[Route('/admin-old/gw2/items', name: 'app_admin_gw2_items')]
     public function appAdminGw2Items(ItemRepository $itemRepository, Request $request, PaginatorInterface $paginator): Response
     {
         $filters = [
-            'is' => (in_array($request->query->get('is'), ['fish', 'fish-bait', 'blackmarket'])) ? $request->query->get('is') : null,
             'type' => $request->query->get('type'),
             'subtype' => $request->query->get('subtype'),
             's' => $request->query->get('s')
@@ -50,8 +45,8 @@ class ItemsController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/gw2/items/{id}', name: 'app_admin_gw2_item_edit')]
-    public function appAdminGw2ItemEdit($id, ItemRepository $itemRepository, Request $request, FishRepository $fishRepository): Response
+    #[Route('/admin-old/gw2/items/{id}', name: 'app_admin_gw2_item_edit')]
+    public function appAdminGw2ItemEdit($id, ItemRepository $itemRepository, Request $request): Response
     {
         $item = $itemRepository->findOneBy(['id' => $id]);
         if(!$item) {
@@ -64,18 +59,6 @@ class ItemsController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $item = $form->getData();
-
-            if(!$form->get('isFish')->getData() && $item->getFish()) {
-                $item->setFish(null);
-            }
-
-            if(!$form->get('isFishBait')->getData() && $item->getBait()) {
-                $fishes = $fishRepository->findBy(['bait' => $item->getBait()]);
-                foreach($fishes as $f) {
-                    $f->setBait(null);
-                }
-                $item->setBait(null);
-            }
 
             if(!$form->get('isDecoration')->getData() && $item->getDecoration()) {
                 $item->setDecoration(null);

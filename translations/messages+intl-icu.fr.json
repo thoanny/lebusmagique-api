@@ -3,7 +3,6 @@
     "User.Role.ROLE_ADMIN": "Administrateur",
     "User.Role.ROLE_MANAGER": "Manager",
     "User.Role.ROLE_GW2": "GW2",
-    "User.Role.ROLE_GENSHIN": "Genshin",
     "Gw2.Item.Type.Armor": "Armure",
     "Gw2.Item.Type.Back": "Objet de dos",
     "Gw2.Item.Type.Bag": "Sac",
@@ -83,5 +82,10 @@
     "Gw2.WizardVault.Type.pve": "JcE",
     "Gw2.WizardVault.Type.pvp": "JcJ",
     "Gw2.WizardVault.Type.wvw": "McM",
-    "LBM.Ticket.pending": "En attente"
+    "LBM.Ticket.pending": "En attente",
+    "LBM.Event.TOTAL": "Total",
+    "LBM.Event.Role.NONE": "Sans rôle",
+    "LBM.Event.Role.ORGA": "Organisateur",
+    "LBM.Event.Role.EXT": "Lead ext.",
+    "LBM.Event.Role.STREAM": "Streamer"
 }

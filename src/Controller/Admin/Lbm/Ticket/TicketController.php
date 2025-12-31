@@ -8,9 +8,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/admin/lbm/tickets/tickets')]
+#[Route('/admin-old/lbm/tickets/tickets')]
 class TicketController extends AbstractController
 {
     #[Route('/', name: 'app_admin_lbm_ticket_ticket_index', methods: ['GET'])]

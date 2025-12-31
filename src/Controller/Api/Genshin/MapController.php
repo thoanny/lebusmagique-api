@@ -13,8 +13,7 @@ use Doctrine\ORM\NoResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use OpenApi\Attributes as OA;
+use Symfony\Component\Routing\Attribute\Route;
 
 class MapController extends AbstractController
 {
@@ -29,7 +28,6 @@ class MapController extends AbstractController
      * @throws NonUniqueResultException
      */
     #[Route('/api/genshin/map/{slug}', name: 'app_api_genshin_map', defaults: ['slug' => null], methods: ['GET'])]
-    #[OA\Tag(name: 'Genshin')]
     public function index(MapRepository $mapRepository, SectionRepository $sectionRepository, GroupRepository $groupRepository, MarkerRepository $markerRepository, IconRepository $iconRepository, Api $api, $slug): Response
     {
         $map = $mapRepository->findOneBySlug($slug);
@@ -76,9 +74,9 @@ class MapController extends AbstractController
             $icons[$k]['popupAnchor'] = [(int) $popup[0], (int) $popup[1]];
         }
 
-        list($a, $b) = explode('|', $map['bounds']);
-        list($c, $d) = explode(',', $a);
-        list($e, $f) = explode(',', $b);
+        [$a, $b] = explode('|', $map['bounds']);
+        [$c, $d] = explode(',', $a);
+        [$e, $f] = explode(',', $b);
 
         $map['bounds'] = [$c, $d, $e, $f];
         $map['center'] = explode(',', $map['center']);

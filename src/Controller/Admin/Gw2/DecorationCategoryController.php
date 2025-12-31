@@ -9,9 +9,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/admin/gw2/decorations/categories')]
+#[Route('/admin-old/gw2/decorations/categories')]
 class DecorationCategoryController extends AbstractController
 {
     #[Route('/', name: 'app_admin_gw2_decoration_category_index', methods: ['GET'])]

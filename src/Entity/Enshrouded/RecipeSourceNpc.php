@@ -4,11 +4,11 @@ namespace App\Entity\Enshrouded;
 
 use App\Repository\Enshrouded\RecipeSourceNpcRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: RecipeSourceNpcRepository::class)]
 #[ORM\Table(name: 'enshrouded_recipe_source_npc')]
-class RecipeSourceNpc extends RecipeSource
+class RecipeSourceNpc extends RecipeSource implements \Stringable
 {
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]

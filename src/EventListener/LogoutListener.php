@@ -5,7 +5,7 @@ class LogoutListener
     public function onSymfonyComponentSecurityHttpEventLogoutEvent(): void
     {
         if(isset($_COOKIE['BEARER'])) {
-            setcookie('BEARER', "", time()-(60*60*24*7), '/');
+            setcookie('BEARER', "", ['expires' => time()-(60*60*24*7), 'path' => '/']);
         }
     }
 }

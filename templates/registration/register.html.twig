@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+
+    {{ form_start(registrationForm) }}
+    <div class="card bg-base-100 shadow-sm max-w-md mx-auto">
+        <div class="card-body">
+            <h1 class="card-title">Inscription</h1>
+
+            {{ form_errors(registrationForm) }}
+
+            {{ form_label(registrationForm.nickname, 'Pseudonyme', {label_attr: {class: 'label'}}) }}
+            {{ form_widget(registrationForm.nickname, {attr: {class: 'input w-full'}}) }}
+
+            {{ form_label(registrationForm.email, 'Adresse e-mail', {label_attr: {class: 'label'}}) }}
+            {{ form_widget(registrationForm.email, {attr: {class: 'input w-full'}}) }}
+
+            {{ form_label(registrationForm.plainPassword, 'Mot de passe', {label_attr: {class: 'label'}}) }}
+            {{ form_widget(registrationForm.plainPassword, {attr: {class: 'input w-full'}}) }}
+
+            <div class="flex gap-2 items-center">
+                {{ form_widget(registrationForm.agreeTerms, {attr: {class: 'checkbox'}}) }}
+                {{ form_label(registrationForm.agreeTerms, 'J\'accepte les conditions d\'utilisation') }}
+            </div>
+
+
+            <div class="card-actions justify-between">
+                <button type="submit" class="btn btn-primary">S'inscrire</button>
+                <a href="{{ path('app_login') }}" class="btn btn-ghost">Se connecter</a>
+            </div>
+
+
+        </div>
+    </div>
+    {{ form_end(registrationForm) }}
+
+
+{% endblock %}

@@ -3,8 +3,6 @@
 namespace App\Form\Admin\Gw2;
 
 use App\Entity\Gw2Api\Item;
-use App\Form\Admin\Gw2\Fish\BaitType;
-use App\Form\Admin\Gw2\Fish\FishType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -17,16 +15,6 @@ class ItemType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('blackmarket', CheckboxType::class, [
-                'required' => false,
-                'label' => 'Black Market',
-                'label_attr' => [
-                    'class' => 'label-text'
-                ],
-                'attr' => [
-                    'class' => 'toggle toggle-primary'
-                ]
-            ])
             ->add('inventoryManagerTip', TextareaType::class, [
                 'required' => false,
                 'label' => 'Conseil pour la gestion d\'inventaire',
@@ -49,28 +37,6 @@ class ItemType extends AbstractType
                 ],
                 'help' => 'Tu peux utiliser Markdown pour formater le texte.',
             ])
-            ->add('isFish', CheckboxType::class, [
-                'mapped' => false,
-                'required' => false,
-                'label' => 'Poisson',
-                'label_attr' => [
-                    'class' => 'label-text'
-                ],
-                'attr' => [
-                    'class' => 'toggle toggle-primary'
-                ]
-            ])
-            ->add('isFishBait', CheckboxType::class, [
-                'mapped' => false,
-                'required' => false,
-                'label' => 'Appât',
-                'label_attr' => [
-                    'class' => 'label-text'
-                ],
-                'attr' => [
-                    'class' => 'toggle toggle-primary'
-                ]
-            ])
             ->add('isDecoration', CheckboxType::class, [
                 'mapped' => false,
                 'required' => false,
@@ -81,14 +47,6 @@ class ItemType extends AbstractType
                 'attr' => [
                     'class' => 'toggle toggle-primary'
                 ]
-            ])
-            ->add('fish', FishType::class, [
-                'label' => false,
-                'required' => false,
-            ])
-            ->add('bait', BaitType::class, [
-                'label' => false,
-                'required' => false,
             ])
             ->add('decoration', DecorationType::class, [
                 'label' => false,

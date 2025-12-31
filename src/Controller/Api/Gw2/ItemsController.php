@@ -16,28 +16,14 @@ use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
-use OpenApi\Attributes as OA;
 
 class ItemsController extends AbstractController
 {
 
-    private ItemRepository $itemRepository;
-    private ItemPriceRepository $itemPriceRepository;
-    private RecipeRepository $recipeRepository;
-    private Gw2Api $Gw2Api;
-    private Api $api;
-    private EntityManagerInterface $em;
-
-    public function __construct(ItemRepository $itemRepository, ItemPriceRepository $itemPriceRepository, RecipeRepository $recipeRepository, Gw2Api $Gw2Api, Api $api, EntityManagerInterface $em)
+    public function __construct(private ItemRepository $itemRepository, private ItemPriceRepository $itemPriceRepository, private RecipeRepository $recipeRepository, private Gw2Api $Gw2Api, private Api $api, private EntityManagerInterface $em)
     {
-        $this->itemRepository = $itemRepository;
-        $this->itemPriceRepository = $itemPriceRepository;
-        $this->recipeRepository = $recipeRepository;
-        $this->Gw2Api = $Gw2Api;
-        $this->api = $api;
-        $this->em = $em;
     }
 
     protected function getGw2Item($uid, $withRecipes = true) {
@@ -167,7 +153,6 @@ class ItemsController extends AbstractController
     }
 
     #[Route('/api/gw2/items/{uid}', name: 'app_api_gw2_item', methods: ['GET'])]
-    #[OA\Tag(name: 'GW2')]
     public function appApiGw2Item(int $uid, SerializerInterface $serializer): JsonResponse
     {
         $item = $this->getGw2Item($uid);
@@ -179,7 +164,6 @@ class ItemsController extends AbstractController
     }
 
     #[Route('/api/gw2/items', name: 'app_api_gw2_items', methods: ['GET'])]
-    #[OA\Tag(name: 'GW2')]
     public function appApiGw2Items(SerializerInterface $serializer): JsonResponse
     {
         $items = $this->itemRepository->findBy([], ['updatedAt' => 'DESC'], 25);

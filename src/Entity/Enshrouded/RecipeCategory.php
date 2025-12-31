@@ -7,12 +7,12 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
-use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: NestedTreeRepository::class)]
 #[ORM\Table(name: 'enshrouded_recipe_category')]
 #[Gedmo\Tree(type: 'nested')]
-class RecipeCategory
+class RecipeCategory implements \Stringable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -48,7 +48,7 @@ class RecipeCategory
     #[Gedmo\TreeParent]
     #[ORM\ManyToOne(targetEntity: RecipeCategory::class, inversedBy: 'children')]
     #[ORM\JoinColumn(name: 'parent_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
-    private ?RecipeCategory $parent;
+    private ?RecipeCategory $parent = null;
 
     #[ORM\OneToMany(targetEntity: RecipeCategory::class, mappedBy: 'parent')]
     #[ORM\OrderBy(['lft' => 'ASC'])]

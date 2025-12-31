@@ -41,26 +41,9 @@ class ItemRepository extends ServiceEntityRepository
 
     public function adminItems($filters) {
         $q = $this->createQueryBuilder('i')
-            ->select('i.id', 'i.uid', 'i.name', 'i.rarity', 'i.type', 'i.subtype', 'i.blackmarket')
+            ->select('i.id', 'i.uid', 'i.name', 'i.rarity', 'i.type', 'i.subtype')
             ->orderBy('i.uid', 'DESC')
         ;
-
-        if($filters['is']) {
-            if($filters['is'] === 'fish') {
-                $q->addSelect('f.power AS fishPower', 'f.specialization', 'f.strangeDiet', 'f.baitAny');
-                $q->addSelect('bi.name AS baitName', 'a.name AS achievementName');
-                $q->innerJoin('i.fish', 'f');
-                $q->leftJoin('f.bait', 'b');
-                $q->leftJoin('b.item', 'bi');
-                $q->leftJoin('f.achievement', 'a');
-            } else if($filters['is'] === 'fish-bait') {
-                $q->addSelect('b.power AS fishBaitPower');
-                $q->innerJoin('i.bait', 'b');
-            } else if($filters['is'] === 'blackmarket') {
-                $q->where('i.blackmarket = :true')
-                    ->setParameter('true', true);
-            }
-        }
 
         if($filters['type']) {
             $q->andWhere('i.type = :type')

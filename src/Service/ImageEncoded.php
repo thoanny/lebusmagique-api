@@ -7,11 +7,8 @@ use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 class ImageEncoded
 {
 
-    private CacheManager $cacheManager;
-
-    public function __construct(CacheManager $cacheManager)
+    public function __construct(private CacheManager $cacheManager)
     {
-        $this->cacheManager = $cacheManager;
     }
 
     public function get($icon = null, $path = null, $filter = null): ?string

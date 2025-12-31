@@ -6,7 +6,7 @@ use App\Entity\Gw2\Decoration;
 use App\Repository\Gw2\DecorationCategoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
 class DecorationsController extends AbstractController

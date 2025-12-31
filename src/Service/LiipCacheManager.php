@@ -8,13 +8,8 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 class LiipCacheManager {
 
-    private MessageBusInterface $messageBus;
-    private CacheManager $cacheManager;
-
-    public function __construct(MessageBusInterface $messageBus, CacheManager $cacheManager)
+    public function __construct(private MessageBusInterface $messageBus, private CacheManager $cacheManager)
     {
-        $this->messageBus = $messageBus;
-        $this->cacheManager = $cacheManager;
     }
 
     public function generate($path, $filters): void

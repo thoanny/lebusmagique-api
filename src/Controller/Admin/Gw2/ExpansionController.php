@@ -10,11 +10,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class ExpansionController extends AbstractController
 {
-    #[Route('/admin/gw2/expansions/{id}', name: 'app_admin_gw2_expansions', defaults: ['id' => null])]
+    #[Route('/admin-old/gw2/expansions/{id}', name: 'app_admin_gw2_expansions', defaults: ['id' => null])]
     public function appAdminGw2Expansions(ExpansionRepository $expansionRepository, Request $request, EntityManagerInterface $em, $id): Response
     {
         $expansions = $expansionRepository->findAll();
@@ -50,7 +50,7 @@ class ExpansionController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/gw2/expansions/delete/{id}', name: 'app_admin_gw2_expansion_delete')]
+    #[Route('/admin-old/gw2/expansions/delete/{id}', name: 'app_admin_gw2_expansion_delete')]
     #[IsGranted('ROLE_ADMIN')]
     public function appAdminGw2ExpansionDelete(ExpansionRepository $expansionRepository, EntityManagerInterface $em, $id): RedirectResponse
     {

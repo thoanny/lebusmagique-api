@@ -4,7 +4,7 @@ namespace App\Entity\Gw2;
 
 use App\Repository\Gw2\ExpansionRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: ExpansionRepository::class)]
 #[ORM\Table(name: 'gw2_expansion')]

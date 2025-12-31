@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mot de passe oublié{% endblock %}
+
+{% block body %}
+
+    {{ form_start(requestForm) }}
+
+    <div class="card bg-base-100 shadow-sm max-w-md mx-auto">
+        <div class="card-body">
+            <h1 class="card-title">Mot de passe oublié&nbsp;?</h1>
+
+            {% for flash_error in app.flashes('reset_password_error') %}
+                <div class="alert alert-error" role="alert">{{ flash_error }}</div>
+            {% endfor %}
+
+            {{ form_label(requestForm.email, 'Adresse e-mail', {label_attr: {class: 'label'}}) }}
+            {{ form_widget(requestForm.email, {attr: {class: 'input w-full'}}) }}
+
+            <div class="card-actions">
+                <button class="btn btn-primary">Réinitialiser mon mot de passe</button>
+            </div>
+        </div>
+    </div>
+
+    {{ form_end(requestForm) }}
+{% endblock %}

@@ -29,7 +29,6 @@ class UserType extends AbstractType
                     'Administrateur' => 'ROLE_ADMIN',
                     'Manager' => 'ROLE_MANAGER',
                     'Guild Wars 2' => 'ROLE_GW2',
-                    'Genshin Impact' => 'ROLE_GENSHIN'
                 ],
                 'expanded' => true,
                 'multiple' => true,

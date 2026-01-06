@@ -54,3 +54,7 @@ vich_uploader:
             uri_prefix: '%lbm.event.image%'
             upload_destination: '%kernel.project_dir%/public%lbm.event.image%'
             namer: Vich\UploaderBundle\Naming\UniqidNamer
+        lbm_feed_image:
+            uri_prefix: '%lbm.feed.image%'
+            upload_destination: '%kernel.project_dir%/public%lbm.feed.image%'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer

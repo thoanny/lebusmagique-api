@@ -11,6 +11,8 @@ parameters:
     mailer.from.name: '%env(MAILER_FORM_NAME)%'
     lbm.discord.id: '%env(LBM_DISCORD_ID)%'
     lbm.event.image: '/uploads/lbm/events'
+    lbm.feed.image: '/uploads/lbm/feeds'
+    api.admin.token: '%env(API_ADMIN_TOKEN)%'
 services:
     # default configuration for services in *this* file
     _defaults:

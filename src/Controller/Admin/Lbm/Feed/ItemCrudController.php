@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controller\Admin\Lbm\Event;
+namespace App\Controller\Admin\Lbm\Feed;
 
-use App\Entity\Lbm\Event\Event;
+use App\Entity\Lbm\Feed\Item;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminRoute;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
@@ -11,15 +11,16 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 
-#[AdminRoute(path: '/lbm/events/events', name: 'lbm_event')]
-class EventCrudController extends AbstractCrudController
+#[AdminRoute(path: '/lbm/feeds/items', name: 'lbm_feed_item')]
+class ItemCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Event::class;
+        return Item::class;
     }
 
     public function configureCrud(Crud $crud): Crud
@@ -39,16 +40,15 @@ class EventCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        $imgPath = $this->getParameter('lbm.event.image');
+        $imgPath = $this->getParameter('lbm.feed.image');
         return [
             IdField::new('id'),
             TextField::new('title', 'Titre'),
-            DateTimeField::new('startAt', 'Début'),
-            DateTimeField::new('endAt', 'Fin'),
-            TextareaField::new('description')->onlyOnDetail(),
-            TextField::new('type'),
-            TextField::new('leaderGw2'),
+            TextEditorField::new('description'),
+            UrlField::new('link', 'Lien'),
+            DateTimeField::new('pubDate', 'Publication'),
             ImageField::new('image')->setBasePath($imgPath),
+            TextField::new('guid')->onlyOnDetail(),
         ];
     }
 }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+    <channel>
+        <title>Actualités et pages du Bus Magique</title>
+        <link>{{ absolute_url(path('app_api_lbm_feed_xml')) }}</link>
+        <description>Flux unifié des actualités et pages du Bus Magique.</description>
+        <language>fr-fr</language>
+        {% for item in items %}
+            <item>
+                <title><![CDATA[{{ item.title }}]]></title>
+                <link>{{ item.link }}</link>
+                <description><![CDATA[{{ item.description }}]]></description>
+                {% if item.image %}
+                    <enclosure url="{{ absolute_url(vich_uploader_asset(item)) }}" length="{{ item.imageSize }}" type="{{ item.imageType }}" />
+                {% endif %}
+                <pubDate>{{ item.pubDate|date('r') }}</pubDate>
+                <guid isPermaLink="false">{{ item.guid }}</guid>
+            </item>
+        {% endfor %}
+    </channel>
+</rss>

@@ -52,22 +52,25 @@ class ImageFromUrlUploader
         $tempPath = tempnam(sys_get_temp_dir(), 'img_');
         file_put_contents($tempPath, $response->getContent());
 
-        try {
-            $imagick = new \Imagick($tempPath);
-        } catch (\Exception $e) {
-            throw new \RuntimeException("Unknown format");
-        }
+        $finfo = new \finfo(FILEINFO_MIME_TYPE);
+        $mime = $finfo->file($tempPath);
 
-        $format = strtolower($imagick->getImageFormat());
-        if ($format === 'jpeg' || $format === 'jpg') {
-            return new ReplacingFile($tempPath);
-        }
+        $image = match ($mime) {
+            'image/jpeg' => imagecreatefromjpeg($tempPath),
+            'image/png'  => imagecreatefrompng($tempPath),
+            'image/gif'  => imagecreatefromgif($tempPath),
+            'image/webp' => function_exists('imagecreatefromwebp') ? imagecreatefromwebp($tempPath) : null,
+            'image/avif' => function_exists('imagecreatefromavif') ? imagecreatefromavif($tempPath) : null,
+            default      => null,
+        };
 
-        $imagick->setImageFormat('jpeg');
-        $imagick->setImageCompressionQuality(90);
+        if(!$image) {
+            return null;
+        }
 
         $tmpJpeg = tempnam(sys_get_temp_dir(), 'img_jpg_');
-        $imagick->writeImage($tmpJpeg);
+        imagejpeg($image, $tmpJpeg, 90);
+        imagedestroy($image);
 
         return new ReplacingFile($tmpJpeg);
     }

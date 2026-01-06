@@ -10,6 +10,8 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-imagick": "*",
+        "ext-fileinfo": "*",
+        "ext-gd": "*",
         "algolia/search-bundle": "^6.0",
         "doctrine/doctrine-bundle": "^2.9",
         "doctrine/doctrine-migrations-bundle": "^3.2",

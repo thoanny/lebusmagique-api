@@ -13,6 +13,7 @@ parameters:
     lbm.event.image: '/uploads/lbm/events'
     lbm.feed.image: '/uploads/lbm/feeds'
     api.admin.token: '%env(API_ADMIN_TOKEN)%'
+    tinify.api.key: '%env(TINIFY_API_KEY)%'
 services:
     # default configuration for services in *this* file
     _defaults:

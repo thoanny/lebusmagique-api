@@ -5,7 +5,7 @@ namespace App\Controller\Api\Lbm;
 use App\Entity\Lbm\Feed\Item;
 use App\Repository\Lbm\Feed\ItemRepository;
 use App\Service\Api;
-use App\Service\ImageFromUrlUploader;
+use App\Service\TinifyManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -16,21 +16,18 @@ use Symfony\Component\Uid\Uuid;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 #[Route('/api/lbm/feed')]
 final class FeedController extends AbstractController
 {
     /**
      * @throws \DateMalformedStringException
-     * @throws TransportExceptionInterface
      * @throws ServerExceptionInterface
      * @throws RedirectionExceptionInterface
      * @throws ClientExceptionInterface
-     * @throws \ImagickException
      */
     #[Route('/item', name: 'app_api_lbm_feed_item', methods: ['POST'])]
-    public function addFeedItem(Api $api, Request $request, ItemRepository $itemRepository, EntityManagerInterface $entityManager, ImageFromUrlUploader $imageFromUrlUploader): JsonResponse
+    public function addFeedItem(Api $api, Request $request, ItemRepository $itemRepository, EntityManagerInterface $entityManager, TinifyManager $tinifyManager): JsonResponse
     {
         $request = $api->transformJsonBody($request);
         $token = $request->get('token');
@@ -63,7 +60,7 @@ final class FeedController extends AbstractController
         ;
 
         if($image) {
-            $imageFile = $imageFromUrlUploader->downloadToTempFileAndConvertToJPG($image);
+            $imageFile = $tinifyManager->convert($image);
             if ($imageFile) {
                 $item->setImageFile($imageFile);
             }
@@ -84,3 +81,5 @@ final class FeedController extends AbstractController
         ]);
     }
 }
+
+// TODO : créer une commande pour nettoyer les anciens items

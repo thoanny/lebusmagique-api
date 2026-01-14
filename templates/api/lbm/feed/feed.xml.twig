@@ -7,9 +7,9 @@
         <language>fr-fr</language>
         {% for item in items %}
             <item>
-                <title><![CDATA[{{ item.title }}]]></title>
+                <title><![CDATA[ {{ item.title|striptags|raw }} ]]></title>
                 <link>{{ item.link }}</link>
-                <description><![CDATA[{{ item.description }}]]></description>
+                <description><![CDATA[ {{ item.description|striptags|raw }} ]]></description>
                 {% if item.image %}
                     <enclosure url="{{ absolute_url(vich_uploader_asset(item)) }}" length="{{ item.imageSize }}" type="{{ item.imageType }}" />
                 {% endif %}

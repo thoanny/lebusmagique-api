@@ -72,7 +72,7 @@ final class FeedController extends AbstractController
         return $api->respondCreated('Feed item added.');
     }
 
-    #[Route('/xml', name: 'app_api_lbm_feed_xml', methods: ['GET'])]
+    #[Route('/xml', name: 'app_api_lbm_feed_xml', defaults: ['_format' => 'xml'], methods: ['GET'])]
     public function getFeedXml(ItemRepository $itemRepository): Response
     {
         $items = $itemRepository->findBy([], ['id' => 'DESC'], 50);

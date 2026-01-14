@@ -78,14 +78,15 @@
     "Gw2.Item.FishTime.dd": "Aube\/Cr\u00e9puscule",
     "Gw2.WizardVault.Period.daily": "Quotidien",
     "Gw2.WizardVault.Period.weekly": "Hebdomadaire",
-    "Gw2.WizardVault.Period.special": "Spécial",
+    "Gw2.WizardVault.Period.special": "Sp\u00e9cial",
     "Gw2.WizardVault.Type.pve": "JcE",
     "Gw2.WizardVault.Type.pvp": "JcJ",
     "Gw2.WizardVault.Type.wvw": "McM",
     "LBM.Ticket.pending": "En attente",
     "LBM.Event.TOTAL": "Total",
-    "LBM.Event.Role.NONE": "Sans rôle",
+    "LBM.Event.Role.NONE": "Sans r\u00f4le",
     "LBM.Event.Role.ORGA": "Organisateur",
     "LBM.Event.Role.EXT": "Lead ext.",
-    "LBM.Event.Role.STREAM": "Streamer"
+    "LBM.Event.Role.STREAM": "Streamer",
+    "Genshin.Map.User.Markers.Count": "{count, plural, =0 {Aucun marqueur} one {1 marqueur} other {# marqueurs}}"
 }

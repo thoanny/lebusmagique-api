@@ -45,7 +45,7 @@
             <div>
                 <div class="text-sm text-base-content/50">Création du compte</div>
                 <div class="font-semibold">{{ app.user.createdAt|format_datetime('long', 'short') }}</div>
-                {% if is_granted('ROLE_MANAGER') %}
+                {% if not is_granted('ROLE_MANAGER') %}
                     <button class="btn btn-xs btn-primary mt-1" onclick="user_account_delete.showModal()">Supprimer mon compte</button>
                 {% endif %}
             </div>
@@ -93,17 +93,19 @@
     {% endif %}
 
     <!-- User Delete Account Modal -->
-    <dialog id="user_account_delete" class="modal">
-        <div class="modal-box">
-            <h3 class="text-lg font-bold">Supprimer mon compte</h3>
-            <p class="py-4">Merci de confirmer que vous souhaitez supprimer votre compte.<br />
-                <strong class="text-error">Cette action est irreversible&nbsp;!</strong></p>
-            <div class="modal-action justify-between">
-                <a href="{{ path('app_user_account_delete') }}" class="btn btn-primary">Supprimer mon compte</a>
-                <form method="dialog">
-                    <button class="btn">Annuler</button>
-                </form>
+    {% if not is_granted('ROLE_MANAGER') %}
+        <dialog id="user_account_delete" class="modal">
+            <div class="modal-box">
+                <h3 class="text-lg font-bold">Supprimer mon compte</h3>
+                <p class="py-4">Merci de confirmer que vous souhaitez supprimer votre compte.<br />
+                    <strong class="text-error">Cette action est irreversible&nbsp;!</strong></p>
+                <div class="modal-action justify-between">
+                    <a href="{{ path('app_user_account_delete') }}" class="btn btn-primary">Supprimer mon compte</a>
+                    <form method="dialog">
+                        <button class="btn">Annuler</button>
+                    </form>
+                </div>
             </div>
-        </div>
-    </dialog>
+        </dialog>
+    {% endif %}
 {% endblock %}

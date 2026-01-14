@@ -41,3 +41,6 @@ sf: ## List all Symfony commands or pass the parameter "c=" to run a given comma
 
 cc: c=c:c ## Clear the cache
 cc: sf
+
+trans: c=translation:extract fr --format json --force ## Update translation
+trans: sf

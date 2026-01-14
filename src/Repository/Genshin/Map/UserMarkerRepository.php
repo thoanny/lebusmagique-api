@@ -4,6 +4,8 @@ namespace App\Repository\Genshin\Map;
 
 use App\Entity\Genshin\Map\UserMarker;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -76,5 +78,20 @@ class UserMarkerRepository extends ServiceEntityRepository
             ])
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
+    public function getUserMarkersCount($user): int
+    {
+        return $this->createQueryBuilder('um')
+            ->select('COUNT(um)')
+            ->where('um.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
     }
 }

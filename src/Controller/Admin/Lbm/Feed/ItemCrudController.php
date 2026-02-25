@@ -8,6 +8,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
@@ -43,6 +44,11 @@ class ItemCrudController extends AbstractCrudController
         $imgPath = $this->getParameter('lbm.feed.image');
         return [
             IdField::new('id'),
+            ChoiceField::new('type')->setChoices([
+                'Flux RSS' => 'rss',
+                'YouTube' => 'youtube',
+                'Twitch' => 'twitch',
+            ]),
             TextField::new('title', 'Titre'),
             TextEditorField::new('description'),
             UrlField::new('link', 'Lien'),

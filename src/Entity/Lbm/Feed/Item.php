@@ -6,31 +6,37 @@ use App\Repository\Lbm\Feed\ItemRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Serializer\Attribute\Groups;
 use Vich\UploaderBundle\Mapping\Attribute as Vich;
 
 #[ORM\Entity(repositoryClass: ItemRepository::class)]
-#[ORM\Table(name: 'lbm_feed')]
+#[ORM\Table(name: 'lbm_feed_item')]
 #[Vich\Uploadable]
 class Item
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['feed'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['feed'])]
     private ?string $title = null;
 
     #[ORM\Column(length: 255, unique: true)]
+    #[Groups(['feed'])]
     private ?string $link = null;
 
     #[ORM\Column]
+    #[Groups(['feed'])]
     private ?\DateTimeImmutable $pubDate = null;
 
     #[ORM\Column(type: Types::GUID)]
     private ?string $guid = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups(['feed'])]
     private ?string $description = null;
 
     #[Vich\UploadableField(mapping: 'lbm_feed_image', fileNameProperty: 'image', size: 'imageSize', mimeType: 'imageType')]
@@ -47,6 +53,17 @@ class Item
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
+
+    #[Groups(['feed'])]
+    #[ORM\Column(length: 25, nullable: true)]
+    private ?string $type = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $externalImageUrl = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['feed'])]
+    private ?string $username = null;
 
     public function getId(): ?int
     {
@@ -155,5 +172,53 @@ class Item
     public function getImageType(): ?string
     {
         return $this->imageType;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(?string $type): static
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function getExternalImageUrl(): ?string
+    {
+        return $this->externalImageUrl;
+    }
+
+    public function setExternalImageUrl(?string $externalImageUrl): static
+    {
+        $this->externalImageUrl = $externalImageUrl;
+
+        return $this;
+    }
+
+    public function getUsername(): ?string
+    {
+        return $this->username;
+    }
+
+    public function setUsername(?string $username): static
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    #[Groups(['feed'])]
+    public function getImageUrl(): ?string
+    {
+        if($this->image){
+            return "https://api.lebusmagique.fr/uploads/lbm/feeds/{$this->image}";
+        } elseif ($this->externalImageUrl) {
+            return $this->externalImageUrl;
+        }
+
+        return null;
     }
 }

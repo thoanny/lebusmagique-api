@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Lbm\Event\Event;
 use App\Entity\Lbm\Event\Role;
 use App\Entity\Lbm\Feed\Item;
+use App\Entity\Lbm\Feed\Source;
 use App\Entity\Lbm\Ticket\Blacklist;
 use App\Entity\Lbm\Ticket\Guild;
 use App\Entity\User;
@@ -40,7 +41,11 @@ class DashboardController extends AbstractDashboardController
                 MenuItem::linkToCrud('Rôles', 'fa fa-user-tag', Role::class),
                 MenuItem::linkToRoute('Statistiques', 'fa fa-chart-column', 'admin_lbm_event_stat_index'),
             ]);
-        yield MenuItem::linkToCrud('Flux RSS', 'fa fa-rss', Item::class);
+        yield MenuItem::subMenu('Flux d\'actualités')
+            ->setSubItems([
+                MenuItem::linkToCrud('Éléments', '', Item::class),
+                MenuItem::linkToCrud('Sources', '', Source::class),
+            ]);
         yield MenuItem::subMenu('Tickets')
             ->setSubItems([
                 MenuItem::linkToCrud('Liste noire', 'fa fa-user-lock', Blacklist::class),

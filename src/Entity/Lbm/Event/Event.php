@@ -155,4 +155,10 @@ class Event
         }
 
     }
+
+    #[Groups(['api'])]
+    public function getLink(): string
+    {
+        return $this->data['deepLink'] ?? '';
+    }
 }

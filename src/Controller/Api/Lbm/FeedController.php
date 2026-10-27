@@ -105,7 +105,7 @@ final class FeedController extends AbstractController
     #[Route('/json', name: 'app_api_lbm_feed_json', defaults: ['_format' => 'xml'], methods: ['GET'])]
     public function Api_LBM_Feed_JSON(ItemRepository $itemRepository, SerializerInterface $serializer): Response
     {
-        $items = $itemRepository->findBy(['type' => null], ['id' => 'DESC'], 10);
+        $items = $itemRepository->findBy(['type' => null], ['pubDate' => 'DESC'], 50);
         return new JsonResponse($serializer->serialize($items, 'json', ['groups' => ['feed']]), 200, [], true);
     }
 

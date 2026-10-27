@@ -64,6 +64,19 @@ class EventRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findNextEventsForXml(): array
+    {
+        return $this->createQueryBuilder('e')
+            ->where('e.startAt >= :now')
+            ->andWhere('e.startAt <= :future')
+            ->setParameter('now', new \DateTimeImmutable())
+            ->setParameter('future', (new \DateTimeImmutable())->modify('+7 days'))
+            ->orderBy('e.id', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     public function findForStatistics(string $start, string $end)
     {
         return $this->createQueryBuilder('e')

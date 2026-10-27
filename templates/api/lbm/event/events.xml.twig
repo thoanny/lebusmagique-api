@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+    <channel>
+        <title>Événements du Bus Magique</title>
+        <link>{{ absolute_url(path('app_api_lbm_events_xml')) }}</link>
+        <description>Flux des événements du Bus Magique.</description>
+        <language>fr-fr</language>
+        {% for event in events %}
+            <item>
+                <title><![CDATA[ {{ event.data.title|striptags|raw }} ]]></title>
+                <link>{{ event.data.deepLink }}</link>
+                <description><![CDATA[ {{ event.data.description|striptags|raw }} ]]></description>
+                {% if event.image %}
+                    <enclosure url="{{ absolute_url(vich_uploader_asset(event)) }}" />
+                {% endif %}
+                <pubDate>{{ event.startAt|date('r') }}</pubDate>
+                <guid isPermaLink="false">{{ event.uid }}</guid>
+            </item>
+        {% endfor %}
+    </channel>
+</rss>

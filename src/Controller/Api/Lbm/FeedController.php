@@ -65,11 +65,11 @@ final class FeedController extends AbstractController
         }
 
         $item = (new Item())
-            ->setTitle($title)
+            ->setTitle(html_entity_decode(strip_tags($title)))
             ->setLink($link)
             ->setPubDate(new \DateTimeImmutable($pub_date))
             ->setGuid($guid ?? Uuid::v4()->toRfc4122())
-            ->setDescription($description)
+            ->setDescription(html_entity_decode(strip_tags($description)))
             ->setExternalImageUrl($externalImageUrl)
         ;
 

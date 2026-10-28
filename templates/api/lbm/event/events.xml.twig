@@ -9,7 +9,7 @@
             <item>
                 <title><![CDATA[ {{ event.data.title|striptags|raw }} ]]></title>
                 <link>{{ event.data.deepLink }}</link>
-                <description><![CDATA[ {{ event.data.description|striptags|raw }} ]]></description>
+                <description><![CDATA[ {{ include('api/lbm/event/_event-description.html.twig', {event: event})|trim }} ]]></description>
                 {% if event.image %}
                     <enclosure url="{{ absolute_url(vich_uploader_asset(event)) }}" />
                 {% endif %}

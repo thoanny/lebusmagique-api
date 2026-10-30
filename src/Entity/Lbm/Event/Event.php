@@ -30,12 +30,18 @@ class Event
     #[Groups(['api'])]
     private ?\DateTimeImmutable $endAt = null;
 
-    #[Vich\UploadableField(mapping: 'lbm_event_image', fileNameProperty: 'image')]
+    #[Vich\UploadableField(mapping: 'lbm_event_image', fileNameProperty: 'image', size: 'imageSize', mimeType: 'imageType')]
     private ?File $imageFile = null;
 
     #[ORM\Column(nullable: true)]
     #[Groups(['api'])]
     private ?string $image = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $imageSize = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?string $imageType = null;
 
     #[ORM\Column(nullable: true)]
     #[Groups(['api'])]
@@ -107,6 +113,26 @@ class Event
     public function getImage(): ?string
     {
         return $this->image;
+    }
+
+    public function setImageSize(?int $imageSize): void
+    {
+        $this->imageSize = $imageSize;
+    }
+
+    public function getImageSize(): ?int
+    {
+        return $this->imageSize;
+    }
+
+    public function setImageType(?string $imageType): void
+    {
+        $this->imageType = $imageType;
+    }
+
+    public function getImageType(): ?string
+    {
+        return $this->imageType;
     }
 
     public function getData(): array

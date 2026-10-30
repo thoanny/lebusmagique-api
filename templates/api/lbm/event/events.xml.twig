@@ -8,10 +8,10 @@
         {% for event in events %}
             <item>
                 <title><![CDATA[ {{ event.data.title|striptags|raw }} ]]></title>
-                <link>{{ event.data.deepLink }}</link>
+                <link>{{ event.data.deepLink|replace({'discord://': 'https://'}) }}</link>
                 <description><![CDATA[ {{ include('api/lbm/event/_event-description.html.twig', {event: event})|trim }} ]]></description>
                 {% if event.image %}
-                    <enclosure url="{{ absolute_url(vich_uploader_asset(event)) }}" />
+                    <enclosure url="{{ absolute_url(vich_uploader_asset(event)) }}" length="{{ event.imageSize ?? 86685 }}" type="{{ item.imageType ?? 'image/jpeg' }}" />
                 {% endif %}
                 <pubDate>{{ event.startAt|date('r') }}</pubDate>
                 <guid isPermaLink="false">{{ event.uid }}</guid>

@@ -1,34 +1,21 @@
-{% set link = event.data.deepLink|replace({'discord://': 'https://'}) %}
 {% set idx = event.id % 9 %}
 
 {% if idx == 0 %}
-📅 Ce {{ event.startAt|format_datetime(pattern: "EEEE d LLLL 'à' H'h'mm", timezone: 'Europe/Paris') }}, retrouvons-nous pour "{{ event.title }}" ! 🔗 {{ link }}
+📅 Ce {{ event.startAt|format_datetime(pattern: "EEEE d LLLL 'à' H'h'mm", timezone: 'Europe/Paris') }}, retrouvons-nous pour "{{ event.title }}" !
 {% elseif idx == 1 %}
-    🎯 Rendez-vous ce {{ event.startAt|format_datetime(pattern: "EEEE d LLLL 'à' H'h'mm", timezone: 'Europe/Paris') }} pour "{{ event.title }}" ! 🔗 {{ link }}
+    🎯 Rendez-vous ce {{ event.startAt|format_datetime(pattern: "EEEE d LLLL 'à' H'h'mm", timezone: 'Europe/Paris') }} pour "{{ event.title }}" !
 {% elseif idx == 2 %}
-    🚌  Ce {{ event.startAt|format_datetime(pattern: "EEEE d LLLL, H'h'mm", timezone: 'Europe/Paris') }} ! On se retrouve pour "{{ event.title }}" ? 🔗 {{ link }}
+    🚌  Ce {{ event.startAt|format_datetime(pattern: "EEEE d LLLL, H'h'mm", timezone: 'Europe/Paris') }} ! On se retrouve pour "{{ event.title }}" ?
 {% elseif idx == 3 %}
     🚍 Le Bus Magique vous donne rendez-vous ! On se retrouve ce {{ event.startAt|format_datetime(pattern: "EEEE d LLLL 'à' H'h'mm", timezone: 'Europe/Paris') }} pour "{{ event.title }}". Que vous soyez habitué ou nouveau parmi nous, vous êtes les bienvenus !
-    🔗 L'événement : {{ link }}
 {% elseif idx == 4 %}
     🚏 Rejoignez Le Bus Magique ce {{ event.startAt|format_datetime(pattern: "EEEE d LLLL 'à' H'h'mm", timezone: 'Europe/Paris') }} pour "{{ event.title }}" ! On vous attend nombreux !
-    🔗 Plus d'infos : {{ link }}
 {% elseif idx == 5 %}
-    📅 {{ event.startAt|format_datetime(pattern: "EEEE d LLLL 'à' H'h'mm", timezone: 'Europe/Paris')|capitalize }}
-    🎉 Au programme : "{{ event.title }}"
-    Ça vous tente ? Retrouvez tous les détails ici 👇
-    🔗 {{ link }}
+    📅 {{ event.startAt|format_datetime(pattern: "EEEE d LLLL 'à' H'h'mm", timezone: 'Europe/Paris')|capitalize }} 🎉 Au programme : "{{ event.title }}". Ça vous tente ? Retrouvez tous les détails ici 👇
 {% elseif idx == 6 %}
     🔥 Vous faites quoi {{ event.startAt|format_datetime(pattern: "EEEE d LLLL", timezone: 'Europe/Paris') }} ? À {{ event.startAt|format_datetime(pattern: "H'h'mm", timezone: 'Europe/Paris') }}, on vous retrouve pour "{{ event.title }}" ! 👀
-    🚏 Préparez-vous, ça se passe ici :
-    🔗 {{ link }}
 {% elseif idx == 7 %}
-    📅 Rendez-vous le {{ event.startAt|format_datetime(pattern: "EEEE d LLLL 'à' H'h'mm", timezone: 'Europe/Paris') }} pour "{{ event.title }}".
-    💬 Curieux ? Envie de participer ? Toutes les infos sont ici :
-    🔗 {{ link }}
+    📅 Rendez-vous le {{ event.startAt|format_datetime(pattern: "EEEE d LLLL 'à' H'h'mm", timezone: 'Europe/Paris') }} pour "{{ event.title }}". 💬 Curieux ? Envie de participer ?
 {% else %}
-    📅 Ce {{ event.startAt|format_datetime(pattern: "EEEE d LLLL 'à' H'h'mm", timezone: 'Europe/Paris') }}, on se retrouve !
-    🚏 Au programme : "{{ event.title }}"
-    🚍 Rejoignez l'aventure avec Le Bus Magique !
-    🔗 {{ link }}
+    📅 Ce {{ event.startAt|format_datetime(pattern: "EEEE d LLLL 'à' H'h'mm", timezone: 'Europe/Paris') }}, on se retrouve ! 🚏 Au programme : "{{ event.title }}" 🚍 Rejoignez l'aventure avec Le Bus Magique !
 {% endif %}
